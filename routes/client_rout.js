@@ -11,11 +11,7 @@ const DraftClient = require('../models/drafts/draftClientEN').DraftClient;
 const DraftClientAr = require('../models/drafts/draftClientAR').DraftClientAr;
 const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
 module.exports = function(router) {
-    //data-en
-    /*
-    The last thing is to check if the logged in user has a draft. if so grab it and render data-en-draft
-    else, it will render data-en 
-    */
+    //data-en **get page to enter data
     router.get('/data-en', function(req, res, next) {
         mongoose.connect(configDB.urlS, {
             useUnifiedTopology: true,
@@ -26,10 +22,16 @@ module.exports = function(router) {
                 statement: 'User: ' + req.user.userName + ' entered data-en '
             });
             let data = {}
-                // get data from database
+
+            /*
+    after javascript code ...
+    The last thing is to check if the logged in user has a draft. if so grab it and render data-en-draft
+    else, it will render data-en 
+    */
             DraftClient.find({ user: req.user.userName }).then(records => {
                 if (records.length > 0) {
                     data.draft = records[0];
+                    // get data from database
                     Country.find({}).then(countries => {
                         data.countries = countries
                         maritalStatus.find({}).then(maritalstatus => {
@@ -79,28 +81,28 @@ module.exports = function(router) {
     but if he has a previous draft, it will update it
     that's all
     */
-
     router.post('/data-en/draft', (req, res) => {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
-        const field = req.body.field;
-        const value = req.body.value;
-        var query = { user: req.user.userName },
-            update = {
-                [field]: value
-            },
-            options = { upsert: true, new: true, setDefaultsOnInsert: true };
-        // Find the document
-        DraftClient.findOneAndUpdate(query, update, options, function(error, result) {
-            if (error) return;
-            // do something with the document
-            res.end();
+            mongoose.connect(configDB.urlS, {
+                useUnifiedTopology: true,
+                useNewUrlParser: true,
+            }, (err) => { console.log('DBS connected ^_^ ') })
+            const field = req.body.field;
+            const value = req.body.value;
+            var query = { user: req.user.userName },
+                update = {
+                    [field]: value
+                },
+                options = { upsert: true, new: true, setDefaultsOnInsert: true };
+            // Find the document
+            DraftClient.findOneAndUpdate(query, update, options, function(error, result) {
+                if (error) return;
+                // do something with the document
+                res.end();
+            })
         })
-    })
-
+        //save data in database
     router.post('/data-en', (req, res) => {
+        //connect to database where data were saved there
         mongoose.connect(configDB.urlS, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
@@ -543,27 +545,28 @@ module.exports = function(router) {
         newClient.save(() => {
             res.redirect(302, '/index')
         });
+        //when user save data will record that in database
         Log.create({
             statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to add new client with ID: ' + req.body.IC_idNumber +
                 ' and name :' + req.body.PI_firstName + ' ' + req.body.PI_secondName
         });
     });
-    ///////
+    //get page where we search client with id
     router.get('/data-en-copy', (req, res) => {
-            Log.create({
-                statement: 'User: ' + req.user.userName + ' entered to data-en-copy-empty'
-            });
-            res.render('data-en-copy-empty');
-            // مفيش بيانات بتتبعت
-            // وبالتالي Client هيطلع
-        })
-        //search for client
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' entered to data-en-copy-empty'
+        });
+        res.render('data-en-copy-empty');
+    })
+
+    //search for client by id 
     router.get('/searchC', (req, res) => {
             mongoose.connect(configDB.urlS, {
                 useUnifiedTopology: true,
                 useNewUrlParser: true,
             }, (err) => { console.log('DBS connected ^_^ ') })
             const searchC = req.query.searchC;
+            //when user search client data will record that in database
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered to search for client'
             });
@@ -580,7 +583,7 @@ module.exports = function(router) {
                 statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to search for client :' + searchC
             });
         })
-        /////
+        //get page
     router.get('/edit/:_id', (req, res) => {
             mongoose.connect(configDB.urlS, {
                 useUnifiedTopology: true,
