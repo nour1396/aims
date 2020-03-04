@@ -1,0 +1,32 @@
+<%- include('../../parts/header.ejs')%>
+<%- include('../../parts/navbar.ejs')%>
+<form action="/itemName"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+<h1></h1>
+<input type="text" name="itemName" value="" placeholder="itemName">
+<button type="">search</button>
+</form>
+<hr>
+<form action="/transactionType"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+<h1></h1>
+<input type="text" name="transactionType" value="" placeholder="transactionType">
+<button type="">search</button>
+</form>
+<hr>
+<form action="/transactionDate"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+<h1></h1>
+dateCreatedfrom: <input type="date" name="transactionDatefrom" value="" placeholder="dateCreatedfrom"><br>
+dateCreatedto: <input type="date" name="transactionDateto" value="" placeholder="dateCreatedto"><br>
+<button type="">search</button>
+</form>
+<hr>
+<form action="/specific"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+<h1>specific</h1>
+<input type="text" name="itemName" value="" placeholder="itemName">
+
+<input type="text" name="transactionType" value="" placeholder="transactionType">
+dateCreatedfrom: <input type="date" name="transactionDatefrom" value="" placeholder="dateCreatedfrom"><br>
+dateCreatedto: <input type="date" name="transactionDateto" value="" placeholder="dateCreatedto"><br>
+<button type="">search</button>
+</form>
+
+<%- include('../../parts/footer.ejs')%>

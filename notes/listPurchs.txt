@@ -1,0 +1,45 @@
+<%- include('parts/header.ejs')%>
+<%- include('parts/navbar.ejs')%>
+
+
+<%for (let purchase of purchases){%>
+   <table class="table table-striped">
+   <thead >
+      <tr >
+         <th style="width:6%">ID</th>
+         <th style="width:6%">invoiceNumber</th>
+         <th style="width:6%">month</th>
+         <th style="width:6%">supplierName</th>
+         <th style="width:6%">statement</th>
+         <th style="width:6%">materialCode</th>
+         <th style="width:6%">quantity</th>
+         <th style="width:6%">pricePerOne</th>
+         <th style="width:6%">purchases</th>
+         <th style="width:6%">VAT</th>
+         <th style="width:6%">totalInvoice</th>
+         <th style="width:6%">discount</th>
+         <th style="width:6%">netInvoice</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+         <td style="width:6%"><%= purchase._id%></td>
+         <td style="width:6%"><%= purchase.invoiceNumber%></td>
+         <td style="width:6%"><%= purchase.montd%></td>
+         <td style="width:6%"><%= purchase.clientName%></td>
+         <td style="width:6%"><%= purchase.statement%></td>
+         <td style="width:6%"><%= purchase.materialCode%></td>
+         <td style="width:6%"><%= purchase.quantity%></td>
+         <td style="width:6%"><%= purchase.pricePerOne%></td>
+         <td style="width:6%"><%= purchase.purchases%></td>
+         <td style="width:6%"><%= purchase.VAT%></td>
+         <td style="width:6%"><%= purchase.totalInvoice%></td>
+         <td style="width:6%"><%= purchase.discount%></td>
+         <td style="width:6%"><%= purchase.netInvoice%></td>
+      </tr> 
+      </tbody>
+   </table>
+   <%}%>
+
+
+<%- include('parts/footer.ejs')%>

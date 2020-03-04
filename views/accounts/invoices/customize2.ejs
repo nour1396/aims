@@ -1,0 +1,30 @@
+<%- include('../../parts/header.ejs')%>
+<%- include('../../parts/navbar.ejs')%>
+ <a href='/export' style="margin-left: 60%;">Export to CSV</a> 
+
+<form action="/transactionDate"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+<h1></h1>
+
+<table style="width:99%;">
+     <thead>
+          <td style="font-size:16px;font-weight:bold;">itemName</td>
+          <td style="font-size:16px;font-weight:bold;">transactionType</td>
+          <td style="font-size:16px;font-weight:bold;">quantity</td>
+          <td style="font-size:16px;font-weight:bold;">price</td>
+          <td style="font-size:16px;font-weight:bold;">total</td>
+          <td style="font-size:16px;font-weight:bold;">transactionDate</td>
+     </thead>
+     <%for (let inc of transactions){%>
+     <tr >
+          <td><output style="font-weight:normal;font-size:15px;"><%= inc._id %></output></td>
+          <td><output style="font-weight:normal;font-size:15px;"><%= inc.transactionType%></output></td>
+          <td><output style="font-weight:normal;font-size:15px;"><%= inc.totalQuantity%></output></td>
+          <td><output style="font-weight:normal;font-size:15px;"><%= inc.price%></output></td>
+          <td><output style="font-weight:normal;font-size:15px;"><%= inc.total%></output></td>
+          <td><output style="font-weight:normal;font-size:15px;"><%= inc.transactionDate%></output></td>
+     </tr>
+     <%}%>
+</table>   
+</form>
+
+<%- include('../../parts/footer.ejs')%>

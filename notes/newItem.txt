@@ -1,0 +1,22 @@
+<%- include('parts/header.ejs')%>
+<%- include('parts/navbar.ejs')%>
+
+    <form action="/newItem"  method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+    <fieldset >
+        <legend>Add item</legend>
+        <label >product id</label>
+        <input type="text" name="_id">
+        <label>product name</label>
+        <input type="text" name="name">
+        <label >price</label>
+        <input type="text" name="price">
+
+        <label >cost</label>
+        <input type="text" name="cost">
+        </fieldset>
+        <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
+
+</form>
+<%- include('parts/footer.ejs')%>
+
+

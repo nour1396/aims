@@ -1,0 +1,69 @@
+<%- include('../parts/header.ejs')%>
+<%- include('../parts/navbar.ejs')%>
+
+<form action="/accounts/addAccCard"  method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+    <fieldset >
+        <legend>Add Acc. Card</legend>
+        <fieldset >
+            <legend name="general">General</legend>
+            <label >accountName</label>
+            <input type="text" name="accountName">
+            <label >accountType</label>
+            <input type="text" name="accountType">
+            <label>accountCode</label>
+            <input type="text" name="accountCode">
+            <label >parentAccount</label>
+            <input type="text" name="parentAccount">
+            <label >description</label>
+            <input type="text" name="description">
+            <label>IncomeOrBalanceSheet</label>
+            <input type="text" name="IncomeOrBalanceSheet">
+            <label>debitOrCredit</label>
+            <input type="text" name="debitOrCredit">
+            <label >totaling</label>
+            <input type="text" name="totaling">
+            <label >numberOfBlanksLine</label>
+            <input type="text" name="numberOfBlanksLine">
+            <label>newPage</label>
+            <input type="text" name="newPage">
+            <label>searchName</label>
+            <input type="text" name="searchName">
+            <label >balance</label>
+            <input type="text" name="balance">
+            <label >reconciliationAccount</label>
+            <input type="text" name="reconciliationAccount">
+            <label>automaticExtendedTexts</label>
+            <input type="text" name="automaticExtendedTexts">
+            <label>directPosting</label>
+            <input type="text" name="directPosting">
+            <label >blocked</label>
+            <input type="text" name="blocked">
+            <label >lastDateModified</label>
+            <input type="text" name="lastDateModified">
+            <label>currencyType</label>
+            <input type="text" name="currencyType">
+            <label>active</label>
+            <input type="text" name="active">
+        </fieldset>
+        <fieldset >
+            <legend name="posting">posting</legend>
+            <label >generalPostingType</label>
+            <input type="text" name="generalPostingType">
+            <label>generalBusinessPostingGroup</label>
+            <input type="text" name="generalBusinessPostingGroup">
+            <label>generalProductPostingGroup</label>
+            <input type="text" name="generalProductPostingGroup">
+            <label >VATBusinessPostingGroup</label>
+            <input type="text" name="VATBusinessPostingGroup">
+            <label>VATProductPostingGroup</label>
+            <input type="text" name="VATProductPostingGroup">
+            <label>defaultIntercompanyPartnerGeneralLedgerAccNumber</label>
+            <input type="text" name="defaultIntercompanyPartnerGeneralLedgerAccNumber">
+        </fieldset>
+    </fieldset>
+        <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
+
+</form>
+
+
+<%- include('../parts/footer.ejs')%>

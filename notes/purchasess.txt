@@ -1,0 +1,15 @@
+const mongoose = require('mongoose');
+const purchaseSchema = mongoose.Schema({
+    _id: String,
+    invoiceNumber: Number,
+    date: Date,
+    month: String,
+    suppliertName: String,
+    statement: String,
+    materialCode: String,
+    quantity: Number,
+    pricePerOne: Number
+})
+
+const Purchases = mongoose.model('purchase', purchaseSchema);
+exports.Purchases = Purchases

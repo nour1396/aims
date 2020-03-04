@@ -1,0 +1,71 @@
+const Log = require('../models/log').Log;
+var Purchases = require('../models/accounts/purchases').Purchases;
+const accountsChart = require('../models/accounts/accountsChart').accountsChart;
+module.exports = function(router) {
+    router.get('/purchases', (req, res) => {
+        if (!req.user == false) {
+            Log.create({
+                statement: 'User: ' + req.user.userName + ' entered to add purchase invoice '
+            });
+            res.render('purchases')
+        } else {
+            res.redirect(302, '/login');
+        }
+    })
+
+    router.post('/purchases', (req, res) => {
+        let data = {}
+        var newPurchases = new Purchases({
+            _id: req.body._id,
+            invoiceNumber: req.body.invoiceNumber,
+            date: req.body.date,
+            month: req.body.month,
+            supplierName: req.body.supplierName,
+            statement: req.body.statement,
+            materialCode: req.body.materialCode,
+            quantity: req.body.quantity,
+            price: req.body.price
+        })
+        newPurchases.save(function() {
+            Purchases.aggregate([{
+                $project: {
+                    _id: "$_id",
+                    invoiceNumber: "$invoiceNumber",
+                    month: "$month",
+                    supplierName: "$supplierName",
+                    statement: "$statement",
+                    materialCode: "$materialCode",
+                    quantity: "$quantity",
+                    price: "$price",
+                    purchases: { $multiply: ["$quantity", "$price"] },
+                    VAT: { $round: [{ $multiply: ["$quantity", "$price", 0.14] }] },
+                    totalInvoice: { $sum: [{ $multiply: ["$quantity", "$price"] }, { $multiply: ["$quantity", "$price", 0.14] }] },
+                    discount: { $multiply: [{ $sum: [{ $multiply: ["$quantity", "$price"] }, { $multiply: ["$quantity", "$price", 0.14] }] }, 0.05] },
+                    netInvoice: { $subtract: [{ $sum: [{ $multiply: ["$quantity", "$price"] }, { $multiply: ["$quantity", "$price", 0.14] }] }, { $multiply: [{ $sum: [{ $multiply: ["$quantity", "$price"] }, { $multiply: ["$quantity", "$price", 0.14] }] }, 0.05] }] }
+                }
+            }, { $out: "listPurchases" }]).then(purchases => {
+                data.purchases = purchases
+                Purchases.aggregate([{
+                    $project: {
+                        _id: "$_id",
+                        Asset: {
+                            name: "Inventory",
+                            Debit: { $sum: [{ $multiply: ["$quantity", "$price"] }, { $multiply: ["$quantity", "$price", 0.14] }] }
+                        },
+                        asset: {
+                            name: "Cash",
+                            Credit: { $sum: [{ $multiply: ["$quantity", "$price"] }, { $multiply: ["$quantity", "$price", 0.14] }] }
+                        }
+                    }
+                }, { $out: "purchasestransations" }]).then(tra => {
+                    data.tra = tra;
+                    res.render('listPurchs', data, console.log(data))
+                })
+            })
+        });
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' added purchases invoice with ID ' + req.body._id
+        });
+    })
+}
+

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=10">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Entry data</title>
+    <!-- <link rel="stylesheet" type="text/css" href="/data1css">for ejs -->
+    <link rel="stylesheet" type="text/css" href="/data-en.css">
+    <!-- //<h3><a href="/data-arejs" dir="rtl">Arabic</a></h3>// -->
+    <!--for ejs-->
+    <input id="changetoarabic" type=button onClick="locationhref='/data-ar'" value='Arabic'>
+    <!--for ejs-->
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+</head>
+
+<body style="backgtoun-img : " >
+    <h1> ADD New Person</h1>
+    <form class="form-inline my-2 my-lg-0" action="/search" method="get">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search"  name="search">
+        <button class="btn btn-outline-success my-2 my-sm-0" >Search</button>
+    </form>
+    <form action="/update" method="post" class="update-form" enctype="multipart/form-data ">
+        <input type="hidden" name="userId">
+        <label style="color:gold">ID</label>
+        <input type="text" maxlength="14" name="_id" placeholder="Enter Your ID Number" value="">
+        <fieldset id="f1"  name="personalInformation" dir="auto">
+            <legend>Basic Information</legend>
+            <label>First Name</label>
+            <input type="text" name="PI_firstName" value="" placeholder="Enter Your First Name" title="enter your first name only without any spaces">
+            <label>Second Name</label>
+            <input type="text" name="PI_secondName" value="" placeholder="Enter Your Second Name">
+            <label>Third Name</label>
+            <input type="text" name="PI_thirdName" value="" placeholder="Enter Your Third Name"><br>
+            <label>Fourth Name</label>
+            <input type="text" name="PI_fourthName" value="" placeholder="Enter Your Fourth Name">
+            <label>Last Name </label>
+            <input type="text" name="PI_lastName" value="" placeholder="Enter Your Last Name">
+             <label>Title </label>
+            <select name="PI_title" value="" placeholder="Enter Your Title" >
+                <%for(let t of titles){%> 
+                <%if (t.male_english.length !==0){%>
+                <option value=""><%= t.male_english%></option>
+                <%}%>
+                <%}%>
+            </select>
+            <label>Gender</label>
+            <select name="PI_gender" value="" placeholder="Enter Your Gender">
+            <option>Male</option>
+            <option>Female</option>
+            </select>
+            <label>Nationality</label>
+            <select name="PI_nationality" value="" placeholder="Enter Your Nationality">
+            <option>no</option>
+            </select>
+            <label>Marital status</label>
+            <select name="PI_maritalStatus" value="" placeholder="Enter Your Marital Status">
+            </select><br>
+        </fieldset>
+
+       <!-- <fieldset id="f2" name="identityCard">
+            <legend>Identity Card</legend>
+            <label>ID Number</label>
+            <input type="text" maxlength="14" name="_id" placeholder="Enter Your ID Number">
+            <label>Issued From</label>
+            <select name="issuedfrom">
+            </select><br>
+            <label>Start Date</label>
+            <input type="date" name="startDate ">
+            <label>End Date</label>
+            <input type="date" name="endDate"><br>
+            <label>Full Name </label>
+            <input type="text " name="fullName " placeholder="Enter Your Full Name">
+            <label>Gender</label>
+            <select name="gender">
+                <option>Male</option>
+                <option>Female</option>
+            </select>
+            <label>Address</label>
+            <input type="text " name="address " placeholder="Enter Your Address"><br>
+            <label>Religion</label>
+            <select name="religion">
+                <option></option>
+            </select>
+            <label>Marital Status</label>
+            <select name="maritalStatus">
+            </select>
+            <label>Job</label>
+            <input type="text" name="job" placeholder="Enter Your Job"><br>
+            <label>Husband Name</label>
+            <input type="text" name="husbandName" placeholder="Enter Your Husband Name">
+            <label>Upload Your Identity Card</label>
+            <input type="file" name="uploadId">
+        </fieldset>
+        <fieldset id="f3" name="militaryState">
+            <legend>Military State</legend>
+            <label>Full Name</label>
+            <input type="text" name="fullName" placeholder="Enter Your Full Name">
+            <label>Birth Date</label>
+            <input type="date" name="birthDate"><br>
+            <label>ID Number</label>
+            <input type="text" name="idNumber" maxlength="14" placeholder="Enter Your ID Number">
+            <label>Issued from</label>
+            <select name="IDIssuedFrom">
+            </select><br>
+            <label>Military service ID(triple)</label>
+            <input type="text" name="militaryServiceIDTriple" placeholder="Enter Your Military Service ID">
+            <label>Issued From</label>
+            <select name="issuedFrom">
+                <option></option>
+            </select><br>
+            <label>Decision Code</label>
+            <input type="text" name="decisionCode" placeholder="Enter Decision Code">
+            <label>Decision Number</label>
+            <input type="text" name="decisionNumber" placeholder="Enter Decision Code">
+            <label>Decision Date</label>
+            <input type="date" name="decisionDate"><br>
+            <label>Decision</label>
+            <input type="text" name="decision" placeholder="Enter Decision">
+            <label>Upload Your Military Certificate</label>
+            <input type="file" name="uploadMilitary">
+        </fieldset>
+        <fieldset id="f4" name="familyStatus">
+            <legend>Family Status</legend>
+            <label>Number Of Family Members</label>
+            <input type="number" min="1" name="numberOfFamilyMembers" placeholder="Enter Number of Family Members">
+            <label>Number Of Children (Males)</label>
+            <input type="number" min="1" name="numberOfChildrenMales" placeholder="Enter Male Children Number">
+            <label>Number Of Children (females)</label>
+            <input type="number" min="1" name="numberOfChildrenFemales" placeholder="Enter Female Children Number">
+            <label>Number Of Wifes</label>
+            <input type="number" min="1" name="numberOfWifes" placeholder="Enter Number of Your Wifes">
+            <label>Parent Status</label>
+            <select name="parentStatus">
+                <option>Divorced</option>
+                <option>Married</option>
+                <option>widower/widowa</option>
+            </select>
+        </fieldset>
+        <fieldset id="f5" name="birthDetails">
+            <legend>Birth Details</legend>
+            <label>Full name In English</label>
+            <input type="text" name="fullNameInEnglish" placeholder="Enter Full name In English">
+            <label>Full Name In Arabic</label>
+            <input type="text" name="fullNameInArabic" placeholder="Enter Full Name In Arabic"><br>
+            <label>Nationality</label>
+            <select name="nationality">
+            </select>
+            <label>Place Of Birth</label>
+            <input type="text" name="placeOfBirth" placeholder="Enter Place Of Birth">
+            <label>Gender</label>
+            <select name="gender">
+            <option>Male</option>
+            <option>Female</option>
+            </select>
+            <label>Religion</label>
+            <select name="religion">
+                <option></option>
+            </select><br>
+            <label>Date Of Birth</label>
+            <input type="date" name="dateOfBirth ">
+            <label>National Number</label>
+            <input type="text" name="nationalNumber" maxlength="14" placeholder="Enter Your National Number"><br>
+            <label>Full Name of Father</label>
+            <input type="text" name="fullFatherName" placeholder="Enter Father's Full Name">
+            <label>His Religion</label>
+            <select name="hisReligion">
+                <option></option>
+            </select>
+            <label>His Nationality</label>
+            <select name="hisNationality">
+            </select><br>
+            <label>Full Name of Mother</label>
+            <input type="text" name="fullMotherName" placeholder="Enter Mother's Full Name">
+            <label>Her Religion</label>
+            <select name="herReligion">
+                <option></option>
+            </select>
+            <label>Her Nationality</label>
+            <select name="herNationality">
+            </select><br>
+            <label>Civil Register</label>
+            <input type="text" name="civilRegister">
+            <label>Issue Register</label>
+            <input type="text" name="issueregister">
+            <label>Issue Date</label>
+            <input type="date" name="issueDate">
+            <label>Register Date</label>
+            <input type="date" name="registerDate">
+            <label>Upload Your Birth Certificate</label>
+            <input type="file" name="uploadCopy">
+        </fieldset>
+        <fieldset id="f6" name="addressDetails">
+            <legend>Address</legend>
+            <label>Address type</label>
+            <select name="addressType">
+                <option>Select Address type</option>
+                <option>Owned</option>
+                <option>Rented</option>
+                <option>Shared</option>
+                <option>Family Residence</option>
+                <option>Friend Residence</option>
+            </select>
+            <label>Expiration Date of Renting</label>
+            <input type="date" name="expirationDateOfRenting">
+            <label>Country</label>
+            <select name="country">
+                <option></option>
+            </select>
+            <label>City</label>
+            <select name="city">
+                <option></option>
+            </select>
+            <label>Area</label>
+            <input type="text" name="area" placeholder="Enter Your Area">
+            <label>Real State Type</label>
+            <select name="realStateType">
+                <option></option>
+            </select>
+            <label>Real State Number</label>
+            <input type="text" name="realStateNumber" maxlength="4" placeholder="Enter Real State Number">
+            <label>Floor Number</label>
+            <input type="number" min="1" name="floorNumber" placeholder="Enter Floor Number">
+            <label>Appartment Number</label>
+            <input type="text" name="appartmentNumber" placeholder="Enter Appartment Number">
+            <label>Street Name</label>
+            <input type="text" name="streetName" placeholder="Enter Street Name">
+            <label>Detailed Address</label>
+            <textarea name="detailedAddress" maxlength="160" placeholder="Enter Detailed Address example: 555 tiba street, ibrahimya, Alexandria, Egypt"></textarea>
+        </fieldset>
+        <fieldset class="f7" name="legalInformation">
+            <legend>Legal Information</legend>
+            <fieldset class="f7" name="drivingLicence">
+                <legend>Driving Licence</legend>
+                <label>Traffic unit</label>
+                <input type="text" name="trafficUnit" placeholder="Enter Trrafic Unit">
+                <label>ID</label>
+                <input type="text" name="ID" maxlength="14" placeholder="Enter Your ID Number"><br>
+                <label>Address</label>
+                <input type="text" name="address" placeholder="Enter Your Address">
+                <label>Nationality</label>
+                <select name="nationality">
+                </select><br>
+                <label>Issue Date</label>
+                <input type="date" name="issueDate">
+                <label>End Date</label>
+                <input type="date" name="endDate"><br>
+                <label>Job</label>
+                <input type="text" name="job" placeholder="Enter Your Job">
+                <label>Type of licence</label>
+                <input type="text" name="typeOfLicence" placeholder="Enter Licence Type"><br>
+                <label>Licence Number</label>
+                <input type="text" name="licenceNumber" placeholder="Enter Licence Number">
+                <label>Type of Vehicle</label>
+                <input type="text" name="typeOfVehicle" placeholder="Enter Vehicle Type"><br>
+                <label>Wearing Glasses?</label>
+                <select name="wearingGlasses">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+                <label>Upload Driving Licence</label>
+                <input type="file" name="copyOfLicence">
+            </fieldset>
+            <fieldset class="f7" name="internationalDrivingLicence">
+                <legend>International Driving Licence</legend>
+                <label>Name</label>
+                <input type="text" name=" name" placeholder="Enter Your Name">
+                <label>Address</label>
+                <input type="text" name="address" placeholder="Enter Your Address"><br>
+                <label>Place of birth</label>
+                <input type="text" name="placeOfBirth" placeholder="Enter Birth Place">
+                <label>Date of Birth</label>
+                <input type="date" name="dateOfBirth"><br>
+                <label>Height</label>
+                <input type="text" name="height" placeholder="Enter Your Height">
+                <label>Gender</label>
+                <select name="gender">
+                <option>Select Your Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+            </select><br>
+                <label>Eyes Color</label>
+                <select name="eyesColor">
+                <option></option>
+            </select>
+                <label>Blood Group</label>
+                <select name="bloodGroup">
+                <option></option>
+            </select><br>
+                <label>Passport Number</label>
+                <input type="text" name="passportNumber" placeholder="Enter Passport Number"><br>
+                <label>Class (Category)</label>
+                <input type="text" name="classCategory" placeholder="Enter Passport Class">
+                <label>Licence Type</label>
+                <input type="text" name="licenceType" placeholder="Enter Licence Type"><br>
+                <label>Issued Date</label>
+                <input type="date" name="issuedDate">
+                <label>Expire Date</label>
+                <input type="date" name="expireDate"><br>
+                <label>Category</label>
+                <input type="text" name="category" placeholder="Enter Category">
+                <label>Upload Copy</label>
+                <input type="file" name="uploadCopy">
+            </fieldset>
+            <fieldset class="f7" name="passport">
+                <legend>Passport</legend>
+                <label>Passport Number</label>
+                <input type="text" name="passportNumber" placeholder="Enter your passport number">
+                <label>Military Status</label>
+                <select name="militaryStatus" placeholder="Enter Military Mtatus">
+                <option></option>
+            </select><br>
+                <label>Passport Type</label>
+                <input type="text" name="passportType" placeholder="Enter Your Passport Type">
+                <label>Passport Country</label>
+                <select name="passportCountry" placeholder="Enter Country Issued Passport">
+                <option></option>
+            </select><br>
+                <label>Issued at</label>
+                <input type="text" name="issuedAt" placeholder="Enter Issue Place">
+                <label>Issue Date</label>
+                <input type="date" name="issueDate"><br>
+                <label>End Date</label>
+                <input type="date" name="endDate">
+                <label>Profession</label>
+                <input type="text" name="profession" placeholder="Enter Your Job"><br>
+                <label>Issue Office</label>
+                <input type="text" name="issueOffice" placeholder="Enter Issue office">
+                <label>Upload Passport</label>
+                <input type="file" name="copyOfPassport">
+            </fieldset>
+            <fieldset class="f7" name="visa">
+                <legend>Visa</legend>
+                <label>Visa Type</label>
+                <select name="typeOfVisa">
+                <option></option>
+            </select>
+                <label>Valid For</label>
+                <input type="text" name="validFor" placeholder="Enter The Duration of The Visa"><br>
+                <label name="periodValidity">Period Validity</label>
+                <label>From</label>
+                <input type="date" name="from">
+                <label>To</label>
+                <input type="date" name="to"><br>
+                <label>Number of Entries</label>
+                <input type="number" min="1" name="numberOfEntries" placeholder="Enter Entries Number">
+                <label>Duration of Stay</label>
+                <input type="text" name="durationOfStay" placeholder="Enter Duration of Stay"><br>
+                <label>Profession</label>
+                <input type="text" name="profession" placeholder="Enter Your Job">
+                <label>Religion</label>
+                <select name="religion">
+                    <option></option>
+                </select><br>
+                <label>Nationality</label>
+                <select name="nationality">
+                </select>
+                <label>Issuing Authority</label>
+                <input type="text" name="issuingAuthority">
+                <label>Issued Date</label>
+                <input type="date" name="issuedDate"><br>
+                <label>Expiration Date</label>
+                <input type="date" name="expirationDate">
+                <label>Purpose</label>
+                <input type="text" name="purpose" placeholder="Enter Purpose of Visa"><br>
+                <label>Transporter</label>
+                <input type="text" name="transporter" placeholder="Enter Transporter">
+                <label>Passport Number</label>
+                <input type="text" name="passportNumber" placeholder="Enter Your Passport Number"><br>
+                <label>First Name</label>
+                <input type="text" name="firstName" placeholder="Enter Your first Name">
+                <label>Last Name</label>
+                <input type="text" name="lastName" placeholder="Enter Your Last Name"><br>
+                <label>Remarks</label>
+                <textarea name="remarks" maxlength="100" placeholder="Enter Remarks"></textarea>
+            </fieldset>
+            <fieldset class="f7" name="residencePermit">
+                <legend>Residence Permit</legend>
+                <label>Residence Permit Type</label>
+                <select name="typesOfResidencePermit">
+                    <option></option>
+                </select>
+                <label>Isuued Date</label>
+                <input type="date" name="issuedDate">
+                <label>Expiration Date</label>
+                <input type="date" name="expirationDate"><br>
+                <label>Issued Place</label>
+                <input type="text" name="issuedPlace" placeholder="Enter Issued Place">
+                <label>Number of Residence Permit</label>
+                <input type="number" min="1" name="numberOfResidencePermit" placeholder="Enter Number Of Residence Permit"><br>
+                <label>Full Name</label>
+                <input type="text" name="FullName" placeholder="Enter Your Full Name">
+                <label>Birth date</label>
+                <input type="date" name="birthDate">
+                <label>Nationality</label>
+                <select name="nationality">
+                <label>Religion</label>
+                <select name="religion">
+                <option>no</option>
+                </select>
+                <label>Employer Sponser</label>
+                <input type="text" name="employerSponser" placeholder="Enter Employer Sponser">
+                <label>Accompanied By</label>
+                <input type="text" name="accompaniedBy">
+                <label>Upload Residence Permit</label>
+                <input type="file" name="copyOfResidencePermit">
+            </fieldset>
+
+
+
+
+
+
+            </fieldset>
+        </fieldset>-->
+        <button type="submit">Edit</button>
+    </form>
+
+   
+
+    <script src="/main-enjs"></script>
+    <script>
+    // When you load this page
+    // get firstName from localStorage and  append it to the value of PI_firstName in the .update-form
+        document.querySelector('.update-form').elements['PI_firstName'].value = localStorage.getItem('PI_firstName') || '';
+        // you can type whatever you want
+        // but you should use a name you can get later 
+        // maybe i can rename it to PI_firstName
+    </script>
+</body>
+
+
+</html>

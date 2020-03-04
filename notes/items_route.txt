@@ -1,0 +1,84 @@
+const Log = require('../models/log').Log;
+const Item = require('../models/accounts/items').Item;
+const itemsModel = require('../models/accounts/items').getAllItems;
+const invoiceItem = require('../models/accounts/invoice').invoiceItem;
+
+
+module.exports = function(router) {
+    router.get('/newItem', (req, res) => {
+        if (!req.user == false) {
+            Log.create({
+                statement: 'User: ' + req.user.userName + ' entered to add sales invoice '
+            });
+            res.render('newItem')
+        } else {
+            res.redirect(302, '/login');
+        }
+    })
+    router.post('/newItem', (req, res) => {
+        var newItem = new Item({
+            _id: req.body._id,
+            name: req.body.name,
+            price: req.body.price,
+            cost: req.body.cost,
+
+        })
+        newItem.save(item => {
+            res.render('index', { item: item }, console.log(item))
+        })
+    })
+
+    router.get('/items', function(req, res) {
+        Item.find().then(items => {
+            res.render('items', { items: items })
+        })
+    })
+
+
+    /*router.get('/Isearch', (req, res) => {
+        const search = req.query.search;
+        Item.find({ "_id": search }, (err, data) => {
+            if (err) throw (err);
+            if (data.length > 0) {
+                res.render('newItem_copy', { Item: data[0] })
+            } else {
+                res.end('No records were found');
+            }
+        })
+    })*/
+
+    router.post('/invoice', (req, res) => {
+        let addItem = new invoiceItem({
+            date: Date.now(),
+
+            customerName: req.user.userName,
+            details: [{
+                name: req.body.name,
+                price: req.body.price,
+                cost: req.body.cost,
+                amount: req.body.amount,
+                userId: req.user._id,
+                itemId: req.body._id
+            }]
+        });
+        let data = {}
+        addItem.save().then(r=>{
+            data.r = r
+        invoiceItem.update({ customerName: req.user.userName }, {
+            $push: {
+                details: {
+                    name: req.body.name,
+                    price: req.body.price,
+                    cost: req.body.cost,
+                    amount: req.body.amount,
+                    userId: req.user._id,
+                    itemId: req.body._id
+                }
+            }
+        }).then((rr) => {
+            data.rr = rr
+            res.redirect('items', data, console.log(data))
+        })
+    })})
+
+}

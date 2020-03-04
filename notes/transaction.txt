@@ -1,0 +1,11 @@
+const mongoose = require('mongoose');
+
+const transactionSchema = mongoose.Schema({
+    Account: String,
+    debit: Number,
+    account: String,
+    credit: Number
+})
+
+const Transaction = mongoose.model('generaltransaction', transactionSchema);
+exports.Transaction = Transaction

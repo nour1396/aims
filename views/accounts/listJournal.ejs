@@ -1,0 +1,31 @@
+<%- include('../parts/header.ejs')%>
+<%- include('../parts/navbar.ejs')%>
+
+<form action="/accounts/listJournal"  method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+
+
+<h5>transactions</h5>
+    <table id="myTable">
+    <tr >
+        <th style="width:6%">accountCode</th>
+        <th style="width:6%">totalDebit</th>
+        <th style="width:6%">totalCredit</th>
+  
+
+    </tr>
+    <%for (let trans of tt){%>
+    <tr>
+        
+    <th><%= trans._id%></th>
+    <th><%= trans.totalDebit%></th>
+    <th><%= trans.totalCredit%></th>
+    
+        
+    </tr> 
+<%}%>
+    
+   </table>
+   
+
+</form>
+<%- include('../parts/footer.ejs')%>

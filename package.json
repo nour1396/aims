@@ -1,0 +1,57 @@
+{
+    "name": "pro3",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "nour",
+    "license": "ISC",
+    "dependencies": {
+        "@google-cloud/translate": "^4.2.1",
+        "@k3rn31p4nic/google-translate-api": "^1.1.0",
+        "async": "^3.2.0",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "compression": "^1.7.4",
+        "connect-flash": "^0.1.1",
+        "connect-mongo": "^3.2.0",
+        "cookie-parser": "^1.4.4",
+        "cors": "^2.8.5",
+        "csv-express": "^1.2.2",
+        "describe": "^1.2.0",
+        "dotenv": "^8.2.0",
+        "ejs": "^2.7.4",
+        "express": "^4.17.1",
+        "express-ejs-layouts": "^2.5.0",
+        "express-session": "^1.17.0",
+        "google-translate": "^2.3.0",
+        "got": "^9.6.0",
+        "jquery": "^3.4.1",
+        "medici": "^3.0.2",
+        "mongo-xlsx": "^1.0.12",
+        "mongodb": "^3.5.4",
+        "mongoose": "^5.9.2",
+        "mongoose-timestamp": "^0.6.0",
+        "morgan": "^1.9.1",
+        "nodemon": "^1.19.4",
+        "passport": "^0.4.1",
+        "passport-local": "^1.0.0",
+        "path": "^0.12.7",
+        "popper.js": "^1.16.1",
+        "request-promise": "^4.2.5",
+        "session-file-store": "^1.4.0",
+        "strategy": "^1.1.1",
+        "util": "^0.12.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "hhtps://github.com/nour1396/pro3.git"
+    },
+    "description": "",
+    "devDependencies": {
+        "mocha": "^6.2.2",
+        "prettier": "^1.19.1",
+        "should": "^13.2.3"
+    }
+}

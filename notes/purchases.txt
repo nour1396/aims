@@ -1,0 +1,30 @@
+<%- include('parts/header.ejs')%>
+<%- include('parts/navbar.ejs')%>
+
+    <form action="/purchases"  method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+    <fieldset >
+        <legend>New Invoice</legend>
+        <label>ID</label>
+        <input type="text" name="_id">
+        <label>Invoice Number</label>
+        <input type="text" name="invoiceNumber">
+        <label>Date</label>
+        <input type="date" name="date">
+        <label>Month</label>
+        <input type="number" name="month">
+        <label>Client Name</label>
+        <input type="text" name="supplierName">
+        <label>Statement</label>
+        <input type="text" name="statement">
+        <label>material Code</label>
+        <input type="text" name="materialCode" >
+        <label>quantity</label>
+        <input type="text" name="quantity" >
+        <label>price Per One</label>
+        <input type="text" name="price" >
+    </fieldset>
+        <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
+
+</form>
+<%- include('parts/footer.ejs')%>
+

@@ -1,0 +1,48 @@
+<%- include('../parts/header.ejs')%>
+<%- include('../parts/navbar.ejs')%>
+<form action="/accounts/newpushinvoice"  method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+
+ <table name="accounts">
+ <input name="documentNumber" type="text">
+    <h3>Accounts</h3>
+    <tr>
+        <th>accountID</th>
+        <th>debit</th>
+        <th>credit</th>
+        
+    </tr>
+    <tr>
+    <th><input type="text" name="accountID"></th>
+    <th><input type="number" name="debit"></th>
+    <th><input type="number" name="credit"></th>
+   
+    </tr>
+    
+   </table>
+
+    <table name="products">
+    <h3>products</h3>
+    <tr >
+        <th style="width:6%">productID</th>
+        <th style="width:6%">description</th>
+        <th style="width:6%">quantity</th>
+        <th style="width:6%">price</th>
+        <th style="width:6%">serialNumber</th>
+    </tr>
+    <tr>
+    <th>
+    <select name="productID"> 
+        <%for (let item of items){%>
+            <option><%= item.itemInEnglish%></option>
+        <%}%>
+    </select></th>
+    <th><input type="text" name="description"></th>
+    <th><input type="number" name="quantity"></th>
+    <th><input type="number" name="price"></th>
+    <th><input type="text" name="serialNumber"></th>
+    </tr> 
+    </table>
+    </fieldset>
+<input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
+</form>
+<%- include('../parts/footer.ejs')%>

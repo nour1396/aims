@@ -1,0 +1,7 @@
+const accountsChart = require('../models/accounts/accountsChart').accountsChart;
+const Log = require('../models/log').Log;
+module.exports = function(router) {
+    router.get('/accountschart', (req, res) => {
+        res.render('')
+    })
+}

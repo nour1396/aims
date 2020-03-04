@@ -1,0 +1,94 @@
+<%- include('../parts/header.ejs')%>
+<%- include('../parts/navbar.ejs')%>
+<form action="/accounts/addAsset"  method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+<h1></h1>
+    <h1> Add New Asset</h1>
+    <fieldset name="information">
+    <legend >information</legend>
+    <label>assetNumber</label>
+    <input type="text" name="assetNumber">
+    <label>assetCode</label>
+    <input type="text" name="assetCode">
+    <label>description</label>
+    <input type="text" name="description">
+    <label>serialNumber</label>
+    <input type="text" name="serialNumber">
+    <label>acquisitionDate</label>
+    <input type="text" name="acquisitionDate">
+    <label>placedInServiceDate</label>
+    <input type="text" name="placedInServiceDate">
+    <label>purchaseValue</label>
+    <input type="text" name="purchaseValue">
+    <label>location</label>
+    <input type="text" name="location">
+    <label>department</label>
+    <input type="text" name="department">
+    <label>purchaseOrderNumber</label>
+    <input type="text" name="purchaseOrderNumber">
+    <label>quantity</label>
+    <input type="text" name="quantity">
+    <label>manufacturer</label>
+    <input type="text" name="manufacturer">
+    <label>warrantyNumber</label>
+    <input type="text" name="warrantyNumber">
+    <label>model</label>
+    <input type="text" name="model">
+    <label>ownership</label>
+    <input type="text" name="ownership">
+    <label>bought</label>
+    <input type="text" name="bought">
+    <label>propertyType</label>
+    <input type="text" name="propertyType">
+    <label>leaseNumber</label>
+    <input type="text" name="leaseNumber">
+    <label>lessor</label>
+    <input type="text" name="lessor">
+    </fieldset>
+    <fieldset name="depreciation">
+    <legend >depreciation</legend>
+    <label>currentCost</label>
+    <input type="text" name="currentCost">
+    <label>originalCost</label>
+    <input type="text" name="originalCost">
+    <label>salvageValue</label>
+    <input type="text" name="salvageValue">
+    <label>salvageValuePercen</label>
+    <input type="text" name="salvageValuePercen">
+    <label>netBookValue</label>
+    <input type="text" name="netBookValue">
+    <label>depreciationMethod</label>
+    <input type="text" name="depreciationMethod">
+    <label>lifeYears</label>
+    <input type="text" name="lifeYears">
+    <label>months</label>
+    <input type="text" name="months">
+    <label>bonusRule</label>
+    <input type="text" name="bonusRule">
+    <label>amortizationStarDate</label>
+    <input type="text" name="amortizationStarDate">
+    <label>amortizeNBVoverRemainingLife</label>
+    <input type="text" name="amortizeNBVoverRemainingLife">
+    <label>Ceiling</label>
+    <input type="text" name="Ceiling">
+    <label>YTDDepreciation</label>
+    <input type="text" name="YTDDepreciation">
+    <label>accumulatedDepreciation</label>
+    <input type="text" name="accumulatedDepreciation">
+    <label>depreciationValue</label>
+    <input type="text" name="depreciationValue">
+    </fieldset>
+    <fieldset  name="depreciationLimit">
+    <legend>depreciationLimit</legend>
+    <label>type</label>
+    <input type="text" name="type">
+    <label>limitAmount</label>
+    <input type="text" name="limitAmount">
+    <label>percent</label>
+    <input type="text" name="percent">
+    </fieldset>
+<input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
+
+</form>
+
+
+<%- include('../parts/footer.ejs')%>

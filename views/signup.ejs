@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link  rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Sign Up</title>
+   
+</head>
+
+<body>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+      
+    <form action="/signup" method="post" id="signup-form">
+    <div class="form-group" >
+            <div class="form-group" >
+            <label>User Name</label>
+            <input type="text" class="form-control" name="userName" placeholder="Enter Unique username" >
+            </div>
+            
+            <div class="form-group" >
+            <label >Password</label>
+            <input type="password"  class="form-control" name="password" placeholder="Enter valid password" >
+            </div>
+            <div class="form-group" >
+            <label>Confirm Password</label>
+            <input type="password" name="password2" class="form-control" placeholder="Confirm Password" >
+        </div>
+        <button type="submit" class="btn btn-primary">submit</button>
+    </form>
+    <p class="lead mt-4">Have An Account? <a href="login">Login</a></p>
+   </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.getElementById('signup-form').querySelectorAll('input').forEach(input => {
+    input.addEventListener('blur', function() {
+
+        fetch('/signup/draft', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                field: input.parentNode.getAttribute('name'),
+                value: input.value
+            })
+        })
+    })
+})
+</script>
+</body>
+
+</html>

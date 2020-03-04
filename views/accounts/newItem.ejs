@@ -1,0 +1,40 @@
+<%- include('../parts/header.ejs')%>
+<%- include('../parts/navbar.ejs')%>
+<form action="/accounts/newItem"  method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+    <fieldset >
+        <legend>Add new item</legend>
+
+        <label >item name (english)</label>
+        <input type="text" name="itemInEnglish">
+        <label >item name (arabic)</label>
+        <input type="text" name="itemInArabic">
+
+        <label>category english</label>
+        <select name="categoryEnglish">
+            <%for(let ca of categories){%> 
+                <%if (ca.categoryInEnglish.length !==0){%>
+                <option ><%= ca.categoryInEnglish%></option>
+                <%}%>
+                <%}%>
+        </select>
+        <label>category arabic</label>
+        <select name="categoryArabic">
+            <%for(let ca of categories){%> 
+                <%if (ca.categoryInArabic.length !==0){%>
+                <option ><%= ca.categoryInArabic%></option>
+                <%}%>
+                <%}%>
+        </select>
+        <label >pricePerOne</label>
+        <input type="text" name="pricePerOne">
+        <label >quantity</label>
+        <input type="text" name="quantity">
+        
+    </fieldset>
+        <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
+
+</form>
+
+
+
+<%- include('../parts/footer.ejs')%>

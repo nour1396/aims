@@ -1,0 +1,51 @@
+<%- include('parts/header.ejs')%>
+<%- include('parts/navbar.ejs')%>
+
+<div class="container">
+<form class="form-inline my-2 my-lg-0" action="/search" method="get">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search"  name="Isearch">
+        <button class="btn btn-outline-success my-2 my-sm-0" >Search</button>
+    </form>
+    <div class="row">
+
+        <%for (let item of items){%>
+        <form class="form-inline my-2 my-lg-0" action="/invoice" method="post">
+            <div  class="col col-12 col-md-6 col-lg-2 col-xl-3">
+                <div class="card" style="width: 40rem;">
+                    <div class="card-body" id="list">
+                        <h5 class="card-title">
+                            <p>item code: <%= item._id%></p>
+                            <p>name : <%= item.name%></p>
+                            <p>price: <%= item.price%></p>
+                            
+                        </h5>
+                        <a href="/edit/<%= item._id%>">Edit</a>  
+                    <input type="number" name="amount" style="background:yellow;">
+                    <input type="hidden" name="_id" value="<%= item._id%>">
+                    <input type="hidden" name="price" value="<%= item.price%>">
+                    <input type="hidden" name="cost" value="<%= item.cost%>">
+                    <input type="hidden" name="name" value="<%= item.name%>">
+                    <input type="submit"  value="add item" onclick="pushFunction()"><br>
+
+                </form>
+                    </div>
+                </div>
+        
+        
+            </div>
+        <%}%>
+    </div>
+
+
+
+</div>
+<script> 
+        var list = ["One", "Two", "Three"]; 
+        document.getElementById("geeks").innerHTML = list; 
+  
+        function pushFunction() { 
+            list.push(items); 
+        } 
+    </script> 
+
+<%- include('parts/footer.ejs')%>
