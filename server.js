@@ -20,6 +20,7 @@ const NODE__ENV = 'development'
 const IN_PROD = NODE__ENV === 'production'
 const SESS_NAME = 'Sid'
 var configDB = require('./config/database');
+//connect to database where collection of users
 mongoose.connect(configDB.urlS, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
@@ -47,12 +48,16 @@ app.use(session({
         ttl: 2 * 24 * 60 * 60
     })
 }));
+//use passport module 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+//specify directory view to view file ejs
 app.use(express.static(path.join(__dirname, '/assets')));
+//use body parser for json
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+//specify ejs as view engien
 app.set('view engine', 'ejs');
 
 
@@ -63,17 +68,14 @@ app.set('view engine', 'ejs');
     res.locals.error = req.flash('error');
     next();
 }); */
-
+//routing files
 require('./config/passport')(passport);
 require('./routes/client_rout')(app, passport);
 require('./routes/main_routes')(app, passport);
 require('./routes/addNew_route')(app);
-require('./routes/invoice_route')(app);
-require('./routes/journalEntry_route')(app);
-require('./routes/purchase_route')(app);
 require('./routes/route_transactions')(app)
     //require('./config/auth')
-
+    //localhost listen at 5000
 app.listen(port, () => {
     console.log('server listening on' + " " + port)
 });

@@ -5,7 +5,6 @@ const Company = require('../models/accounts/companySchema').Company;
 const Organization = require('../models/accounts/orgSchema').Organization;
 const addAsset = require('../models/accounts/assets').addAsset;
 const addService = require('../models/accounts/services').addService;
-const journalEntry = require('../models/accounts/journal').journalEntry;
 module.exports = function(router) {
     //get form to add new item 
     router.get('/accounts/newItem', function(req, res, next) {
@@ -27,19 +26,7 @@ module.exports = function(router) {
                 quantity: req.body.quantity
             })
             addNewItem.save(() => {
-                journalEntry.create([{
-                    accountCode: "merchandise inventory",
-                    documentNumber: addNewItem._id,
-                    debit: addNewItem.pricePerOne * addNewItem.quantity,
-                    credit: 0
-                }, {
-                    accountCode: "AP",
-                    documentNumber: addNewItem._id,
-                    debit: 0,
-                    credit: addNewItem.pricePerOne * addNewItem.quantity
-                }]).then(() => {
-                    res.redirect(302, '../index')
-                })
+                res.redirect(302, '../index')
             })
         })
         //get form to add account
@@ -350,7 +337,6 @@ module.exports = function(router) {
                 currency: req.body.currency,
                 branch: req.body.branch
             },
-
             activityOfBusiness: {
                 category: req.body.category,
                 subCategory: req.body.subCategory
