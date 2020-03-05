@@ -354,37 +354,50 @@ module.exports = function(router) {
 
     //get customize page to search item by name
     router.get('/accounts/invoices/customize', (req, res) => {
-        res.render('accounts/invoices/customizeCopy')
+        //connect to databse which contain list of data
+        mongoose.connect(configDB.urlP, {
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+        }, (err) => { console.log('DBP connected ^_^ ') })
+        let data = {}
+            //get list of items
+        addItem.find({}).then(items => {
+            data.items = items;
+            res.render('accounts/invoices/customizeCopy', data)
+                //disconnect first database which contain list of data
+            mongoose.disconnect();
+
+        })
     })
 
     //search item by name
-    router.get('/itemName', (req, res) => {
-            //connect to database where we save entered data 
-            mongoose.connect(configDB.urlS, {
-                useUnifiedTopology: true,
-                useNewUrlParser: true,
-            }, (err) => { console.log('DBS connected ^_^ ') });
-            let data = {}
-            const itemName = req.query.itemName;
-            Transaction.aggregate([{ $unwind: "$items" },
-                { $match: { "items.itemName": itemName } }, {
-                    $project: {
-                        transactionDate: "$transactionDate",
-                        dateCreated: "$dateCreated",
-                        transactionType: "$transactionType",
-                        itemName: "$items.itemName",
-                        price: "$items.itemsPrice",
-                        totalQuantity: { $sum: "$items.itemsQuantity" },
-                        total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
-                    }
-                }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
-            ]).then(transactions => {
+    /*     router.get('/itemName', (req, res) => {
+                //connect to database where we save entered data 
+                mongoose.connect(configDB.urlS, {
+                    useUnifiedTopology: true,
+                    useNewUrlParser: true,
+                }, (err) => { console.log('DBS connected ^_^ ') });
+                let data = {}
+                const itemName = req.query.itemName;
+                Transaction.aggregate([{ $unwind: "$items" },
+                    { $match: { "items.itemName": itemName } }, {
+                        $project: {
+                            transactionDate: "$transactionDate",
+                            dateCreated: "$dateCreated",
+                            transactionType: "$transactionType",
+                            itemName: "$items.itemName",
+                            price: "$items.itemsPrice",
+                            totalQuantity: { $sum: "$items.itemsQuantity" },
+                            total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
+                        }
+                    }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
+                ]).then(transactions => {
 
-                data.transactions = transactions;
-                res.render('accounts/invoices/customize', data, console.log(data))
-            })
-        })
-        //search by transactionType
+                    data.transactions = transactions;
+                    res.render('accounts/invoices/customize', data, console.log(data))
+                })
+            }) */
+    //search by transactionType
     router.get('/transactionType', (req, res) => {
             //connect to database where we save entered data 
             mongoose.connect(configDB.urlS, {
@@ -446,44 +459,86 @@ module.exports = function(router) {
                 res.render('accounts/invoices/customize', data, console.log(data))
             })
         })
-        //............
+        //search by transactionDate, itemName, transactionType
     router.get('/specific', (req, res) => {
+            //connect to database where we save entered data 
+            mongoose.connect(configDB.urlS, {
+                useUnifiedTopology: true,
+                useNewUrlParser: true,
+            }, (err) => { console.log('DBS connected ^_^ ') });
+            let data = {}
+            const transactionDatefrom = req.query.transactionDatefrom
+            const transactionDateto = req.query.transactionDateto
+            const itemName = req.query.itemName;
+            const transactionType = req.query.transactionType
+            Transaction.aggregate([{ $unwind: "$items" },
+                {
+                    $match: {
+                        transactionDate: {
+                            $gte: transactionDatefrom,
+                            $lt: transactionDateto
+                        },
+                        "items.itemName": itemName,
+                        transactionType: transactionType
+                    }
+                },
+                {
+                    $project: {
+                        transactionDate: "$transactionDate",
+                        dateCreated: "$dateCreated",
+                        transactionType: "$transactionType",
+                        itemName: "$items.itemName",
+                        price: "$items.itemsPrice",
+                        totalQuantity: { $sum: "$items.itemsQuantity" },
+                        total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
+                    }
+                }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
+            ]).then(transactions => {
+                data.transactions = transactions;
+                res.render('accounts/invoices/customize', data, console.log(data))
+            })
+        })
+        //search item by multi names
+    router.get('/itemName', (req, res) => {
         //connect to database where we save entered data 
         mongoose.connect(configDB.urlS, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
         }, (err) => { console.log('DBS connected ^_^ ') });
         let data = {}
-        const transactionDatefrom = req.query.transactionDatefrom
-        const transactionDateto = req.query.transactionDateto
+
         const itemName = req.query.itemName;
-        const transactionType = req.query.transactionType
-        Transaction.aggregate([{ $unwind: "$items" },
-            {
-                $match: {
-                    transactionDate: {
-                        $gte: transactionDatefrom,
-                        $lt: transactionDateto
-                    },
-                    "items.itemName": itemName,
-                    transactionType: transactionType
-                }
-            },
-            {
-                $project: {
-                    transactionDate: "$transactionDate",
-                    dateCreated: "$dateCreated",
-                    transactionType: "$transactionType",
-                    itemName: "$items.itemName",
-                    price: "$items.itemsPrice",
-                    totalQuantity: { $sum: "$items.itemsQuantity" },
-                    total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
-                }
-            }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
-        ]).then(transactions => {
+        var i = 0;
+
+        var TN = 0;
+        for (var i = 0; i < itemName.length; i++) {
+            TN = Transaction.aggregate([{ $unwind: "$items" },
+                {
+                    $match: {
+                        $or: [
+
+                            { "items.itemName": itemName[i] }
+                        ]
+                    }
+                }, {
+                    $project: {
+                        transactionDate: "$transactionDate",
+                        dateCreated: "$dateCreated",
+                        transactionType: "$transactionType",
+                        itemName: "$items.itemName",
+                        price: "$items.itemsPrice",
+                        totalQuantity: { $sum: "$items.itemsQuantity" },
+                        total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
+                    }
+                }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
+            ])
+        }
+        TN.then(transactions => {
+
             data.transactions = transactions;
-            res.render('accounts/invoices/customize', data, console.log(data))
+            res.render('accounts/invoices/customize', data, console.log(data, TN, itemName.length))
         })
+
     })
 
     //search assets by name

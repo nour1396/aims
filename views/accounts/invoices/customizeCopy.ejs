@@ -1,8 +1,13 @@
 <%- include('../../parts/header.ejs')%>
 <%- include('../../parts/navbar.ejs')%>
+
 <form action="/itemName"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
 <h1></h1>
-<input type="text" name="itemName" value="" placeholder="itemName">
+<select name="itemName" multiple style="height:100px;">
+            <%for (let item of items){%>
+            <option><%= item.itemInEnglish %></option>
+            <%}%>
+        </select>
 <button type="">search</button>
 </form>
 <hr>
@@ -21,7 +26,11 @@ dateCreatedto: <input type="date" name="transactionDateto" value="" placeholder=
 <hr>
 <form action="/specific"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
 <h1>specific</h1>
-<input type="text" name="itemName" value="" placeholder="itemName">
+<select name="itemName" multiple style="height:100px;">
+            <%for (let item of items){%>
+            <option><%= item.itemInEnglish %></option>
+            <%}%>
+        </select>
 
 <input type="text" name="transactionType" value="" placeholder="transactionType">
 dateCreatedfrom: <input type="date" name="transactionDatefrom" value="" placeholder="dateCreatedfrom"><br>
