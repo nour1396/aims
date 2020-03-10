@@ -1,10 +1,10 @@
 <%- include('../../parts/header.ejs')%>
 <%- include('../../parts/navbar.ejs')%>
  <a href='/export' style="margin-left: 60%;">Export to CSV</a> 
-<form action="/specific"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
-<h1></h1>
+<form action="/entities"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+<h1>entities</h1>
 
-<table style="width:99%;">
+<table >
      <thead>
           <td style="font-size:16px;font-weight:bold;">itemName</td>
           <td style="font-size:16px;font-weight:bold;">transactionType</td>
@@ -18,7 +18,7 @@
           <td style="font-size:16px;font-weight:bold;">toSubEntity</td>
      </thead>
      <%for (let inc of transactions){%>
-     <tr >
+     <tr>
           <td><output style="font-weight:normal;font-size:15px;"><%= inc._id %></output></td>
           <td><output style="font-weight:normal;font-size:15px;"><%= inc.transactionType%></output></td>
           <td><output style="font-weight:normal;font-size:15px;"><%= inc.totalQuantity%></output></td>

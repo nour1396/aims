@@ -3,39 +3,50 @@
 
 <form action="/itemName"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
 <h1></h1>
-<select name="itemName" multiple style="height:100px;">
+        <select name="itemName" multiple style="height:100px;">
             <%for (let item of items){%>
             <option><%= item.itemInEnglish %></option>
             <%}%>
         </select>
-<button type="">search</button>
+        <button type="">search</button>
 </form>
 <hr>
 <form action="/transactionType"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
-<h1></h1>
-<input type="text" name="transactionType" value="" placeholder="transactionType">
-<button type="">search</button>
+        <h1></h1>
+        <input type="text" name="transactionType" value="" placeholder="transactionType">
+        <button type="">search</button>
 </form>
 <hr>
 <form action="/transactionDate"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
-<h1></h1>
-dateCreatedfrom: <input type="date" name="transactionDatefrom" value="" placeholder="dateCreatedfrom"><br>
-dateCreatedto: <input type="date" name="transactionDateto" value="" placeholder="dateCreatedto"><br>
-<button type="">search</button>
+        <h1></h1>
+        dateCreatedfrom: <input type="date" name="transactionDatefrom" value="" placeholder="dateCreatedfrom"><br>
+        dateCreatedto: <input type="date" name="transactionDateto" value="" placeholder="dateCreatedto"><br>
+        <button type="">search</button>
 </form>
 <hr>
 <form action="/specific"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
-<h1>specific</h1>
-<select name="itemName" multiple style="height:100px;">
+        <h1>specific</h1>
+        <select name="itemName" multiple style="height:100px;">
             <%for (let item of items){%>
             <option><%= item.itemInEnglish %></option>
             <%}%>
         </select>
-
-<input type="text" name="transactionType" value="" placeholder="transactionType">
-dateCreatedfrom: <input type="date" name="transactionDatefrom" value="" placeholder="dateCreatedfrom"><br>
-dateCreatedto: <input type="date" name="transactionDateto" value="" placeholder="dateCreatedto"><br>
-<button type="">search</button>
+        <input type="text" name="fromEntity" value="" placeholder="fromEntity">
+        <input type="text" name="fromSubEntity" value="" placeholder="fromSubEntity">
+        <input type="text" name="toEntity" value="" placeholder="toEntity">
+        <input type="text" name="toSubEntity" value="" placeholder="toSubEntity">
+        <input type="text" name="transactionType" value="" placeholder="transactionType">
+        dateCreatedfrom: <input type="date" name="transactionDatefrom" value="" placeholder="dateCreatedfrom"><br>
+        dateCreatedto: <input type="date" name="transactionDateto" value="" placeholder="dateCreatedto"><br>
+        <button type="">search</button>
+</form>
+<form action="/entities"  method="GET" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+        <h1>entities</h1>
+        <input type="text" name="fromEntity" value="" placeholder="fromEntity">
+        <input type="text" name="fromSubEntity" value="" placeholder="fromSubEntity">
+        <input type="text" name="toEntity" value="" placeholder="toEntity">
+        <input type="text" name="toSubEntity" value="" placeholder="toSubEntity">
+        <button type="">search</button>
 </form>
 
 <%- include('../../parts/footer.ejs')%>
