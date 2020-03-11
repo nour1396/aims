@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 var transactionSchema = mongoose.Schema({
-    dateCreated: Date,
+    dateCreated: {
+        type: Date,
+        default: new Date()
+    },
     transactionDate: String,
     postDate: Date,
     postNumber: String,

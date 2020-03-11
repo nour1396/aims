@@ -4,33 +4,26 @@ const configDB = require('../config/database'); //Connections to database
 const mongoose = require('mongoose'); //mongoose module
 const csv = require('csv-express'); // csv module
 const mongoXlsx = require('mongo-xlsx'); //mongoXlsx module
+const Log = require('../models/log').Log;
 module.exports = function(router) {
     //get page to enter data of invoice (transaction)
     router.get('/accounts/invoices/transactions', (req, res, next) => {
-        //connect to databse which contain list of data
-        mongoose.connect(configDB.urlP, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBP connected ^_^ ') })
         let data = {}
             //get list of items
         addItem.find({}).then(items => {
             data.items = items;
             res.render('accounts/invoices/transactions', data)
-                //disconnect first database which contain list of data
-            mongoose.disconnect();
         })
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' entered transactionPage to add new transaction',
+            user: req.user.userName
+        });
+
     })
 
     //save transaction(invoice) in database
     router.post('/accounts/invoices/transactions', (req, res) => {
-        //connect to database where we save entered data
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         var newTransaction = new Transaction({
-            dateCreated: req.body.dateCreated,
             transactionDate: req.body.transactionDate,
             postDate: req.body.postDate,
             postNumber: req.body.postNumber,
@@ -179,20 +172,23 @@ module.exports = function(router) {
         newTransaction.save().then(() => {
             res.redirect(302, '../../index', console.log(newTransaction))
         })
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' saved new transaction with number' + req.body.docNumber + 'and type:' + req.body.transactionType,
+            user: req.user.userName
+        });
     })
 
     //get page to enter data will be pushed in database
     router.get('/accounts/invoices/pushtransactions', (req, res) => {
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' entered transactionPage to push new items to exsiting transaction',
+            user: req.user.userName
+        });
         res.render('accounts/invoices/pushtransactions')
     });
 
     //push object in specific and specific array document
     router.post('/accounts/invoices/pushtransactions', (req, res) => {
-        //connect to database where we saved entered data
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         Transaction.updateMany({ docNumber: req.body.documentNumber }, {
             $push: {
                 assets: {
@@ -321,61 +317,28 @@ module.exports = function(router) {
         }).then(() => {
             res.redirect('pushtransactions')
         })
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' pushed new items to exsiting transaction with document number:' + req.query.docNumber,
+            user: req.user.userName
+        });
     })
 
-    //get all transactions
-    router.get('/accounts/invoices/totalinvoices', (req, res, next) => {
-        //connect to database where we save entered data
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
-        var transactionsList = function(callback) {
-            Transaction.find().
-            exec(function(err, transactions) {
-                // docs contains an array of MongooseJS Documents
-                // so you can return that...
-                // reverse does an in-place modification, so there's no reason
-                // to assign to something else ...
-                transactions.reverse();
-                callback(err, transactions);
-            });
-        };
-        transactionsList(function(err, transactions) {
-            if (err) {
-                /* panic! there was an error fetching the list of transactions */
-                return;
-            }
-            // do something with the transactions here ...
-            res.render('accounts/invoices/totalinvoices', { transactions: transactions }, console.log(transactions));
-        });
-    });
-
     //get customize page to search item by name
-    router.get('/accounts/invoices/customize', (req, res) => {
-        //connect to databse which contain list of data
-        mongoose.connect(configDB.urlP, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBP connected ^_^ ') })
+    router.get('/accounts/invoices/search', (req, res) => {
         let data = {}
             //get list of items
         addItem.find({}).then(items => {
             data.items = items;
-            res.render('accounts/invoices/customizeCopy', data)
-                //disconnect first database which contain list of data
-            mongoose.disconnect();
-
+            res.render('accounts/invoices/search', data)
         })
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' entered to search in items',
+            user: req.user.userName
+        });
     })
 
     //search assets by name
     router.get('/assetName', (req, res) => {
-        //connect to database where we save entered data
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') });
         let data = {}
         const assetName = req.query.assetName;
         Transaction.aggregate([{ $unwind: "$assets" },
@@ -403,16 +366,15 @@ module.exports = function(router) {
                 res.render('accounts/invoices/customize', data, console.log(data))
             })
         })
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' entered to search in assets name:' + assetName,
+            user: req.user.userName
+        });
     })
 
     /*search item by name (single name , multi names ,
      if not choosen get all ,if single name was chosen not exist return no record)*/
     router.get('/itemName', (req, res) => {
-        //connect to database where we save entered data 
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') });
         let data = {}
         var itemName = req.query.itemName;
         console.log(itemName)
@@ -434,6 +396,10 @@ module.exports = function(router) {
                 data.transactions = transactions;
                 res.render('accounts/invoices/customize', data, console.log(data))
             })
+            Log.create({
+                statement: 'User: ' + req.user.userName + ' entered to get all items',
+                user: req.user.userName
+            });
         } else if (itemName.constructor === String) {
             var itemName = req.query.itemName;
             Transaction.aggregate([{ $unwind: "$items" },
@@ -459,8 +425,11 @@ module.exports = function(router) {
                 } else {
                     res.render('accounts/invoices/customize', data, console.log(data))
                 }
-
             })
+            Log.create({
+                statement: 'User: ' + req.user.userName + ' entered to search in item name:' + itemName,
+                user: req.user.userName
+            });
         } else {
             var itemName = req.query.itemName;
             var x = []
@@ -488,16 +457,15 @@ module.exports = function(router) {
                 data.transactions = transactions;
                 res.render('accounts/invoices/customize', data, console.log(data))
             })
+            Log.create({
+                statement: 'User: ' + req.user.userName + ' entered to search in items :' + itemName,
+                user: req.user.userName
+            });
         }
     })
 
     //search by transactionType
     router.get('/transactionType', (req, res) => {
-        //connect to database where we save entered data 
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') });
         let data = {}
         const transactionType = req.query.transactionType
         Transaction.aggregate([{ $unwind: "$items" },
@@ -521,11 +489,6 @@ module.exports = function(router) {
 
     //search by transactionDate
     router.get('/transactionDate', (req, res) => {
-        //connect to database where we save entered data 
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') });
         let data = {}
         const transactionDatefrom = req.query.transactionDatefrom
         const transactionDateto = req.query.transactionDateto
@@ -557,11 +520,6 @@ module.exports = function(router) {
 
     //search by transactionDate, itemName, transactionType,entities
     router.get('/specific', (req, res) => {
-            //connect to database where we save entered data 
-            mongoose.connect(configDB.urlS, {
-                useUnifiedTopology: true,
-                useNewUrlParser: true,
-            }, (err) => { console.log('DBS connected ^_^ ') });
             let data = {}
             const transactionDatefrom = req.query.transactionDatefrom
             const transactionDateto = req.query.transactionDateto
@@ -622,11 +580,6 @@ module.exports = function(router) {
         })
         //search items by name of entity and subEntity
     router.get('/entities', (req, res) => {
-        //connect to database where we save entered data 
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') });
         let data = {}
         const fromEntity = req.query.fromEntity
         const fromSubEntity = req.query.fromSubEntity

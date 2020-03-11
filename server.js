@@ -21,10 +21,10 @@ const IN_PROD = NODE__ENV === 'production'
 const SESS_NAME = 'Sid'
 var configDB = require('./config/database');
 //connect to database where collection of users
-mongoose.connect(configDB.urlS, {
+mongoose.connect(configDB.url, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-}, (err) => { console.log('DBS connected ^_^ ') })
+}, (err) => { console.log('DB connected ^_^ ') })
 
 mongoose.set('useFindAndModify', false);
 

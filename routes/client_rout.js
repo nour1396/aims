@@ -13,13 +13,10 @@ const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
 module.exports = function(router) {
     //data-en **get page to enter data
     router.get('/data-en', function(req, res, next) {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         if (!req.user == false) {
             Log.create({
-                statement: 'User: ' + req.user.userName + ' entered data-en '
+                statement: 'User: ' + req.user.userName + ' entered data-en ',
+                user: req.user.userName
             });
             let data = {}
 
@@ -82,10 +79,6 @@ module.exports = function(router) {
     that's all
     */
     router.post('/data-en/draft', (req, res) => {
-            mongoose.connect(configDB.urlS, {
-                useUnifiedTopology: true,
-                useNewUrlParser: true,
-            }, (err) => { console.log('DBS connected ^_^ ') })
             const field = req.body.field;
             const value = req.body.value;
             var query = { user: req.user.userName },
@@ -102,11 +95,6 @@ module.exports = function(router) {
         })
         //save data in database
     router.post('/data-en', (req, res) => {
-        //connect to database where data were saved there
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         DraftClient.deleteOne({ user: req.user.userName }).then(resolve => {});
 
         var newClient = new Client({
@@ -548,27 +536,26 @@ module.exports = function(router) {
         //when user save data will record that in database
         Log.create({
             statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to add new client with ID: ' + req.body.IC_idNumber +
-                ' and name :' + req.body.PI_firstName + ' ' + req.body.PI_secondName
+                ' and name :' + req.body.PI_firstName + ' ' + req.body.PI_secondName,
+            user: req.user.userName
         });
     });
     //get page where we search client with id
     router.get('/data-en-copy', (req, res) => {
         Log.create({
-            statement: 'User: ' + req.user.userName + ' entered to data-en-copy-empty'
+            statement: 'User: ' + req.user.userName + ' entered to data-en-copy-empty',
+            user: req.user.userName
         });
         res.render('data-en-copy-empty');
     })
 
     //search for client by id 
     router.get('/searchC', (req, res) => {
-            mongoose.connect(configDB.urlS, {
-                useUnifiedTopology: true,
-                useNewUrlParser: true,
-            }, (err) => { console.log('DBS connected ^_^ ') })
             const searchC = req.query.searchC;
             //when user search client data will record that in database
             Log.create({
-                statement: 'User: ' + req.user.userName + ' entered to search for client'
+                statement: 'User: ' + req.user.userName + ' entered to search for client',
+                user: req.user.userName
             });
 
             Client.find({ "_id": searchC }, (err, data) => {
@@ -580,18 +567,16 @@ module.exports = function(router) {
                 }
             })
             Log.create({
-                statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to search for client :' + searchC
+                statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to search for client :' + searchC,
+                user: req.user.userName
             });
         })
         //get page
     router.get('/edit/:_id', (req, res) => {
-            mongoose.connect(configDB.urlS, {
-                useUnifiedTopology: true,
-                useNewUrlParser: true,
-            }, (err) => { console.log('DBS connected ^_^ ') })
             const search = req.query.search;
             Log.create({
-                statement: 'User: ' + req.user.userName + ' entered /data-en to search for client :' + search
+                statement: 'User: ' + req.user.userName + ' entered /data-en to search for client :' + search,
+                user: req.user.userName
             });
             const _id = req.params._id;
             Client.find({ "_id": _id }, (err, data) => {
@@ -605,12 +590,9 @@ module.exports = function(router) {
         })
         ///
     router.post('/update', (req, res) => {
-            mongoose.connect(configDB.urlS, {
-                useUnifiedTopology: true,
-                useNewUrlParser: true,
-            }, (err) => { console.log('DBS connected ^_^ ') })
             Log.create({
-                statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to update client with ID:' + req.body.userId
+                statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to update client with ID:' + req.body.userId,
+                user: req.user.userName
             });
 
             const _id = req.body.userId;
@@ -642,12 +624,9 @@ module.exports = function(router) {
         })
         ///
     router.post('/data-en-copy', (req, res) => {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         Log.create({
-            statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to update'
+            statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to update',
+            user: req.user.userName
         });
         Client.updateMany({}, (err, updata) => {
             if (err) throw (err);
@@ -657,13 +636,10 @@ module.exports = function(router) {
 
     //arabic
     router.get('/data-ar', function(req, res, next) {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         if (!req.user == false) {
             Log.create({
-                statement: 'User: ' + req.user.userName + ' entered /data-ar[GET]'
+                statement: 'User: ' + req.user.userName + ' entered /data-ar[GET]',
+                user: req.user.userName
             });
             let data = {}
                 // get data from database
@@ -713,10 +689,6 @@ module.exports = function(router) {
     })
 
     router.post('/data-ar/draft', (req, res) => {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         const field = req.body.field;
         const value = req.body.value;
         var query = { user: req.user.userName },
@@ -734,10 +706,6 @@ module.exports = function(router) {
 
 
     router.post('/data-ar', (req, res) => {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         DraftClientAr.deleteOne({ user: req.user.userName }).then(resolve => {});
         var newClient = new Client({
             _id: req.body._id,
@@ -1177,16 +1145,13 @@ module.exports = function(router) {
         });
         Log.create({
             statement: 'User: ' + req.user.userName + ' entered /data-ar[POST] to add new client with ID: ' + req.body._id +
-                ' and name :' + req.body.PI_firstName + ' ' + req.body.PI_secondName
+                ' and name :' + req.body.PI_firstName + ' ' + req.body.PI_secondName,
+            user: req.user.userName
         });
     });
 
 
     router.get('/personalInf', function(req, res, next) {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         if (!req.user == false) {
             let data = {}
                 // get data from database
@@ -1222,10 +1187,6 @@ module.exports = function(router) {
     })
 
     router.post('/personalInf/draft', (req, res) => {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         const field = req.body.field;
         const value = req.body.value;
         var query = { user: req.user.userName },
@@ -1242,10 +1203,6 @@ module.exports = function(router) {
     })
 
     router.post('/personalInf', (req, res) => {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         DraftPersonal.deleteOne({ user: req.user.userName }).then(resolve => {});
         var newClient = new Client({
             _id: req.body._id,
@@ -1265,7 +1222,8 @@ module.exports = function(router) {
             res.redirect(302, '/index')
         });
         Log.create({
-            statement: 'User: ' + req.user.userName + ' entered /personalInfo[POST] to add new client with name :' + req.body.PI_firstName + ' ' + req.body.PI_secondName
+            statement: 'User: ' + req.user.userName + ' entered /personalInfo[POST] to add new client with name :' + req.body.PI_firstName + ' ' + req.body.PI_secondName,
+            user: req.user.userName
         });
     });
 };

@@ -9,12 +9,16 @@ const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
 var configDB = require('../config/database');
 var mongoose = require('mongoose');
 module.exports = function(router) {
-    //home page
+    router.get('/log', (req, res) => {
+            const log = req.query.log;
+            let data = {}
+            Log.find({ user: log }).then(logs => {
+                data.logs = logs
+                res.render('log', data)
+            })
+        })
+        //home page
     router.get('/clients', function(req, res) {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         if (!req.user == false) {
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered All Clients '
@@ -66,10 +70,6 @@ module.exports = function(router) {
 
 
     router.get('/ind', function(req, res) {
-        mongoose.connect(configDB.urlS, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-        }, (err) => { console.log('DBS connected ^_^ ') })
         let data = {}
         DraftClient.find({ user: req.user.userName }).then(draftEn => {
             data.draftEn = draftEn
