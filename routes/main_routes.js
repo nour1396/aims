@@ -68,7 +68,6 @@ module.exports = function(router) {
         res.render('profile', { user: req.user });
     });
 
-
     router.get('/ind', function(req, res) {
         let data = {}
         DraftClient.find({ user: req.user.userName }).then(draftEn => {
@@ -97,7 +96,6 @@ module.exports = function(router) {
         if (req.isAuthenticated()) {
             return next();
         }
-
         res.redirect('/login');
     }
 }

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 var transactionSchema = mongoose.Schema({
     dateCreated: {
         type: Date,
-        default: new Date()
+        default: Date.now
     },
     transactionDate: String,
     postDate: Date,

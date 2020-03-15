@@ -15,22 +15,20 @@
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-      
+      <!-- show any messages that come back with authentication -->
+          <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+          <% } %>
     <form action="/signup" method="post" id="signup-form">
     <div class="form-group" >
             <div class="form-group" >
             <label>User Name</label>
             <input type="text" class="form-control" name="userName" placeholder="Enter Unique username" >
             </div>
-            
             <div class="form-group" >
             <label >Password</label>
             <input type="password"  class="form-control" name="password" placeholder="Enter valid password" >
             </div>
-            <div class="form-group" >
-            <label>Confirm Password</label>
-            <input type="password" name="password2" class="form-control" placeholder="Confirm Password" >
-        </div>
         <button type="submit" class="btn btn-primary">submit</button>
     </form>
     <p class="lead mt-4">Have An Account? <a href="login">Login</a></p>
@@ -38,7 +36,7 @@
     </div>
   </div>
 </div>
-<script>
+<!--<script>
   document.getElementById('signup-form').querySelectorAll('input').forEach(input => {
     input.addEventListener('blur', function() {
 
@@ -54,7 +52,7 @@
         })
     })
 })
-</script>
+</script>-->
 </body>
 
 </html>

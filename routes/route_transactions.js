@@ -363,7 +363,7 @@ module.exports = function(router) {
                 }
             ]).then(transactions2 => {
                 data.transactions2 = transactions2;
-                res.render('accounts/invoices/customize', data, console.log(data))
+                res.render('accounts/invoices/customize', data)
             })
         })
         Log.create({
@@ -394,7 +394,7 @@ module.exports = function(router) {
                 }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
             ]).then(transactions => {
                 data.transactions = transactions;
-                res.render('accounts/invoices/customize', data, console.log(data))
+                res.render('accounts/invoices/customize', data)
             })
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered to get all items',
@@ -423,7 +423,7 @@ module.exports = function(router) {
                 if (transactions == 0) {
                     res.end('no record found')
                 } else {
-                    res.render('accounts/invoices/customize', data, console.log(data))
+                    res.render('accounts/invoices/customize', data)
                 }
             })
             Log.create({
@@ -455,7 +455,7 @@ module.exports = function(router) {
                 }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
             ]).then(transactions => {
                 data.transactions = transactions;
-                res.render('accounts/invoices/customize', data, console.log(data))
+                res.render('accounts/invoices/customize', data)
             })
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered to search in items :' + itemName,
@@ -483,7 +483,7 @@ module.exports = function(router) {
             }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
         ]).then(transactions => {
             data.transactions = transactions;
-            res.render('accounts/invoices/customize1', data, console.log(data))
+            res.render('accounts/invoices/customize1', data)
         })
     })
 
