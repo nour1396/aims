@@ -1,27 +1,27 @@
-var express = require('express');
+const express = require('express');
 //initialize the app
-var app = express();
+const app = express();
 const expressLayouts = require('express-ejs-layouts')
-var router = express.Router()
-var mongoose = require('mongoose');
-var morgan = require('morgan');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var passport = require('passport');
+const router = express.Router()
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
 const compression = require('compression');
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
-var flash = require('connect-flash');
-var bodyParser = require('body-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const flash = require('connect-flash');
+const bodyParser = require('body-parser');
 const cors = require('cors');
-var bcrypt = require('bcryptjs');
-var LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
+const LocalStrategy = require('passport-local').Strategy;
 //defining the port
-var port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 const NODE__ENV = 'development'
 const IN_PROD = NODE__ENV === 'production'
 const SESS_NAME = 'Sid'
-var configDB = require('./config/database');
+const configDB = require('./config/database');
 //connect to database
 mongoose.connect(configDB.url, {
     useUnifiedTopology: true,
@@ -29,6 +29,7 @@ mongoose.connect(configDB.url, {
 }, (err) => { console.log('DB connected ^_^ ') })
 
 mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 
 app.use(compression());
@@ -63,6 +64,21 @@ app.use(bodyParser.json());
 //specify ejs as view engien
 app.set('view engine', 'ejs');
 
+app.get('/', (req, res) => {
+    return res.json({
+        message: "This is node.js role based authentication system"
+    });
+});
+
+// Create a custom middleware function
+const checkUserType = function(req, res, next) {
+    const userType = req.originalUrl.split('/')[2];
+    // Bring in the passport authentication starategy
+    require('./config/passport')(userType, passport);
+    next();
+};
+
+app.use(checkUserType);
 // Global variables
 /* app.use(function(req, res, next) {
     res.locals.success_msg = req.flash('success_msg');
@@ -71,11 +87,13 @@ app.set('view engine', 'ejs');
     next();
 }); */
 //routing files
-require('./config/passport')(passport);
+/* require('./config/passport')(passport); */
 require('./routes/client_rout')(app, passport);
 require('./routes/main_routes')(app, passport);
 require('./routes/addNew_route')(app);
 require('./routes/route_transactions')(app)
+require('./routes/users_route')(app);
+require('./routes/admin_route')(app);
 
 //localhost listen at 5000
 app.listen(port, () => {

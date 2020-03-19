@@ -6,8 +6,6 @@ const Log = require('../models/log').Log;
 const DraftClient = require('../models/drafts/draftClientEN').DraftClient;
 const DraftClientAr = require('../models/drafts/draftClientAR').DraftClientAr;
 const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
-var configDB = require('../config/database');
-var mongoose = require('mongoose');
 module.exports = function(router) {
     router.get('/log', (req, res) => {
             const log = req.query.log;
@@ -37,18 +35,18 @@ module.exports = function(router) {
     })
 
     //signup
-    router.get('/signup', (req, res, next) => {
-        res.render('signup', { message: req.flash('signupMessage') });
-    });
+    /*  router.get('/signup', (req, res, next) => {
+         res.render('signup', { message: req.flash('signupMessage') });
+     });
 
-    router.post('/signup', passport.authenticate('local-signup', {
-        successRedirect: '/login',
-        failureRedirect: '/signup',
-        failureFlash: true
-    }));
+     router.post('/signup', passport.authenticate('local-signup', {
+         successRedirect: '/login',
+         failureRedirect: '/signup',
+         failureFlash: true
+     })); */
 
     //login
-    router.get('/login', (req, res) => {
+    /* router.get('/login', (req, res) => {
         req.logIn(User, () => {
             req.session.save(() => {
                 res.render('login', { message: req.flash('loginMessage') })
@@ -62,7 +60,7 @@ module.exports = function(router) {
             failureRedirect: '/login',
             failureFlash: true
         })
-    );
+    ); */
 
     router.get('/profile', isLoggedIn, function(req, res) {
         res.render('profile', { user: req.user });
