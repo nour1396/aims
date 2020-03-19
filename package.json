@@ -1,5 +1,5 @@
 {
-    "name": "pro3",
+    "name": "aims",
     "version": "1.0.0",
     "main": "server.js",
     "scripts": {
@@ -51,7 +51,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "hhtps://github.com/nour1396/pro3.git"
+        "url": "https://nourhanElkashef@bitbucket.org/rootsolutions/aims.git"
     },
     "description": "",
     "devDependencies": {
