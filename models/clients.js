@@ -455,20 +455,3 @@ exports.getAllClients = () => {
 }
 
 exports.Client = Client
-
-/* exports.getClientByID = _id => {
-    return new Promise((resolve, reject) => {
-        mongoose.connect(configDB.url, { useNewUrlParser: true })
-            .then(() =>
-                Client.find({ _id: _id })
-            )
-            .then(clients => {
-                mongoose.disconnect();
-                resolve(clients)
-            })
-            .catch(err => {
-                mongoose.disconnect();
-                console.log(err)
-            })
-    })
-} */
