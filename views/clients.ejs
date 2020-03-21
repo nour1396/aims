@@ -1,41 +1,35 @@
 <%- include('parts/header.ejs')%>
     <%- include('parts/navbar.ejs')%>
 
-        <div class="container">
-            <form class="form-inline my-2 my-lg-0" action="/searchC" method="get">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="searchC">
-                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
-            </form>
-            <div class="row">
-                <%for (let client of clients){%>
-                    <div class="col col-12 col-md-6 col-lg-2 col-xl-3">
-                        <div class="card" style="width: 40rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <p>Name:
-                                        <%= client.personalInformation.PI_firstName%>
-                                            <%=client.personalInformation.PI_secondName%>
-                                    </p>
-                                    <p>ID :
-                                        <%= client._id%>
-                                    </p>
-                                    <p>Gender:
-                                        <%= client.personalInformation.PI_gender%>
-                                    </p>
-                                    <p>Marital Status:
-                                        <%= client.personalInformation.PI_maritalStatus%>
-                                    </p>
-                                    <p>Nationality:
-                                        <%= client.personalInformation.PI_nationality%>
-                                    </p>
-                                </h5>
-                                <a href="/edit/<%= client._id%>">Edit</a>
-                            </div>
-                        </div>
-                    </div>
-                    <%}%>
-            </div>
-        </div>
-
-
+        <form class="form-inline my-2 my-lg-0" action="/searchC" method="get">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="searchC">
+            <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+        </form>
+        <table>
+            <tr style="font-size: 20px;font-weight: bold;color: #333;border-bottom: #333 solid 1px;">
+                <td>Name</td>
+                <td>ID</td>
+                <td>Gender</td>
+                <td>Nationality</td>
+                <td></td>
+            </tr>
+            <%for (let client of clients){%>
+                <tr>
+                    <td style="padding-bottom: 10px;">
+                        <%= client.personalInformation.PI_firstName%>
+                            <%=client.personalInformation.PI_secondName%>
+                    </td>
+                    <td style="padding-bottom: 10px;">
+                        <%= client._id%>
+                    </td>
+                    <td style="padding-bottom: 10px;">
+                        <%= client.personalInformation.PI_gender%>
+                    </td>
+                    <td style="padding-bottom: 10px;">
+                        <%= client.personalInformation.PI_nationality%>
+                    </td>
+                    <td style="padding-bottom: 10px;"><a style="color: #bd2176;" href="/edit/<%= client._id%>">Edit</a></td>
+                </tr>
+                <%}%>
+        </table>
         <%- include('parts/footer.ejs')%>
