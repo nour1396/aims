@@ -571,12 +571,12 @@ module.exports = function(router) {
         })
         //get page
     router.get('/edit/:_id', (req, res) => {
-            const search = req.query.search;
+            const _id = req.params._id;
             Log.create({
-                statement: 'User: ' + req.user.userName + ' entered /data-en to search for client :' + search,
+                statement: 'User: ' + req.user.userName + ' entered /data-en to search for client :' + _id,
                 user: req.user.userName
             });
-            const _id = req.params._id;
+
             Client.find({ "_id": _id }, (err, data) => {
                 if (err) throw err;
                 if (data.length > 0) {
