@@ -19,8 +19,7 @@ module.exports = function(router) {
                 user: req.user.userName
             });
             let data = {}
-
-            /*
+                /*
     after javascript code ...
     The last thing is to check if the logged in user has a draft. if so grab it and render data-en-draft
     else, it will render data-en 
@@ -96,7 +95,6 @@ module.exports = function(router) {
         //save data in database
     router.post('/data-en', (req, res) => {
         DraftClient.deleteOne({ user: req.user.userName }).then(resolve => {});
-
         var newClient = new Client({
             _id: req.body._id,
             personalInformation: {
@@ -549,7 +547,7 @@ module.exports = function(router) {
         res.render('data-en-copy-empty');
     })
 
-    //search for client by id 
+    //get client by id 
     router.get('/searchC', (req, res) => {
             const searchC = req.query.searchC;
             //when user search client data will record that in database
@@ -588,7 +586,7 @@ module.exports = function(router) {
                 }
             })
         })
-        ///
+        //update data of specific client
     router.post('/update', (req, res) => {
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to update client with ID:' + req.body.userId,
@@ -634,7 +632,7 @@ module.exports = function(router) {
         })
     })
 
-    //arabic
+    //data client in arabic
     router.get('/data-ar', function(req, res, next) {
         if (!req.user == false) {
             Log.create({
@@ -1148,8 +1146,7 @@ module.exports = function(router) {
                 ' and name :' + req.body.PI_firstName + ' ' + req.body.PI_secondName,
             user: req.user.userName
         });
-    });
-
+    })
 
     router.get('/personalInf', function(req, res, next) {
         if (!req.user == false) {

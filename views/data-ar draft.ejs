@@ -18,22 +18,23 @@
 <body background="/hd1.jpg" background-size="full">
     <h1 dir="rtl"> اضافة شخص جديد</h1>
 
-    <form action="/data-ar" id="data-ar-form" method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+    <form action="/data-ar" id="data-ar-form" method="POST" enctype="multipart/form-data ">
+        </*onsubmit="returen false" */>
         <label style="color:gold">ID</label>
         <input type="text" maxlength="14" name="_id" placeholder="Enter Your ID Number" value="<%= draft._id ? draft._id : '' %>">
-        <fieldset id="f1" class="draftStyle"  name="personalInformation" dir="rtl">
+        <fieldset id="f1" class="draftStyle" name="personalInformation" dir="rtl">
             <legend>Basic Information</legend>
             <label>الاسم الاول</label>
             <input type="text" name="PI_firstName" value="<%= draft.personalInformation ? draft.personalInformation.PI_firstName : '' %>" placeholder="Enter Your First Name" title="ادخل الاسم الاول">
             <label>الاسم الثاني</label>
-            <input type="text" name="PI_secondName"  value="<%= draft.personalInformation ? draft.personalInformation.PI_secondName : '' %>" placeholder="ادحل الاسم الثاني">
+            <input type="text" name="PI_secondName" value="<%= draft.personalInformation ? draft.personalInformation.PI_secondName : '' %>" placeholder="ادحل الاسم الثاني">
             <label>الاسم الثالث</label>
             <input type="text" name="PI_thirdName" value="<%= draft.personalInformation ? draft.personalInformation.PI_thirdName : '' %>" placeholder="ادخل الاسم الثالث"><br>
             <label>الاسم الرابع</label>
             <input type="text" name="PI_fourthName" value="<%= draft.personalInformation ? draft.personalInformation.PI_fourthName : '' %>" placeholder="ادخل الاسم الرابع">
             <label>الاسم الاخير </label>
             <input type="text" name="PI_lastName" value="<%= draft.personalInformation ? draft.personalInformation.PI_lastName : '' %>" placeholder="ادخل الاسم الاخير">
-             <label>اللقب </label>
+            <label>اللقب </label>
             <select name="PI_title" placeholder="اللقب" value="<%= draft.personalInformation ? draft.personalInformation.PI_title : '' %>">
                 <%for(let t of titles){%> 
                 <%if (t.male_arabic.length !==0){%>
@@ -63,7 +64,7 @@
 
         </fieldset>
 
-       <!-- <fieldset name="identity card" dir="rtl">
+        <!-- <fieldset name="identity card" dir="rtl">
             <legend>البطاقة الشخصية</legend>
             <label>رقم البطاقة الشخصية</label>
             <input type="text" maxlength="14" name="_id" placeholder="ادخل الرقم القومي">
@@ -357,21 +358,20 @@
     </form>
     <script>
         document.getElementById('data-ar-form').querySelectorAll('input').forEach(input => {
-    input.addEventListener('blur', function() {
+            input.addEventListener('blur', function() {
 
-        fetch('/data-ar/draft', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                field: input.parentNode.getAttribute('name') + '.' + input.getAttribute('name'),
-                value: input.value
+                fetch('/data-ar/draft', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        field: input.parentNode.getAttribute('name') + '.' + input.getAttribute('name'),
+                        value: input.value
+                    })
+                })
             })
         })
-    })
-})
-    
     </script>
 </body>
 

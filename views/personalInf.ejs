@@ -11,19 +11,16 @@
     <!-- //<h3><a href="/data-arejs" dir="rtl">Arabic</a></h3>// -->
     <!--for ejs-->
     <input id="changetoarabic" type="button" onClick="locationhref='/data-ar'" value='Arabic'>
-    
-    <!--for ejs-->
     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
 </head>
 
-<body style="backgtoun-img : " >
+<body>
     <h1> ADD New Person</h1>
-
-
-    <form action="/data-en" id="personalInf-form" method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+    <form action="/data-en" id="personalInf-form" method="POST" enctype="multipart/form-data ">
+        </*onsubmit="returen false" */>
         <label style="color:gold">ID</label>
         <input type="text" maxlength="14" name="_id" placeholder="Enter Your ID Number">
-        <fieldset id="f1"  name="personalInformation" dir="auto">
+        <fieldset id="f1" name="personalInformation" dir="auto">
             <legend>Personal Information</legend>
             <label>First Name</label>
             <input type="text" name="PI_firstName" placeholder="Enter Your First Name" title="enter your first name only without any spaces">
@@ -35,8 +32,8 @@
             <input type="text" name="PI_fourthName" placeholder="Enter Your Fourth Name">
             <label>Last Name </label>
             <input type="text" name="PI_lastName" placeholder="Enter Your Last Name">
-             <label>Title </label>
-            <select name="PI_title" placeholder="Enter Your Title" >
+            <label>Title </label>
+            <select name="PI_title" placeholder="Enter Your Title">
                 <%for(let t of titles){%> 
                 <%if (t.male_english.length !==0){%>
                 <option value=""><%= t.male_english%></option>
@@ -67,23 +64,22 @@
         <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
     </form>
 
-        <script>
+    <script>
         document.getElementById('personalInf-form').querySelectorAll('input').forEach(input => {
-    input.addEventListener('blur', function() {
+            input.addEventListener('blur', function() {
 
-        fetch('/personalInf/draft', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                field: input.parentNode.getAttribute('name') + '.' + input.getAttribute('name'),
-                value: input.value
+                fetch('/personalInf/draft', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        field: input.parentNode.getAttribute('name') + '.' + input.getAttribute('name'),
+                        value: input.value
+                    })
+                })
             })
         })
-    })
-})
-    
     </script>
 </body>
 

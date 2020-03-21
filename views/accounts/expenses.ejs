@@ -1,23 +1,24 @@
 <%- include('../parts/header.ejs')%>
-<%- include('../parts/navbar.ejs')%>
-<form action="/accounts/expenses"  method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
-    <fieldset >
-        <legend>Add purchase </legend>
-        
-        <label >expenseName</label>
-        <select name="expenseName">
+    <%- include('../parts/navbar.ejs')%>
+        <form action="/accounts/expenses" method="POST" enctype="multipart/form-data ">
+            </*onsubmit="returen false" */>
+            <fieldset>
+                <legend>Add purchase </legend>
+
+                <label>expenseName</label>
+                <select name="expenseName">
             <%for(let expense of expenses){%> 
                 <%if (expense.nameInEnglish !==0){%>
                 <option ><%= expense.nameInEnglish%></option>
                 <%}%>
                 <%}%>
         </select>
-        <label >documentNumber</label>
-        <input type="text" name="documentNumber">
-        <label >amount</label>
-        <input type="text" name="amount">
-        
-    </fieldset>
-        <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
-</form>
-<%- include('../parts/footer.ejs')%>
+                <label>documentNumber</label>
+                <input type="text" name="documentNumber">
+                <label>amount</label>
+                <input type="text" name="amount">
+
+            </fieldset>
+            <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
+        </form>
+        <%- include('../parts/footer.ejs')%>

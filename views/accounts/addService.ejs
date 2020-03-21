@@ -1,60 +1,61 @@
 <%- include('../parts/header.ejs')%>
-<%- include('../parts/navbar.ejs')%>
-<form action="/accounts/addService"  method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
-<h1></h1>
-    <h1> Add New service</h1>
-    <fieldset name="information">
-    <legend >information</legend>
-    <label>serviceID</label>
-    <input type="text" name="serviceID">
-    <label>serviceName</label>
-    <input type="text" name="serviceName">
-    <label>owner</label>
-    <input type="text" name="owner">
-    <label>serviceDescription</label>
-    <input type="text" name="serviceDescription">
-    <label>status</label>
-    <input type="text" name="status">
-    <label>type</label>
-    <input type="text" name="type">
-    <label>startDate</label>
-    <input type="text" name="startDate">
-    <label>startTime</label>
-    <input type="text" name="startTime">
-    <label>endDate</label>
-    <input type="text" name="endDate">
-    <label>endTime</label>
-    <input type="text" name="endTime">
-    <label>serviceRendered</label>
-    <input type="text" name="serviceRendered">
-    <label>detailsOfService</label>
-    <input type="text" name="detailsOfService">
-    <label>requestStartDate</label>
-    <input type="text" name="requestStartDate">
-    <label>schduledStartDate</label>
-    <input type="text" name="schduledStartDate">
-    <label>servicePeriod</label>
-    <input type="text" name="servicePeriod">
-    <label>lastUpdated</label>
-    <input type="text" name="lastUpdated">
-    <label>job</label>
-    <input type="text" name="job">
-    <label>dataCenter</label>
-    <input type="text" name="dataCenter">
-    <label>paymentMethod</label>
-    <input type="text" name="paymentMethod">
-    <label>firstPaymentAmount</label>
-    <input type="text" name="firstPaymentAmount">
-    <label>recurringAmount</label>
-    <input type="text" name="recurringAmount">
-    <label>billingCycle</label>
-    <input type="text" name="billingCycle">
-    <label>servicePrice</label>
-    <input type="text" name="servicePrice">
-</fieldset>
-<input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
+    <%- include('../parts/navbar.ejs')%>
+        <form action="/accounts/addService" method="POST" enctype="multipart/form-data ">
+            </*onsubmit="returen false" */>
+            <h1></h1>
+            <h1> Add New service</h1>
+            <fieldset name="information">
+                <legend>information</legend>
+                <label>serviceID</label>
+                <input type="text" name="serviceID">
+                <label>serviceName</label>
+                <input type="text" name="serviceName">
+                <label>owner</label>
+                <input type="text" name="owner">
+                <label>serviceDescription</label>
+                <input type="text" name="serviceDescription">
+                <label>status</label>
+                <input type="text" name="status">
+                <label>type</label>
+                <input type="text" name="type">
+                <label>startDate</label>
+                <input type="text" name="startDate">
+                <label>startTime</label>
+                <input type="text" name="startTime">
+                <label>endDate</label>
+                <input type="text" name="endDate">
+                <label>endTime</label>
+                <input type="text" name="endTime">
+                <label>serviceRendered</label>
+                <input type="text" name="serviceRendered">
+                <label>detailsOfService</label>
+                <input type="text" name="detailsOfService">
+                <label>requestStartDate</label>
+                <input type="text" name="requestStartDate">
+                <label>schduledStartDate</label>
+                <input type="text" name="schduledStartDate">
+                <label>servicePeriod</label>
+                <input type="text" name="servicePeriod">
+                <label>lastUpdated</label>
+                <input type="text" name="lastUpdated">
+                <label>job</label>
+                <input type="text" name="job">
+                <label>dataCenter</label>
+                <input type="text" name="dataCenter">
+                <label>paymentMethod</label>
+                <input type="text" name="paymentMethod">
+                <label>firstPaymentAmount</label>
+                <input type="text" name="firstPaymentAmount">
+                <label>recurringAmount</label>
+                <input type="text" name="recurringAmount">
+                <label>billingCycle</label>
+                <input type="text" name="billingCycle">
+                <label>servicePrice</label>
+                <input type="text" name="servicePrice">
+            </fieldset>
+            <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
 
-</form>
+        </form>
 
 
-<%- include('../parts/footer.ejs')%>
+        <%- include('../parts/footer.ejs')%>

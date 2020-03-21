@@ -1,147 +1,148 @@
 <%- include('../parts/header.ejs')%>
-<%- include('../parts/navbar.ejs')%>
-<form action="/accounts/addCompany"  method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
-<h1></h1>
-    <h1> Add New Company</h1>
-    
-        <fieldset >
-            <legend name="companyInformation">companyInformation</legend>
-            <label>nameInArabic</label>
-            <input type="text" name="nameInArabic">
-            <label>nameInEnglish</label>
-            <input type="text" name="nameInEnglish">
-            <label>namePronunciation</label>
-            <input type="text" name="namePronunciation">
-            <label>descreption</label>
-            <input type="text" name="descreption">
-            <label>allies</label>
-            <input type="text" name="allies">
-            <label>parentCompany</label>
-            <input type="text" name="parentCompany">
-            <label>legalForm</label>
-            <input type="text" name="legalForm">
-            <label>legalInformation</label>
-            <input type="text" name="legalInformation">
-            <label>startDate</label>
-            <input type="text" name="startDate">
-            <label>cityInCorporated</label>
-            <input type="text" name="cityInCorporated">
-            <label>ultimateParentName</label>
-            <input type="text" name="ultimateParentName">
-            <label>companyNationality</label>
-            <input type="text" name="companyNationality">
-        </fieldset>
-        <fieldset >
-            <legend name="addressDetails">addressDetails</legend>
-            <label>addressType</label>
-            <input type="text" name="addressType">
-            <label>country</label>
-            <input type="text" name="country">
-            <label>city</label>
-            <input type="text" name="city">
-            <label>streetName</label>
-            <input type="text" name="streetName">
-            <label>area</label>
-            <input type="text" name="area">
-            <label>realStateType</label>
-            <input type="text" name="realStateType">
-            <label>realStateNumber</label>
-            <input type="text" name="realStateNumber">
-            <label>floorNumber</label>
-            <input type="text" name="floorNumber">
-            <label>apartmentNumber</label>
-            <input type="text" name="apartmentNumber">
-            <label>detailedAddress</label>
-            <input type="text" name="detailedAddress">
-            <label>coordinates</label>
-            <input type="text" name="coordinates">
-        </fieldset>
-        <fieldset >
-            <legend name="contactInformation">contactInformation</legend>
-            <label>countryCode</label>
-            <input type="text" name="countryCode">
-            <label>governorateCode</label>
-            <input type="text" name="governorateCode">
-            <label>landLine</label>
-            <input type="text" name="landLine">
-            <label>faxNumber</label>
-            <input type="text" name="faxNumber">
-            <label>email</label>
-            <input type="text" name="email">
-            <label>logoURL</label>
-            <input type="text" name="logoURL">
-            <label>website</label>
-            <input type="text" name="website">
-            <label>mobileNumber</label>
-            <input type="text" name="mobileNumber">
-            <label>contactLanguage</label>
-            <input type="text" name="contactLanguage">
-            <label>postOfficeCode</label>
-            <input type="text" name="postOfficeCode">
-        </fieldset>
-        <fieldset >
-            <legend name="accounts">accounts</legend>
-            <label>balance</label>
-            <input type="text" name="balance">
-            <label>ARbalance</label>
-            <input type="text" name="ARbalance">
-            <label>paymentTerm</label>
-            <input type="text" name="paymentTerm">
-            <label>accountNumber</label>
-            <input type="text" name="accountNumber">
-            <label>creditLimit</label>
-            <input type="text" name="creditLimit">
-            <label>invoiceToParent</label>
-            <input type="text" name="invoiceToParent">
-            <label>salesOrderToParent</label>
-            <input type="text" name="salesOrderToParent">
-            <label>openItem</label>
-            <input type="text" name="openItem">
-            <label>stopCredit</label>
-            <input type="text" name="stopCredit">
-            <label>primaryGroup</label>
-            <input type="text" name="primaryGroup">
-            <label>secondryGroup</label>
-            <input type="text" name="secondryGroup">
-            <label>defaultCurrency</label>
-            <input type="text" name="defaultCurrency">
-            <label>strategy</label>
-            <input type="text" name="strategy">
-        </fieldset>
-        <fieldset >
-            <legend name="bankAccount">bankAccount</legend>
-            <label>accountType</label>
-            <input type="text" name="accountType">
-            <label>accountNumber</label>
-            <input type="text" name="accountNumber">
-            <label>bankName</label>
-            <input type="text" name="bankName">
-            <label>currency</label>
-            <input type="text" name="currency">
-            <label>branch</label>
-            <input type="text" name="branch">
-        </fieldset>
-        <fieldset >
-            <legend name="activityBusiness">activityBusiness</legend>
-            <label>category</label>
-            <input type="text" name="category">
-            <label>subcategory</label>
-            <input type="text" name="subcategory">
-        </fieldset>
-        <fieldset >
-            <legend name="taxCard">taxCard</legend>
-            <label>name</label>
-            <input type="text" name="name">
-            <label>address</label>
-            <input type="text" name="address">
-            <label>UnderlyingOffice</label>
-            <input type="text" name="UnderlyingOffice">
-            <label>typeOfCompany</label>
-            <input type="text" name="typeOfCompany">
-            <label>companyActivity</label>
-            <input type="text" name="companyActivity">
-        </fieldset>
-        <fieldset >
+    <%- include('../parts/navbar.ejs')%>
+        <form action="/accounts/addCompany" method="POST" enctype="multipart/form-data ">
+            </*onsubmit="returen false" */>
+            <h1></h1>
+            <h1> Add New Company</h1>
+
+            <fieldset>
+                <legend name="companyInformation">companyInformation</legend>
+                <label>nameInArabic</label>
+                <input type="text" name="nameInArabic">
+                <label>nameInEnglish</label>
+                <input type="text" name="nameInEnglish">
+                <label>namePronunciation</label>
+                <input type="text" name="namePronunciation">
+                <label>descreption</label>
+                <input type="text" name="descreption">
+                <label>allies</label>
+                <input type="text" name="allies">
+                <label>parentCompany</label>
+                <input type="text" name="parentCompany">
+                <label>legalForm</label>
+                <input type="text" name="legalForm">
+                <label>legalInformation</label>
+                <input type="text" name="legalInformation">
+                <label>startDate</label>
+                <input type="text" name="startDate">
+                <label>cityInCorporated</label>
+                <input type="text" name="cityInCorporated">
+                <label>ultimateParentName</label>
+                <input type="text" name="ultimateParentName">
+                <label>companyNationality</label>
+                <input type="text" name="companyNationality">
+            </fieldset>
+            <fieldset>
+                <legend name="addressDetails">addressDetails</legend>
+                <label>addressType</label>
+                <input type="text" name="addressType">
+                <label>country</label>
+                <input type="text" name="country">
+                <label>city</label>
+                <input type="text" name="city">
+                <label>streetName</label>
+                <input type="text" name="streetName">
+                <label>area</label>
+                <input type="text" name="area">
+                <label>realStateType</label>
+                <input type="text" name="realStateType">
+                <label>realStateNumber</label>
+                <input type="text" name="realStateNumber">
+                <label>floorNumber</label>
+                <input type="text" name="floorNumber">
+                <label>apartmentNumber</label>
+                <input type="text" name="apartmentNumber">
+                <label>detailedAddress</label>
+                <input type="text" name="detailedAddress">
+                <label>coordinates</label>
+                <input type="text" name="coordinates">
+            </fieldset>
+            <fieldset>
+                <legend name="contactInformation">contactInformation</legend>
+                <label>countryCode</label>
+                <input type="text" name="countryCode">
+                <label>governorateCode</label>
+                <input type="text" name="governorateCode">
+                <label>landLine</label>
+                <input type="text" name="landLine">
+                <label>faxNumber</label>
+                <input type="text" name="faxNumber">
+                <label>email</label>
+                <input type="text" name="email">
+                <label>logoURL</label>
+                <input type="text" name="logoURL">
+                <label>website</label>
+                <input type="text" name="website">
+                <label>mobileNumber</label>
+                <input type="text" name="mobileNumber">
+                <label>contactLanguage</label>
+                <input type="text" name="contactLanguage">
+                <label>postOfficeCode</label>
+                <input type="text" name="postOfficeCode">
+            </fieldset>
+            <fieldset>
+                <legend name="accounts">accounts</legend>
+                <label>balance</label>
+                <input type="text" name="balance">
+                <label>ARbalance</label>
+                <input type="text" name="ARbalance">
+                <label>paymentTerm</label>
+                <input type="text" name="paymentTerm">
+                <label>accountNumber</label>
+                <input type="text" name="accountNumber">
+                <label>creditLimit</label>
+                <input type="text" name="creditLimit">
+                <label>invoiceToParent</label>
+                <input type="text" name="invoiceToParent">
+                <label>salesOrderToParent</label>
+                <input type="text" name="salesOrderToParent">
+                <label>openItem</label>
+                <input type="text" name="openItem">
+                <label>stopCredit</label>
+                <input type="text" name="stopCredit">
+                <label>primaryGroup</label>
+                <input type="text" name="primaryGroup">
+                <label>secondryGroup</label>
+                <input type="text" name="secondryGroup">
+                <label>defaultCurrency</label>
+                <input type="text" name="defaultCurrency">
+                <label>strategy</label>
+                <input type="text" name="strategy">
+            </fieldset>
+            <fieldset>
+                <legend name="bankAccount">bankAccount</legend>
+                <label>accountType</label>
+                <input type="text" name="accountType">
+                <label>accountNumber</label>
+                <input type="text" name="accountNumber">
+                <label>bankName</label>
+                <input type="text" name="bankName">
+                <label>currency</label>
+                <input type="text" name="currency">
+                <label>branch</label>
+                <input type="text" name="branch">
+            </fieldset>
+            <fieldset>
+                <legend name="activityBusiness">activityBusiness</legend>
+                <label>category</label>
+                <input type="text" name="category">
+                <label>subcategory</label>
+                <input type="text" name="subcategory">
+            </fieldset>
+            <fieldset>
+                <legend name="taxCard">taxCard</legend>
+                <label>name</label>
+                <input type="text" name="name">
+                <label>address</label>
+                <input type="text" name="address">
+                <label>UnderlyingOffice</label>
+                <input type="text" name="UnderlyingOffice">
+                <label>typeOfCompany</label>
+                <input type="text" name="typeOfCompany">
+                <label>companyActivity</label>
+                <input type="text" name="companyActivity">
+            </fieldset>
+            <fieldset>
                 <legend name="commercialRegister">commercialRegister</legend>
                 <label>nationalNumberForCompany</label>
                 <input type="text" name="nationalNumberForCompany">
@@ -173,7 +174,7 @@
                 <input type="text" name="commercialAttribute">
                 <label>CommercialDenominationForBranch</label>
                 <input type="text" name="CommercialDenominationForBranch">
-                    <fieldset>
+                <fieldset>
                     <legend name="nameOfMerchantHisNickNameDateAndPalceOfHisBirthAndHisNationality">nameOfMerchantHisNickNameDateAndPalceOfHisBirthAndHisNationality</legend>
                     <label>merchantName</label>
                     <input type="text" name="merchantName">
@@ -185,8 +186,8 @@
                     <input type="text" name="placeOfBirth">
                     <label>nationality</label>
                     <input type="text" name="nationality">
-                    </fieldset>
-                    <fieldset>
+                </fieldset>
+                <fieldset>
                     <legend name="namesNickNamesOfJointlyResponsibleInGeneralPartnershipOrLimitedPartnershipBirthDateAndPlaceAndTheirNationality">namesNickNamesOfJointlyResponsibleInGeneralPartnershipOrLimitedPartnershipBirthDateAndPlaceAndTheirNationality</legend>
                     <label>partnerName</label>
                     <input type="text" name="partnerName">
@@ -198,8 +199,8 @@
                     <input type="text" name="placeOfBirth">
                     <label>nationality</label>
                     <input type="text" name="nationality">
-                    </fieldset>
-                    <fieldset>
+                </fieldset>
+                <fieldset>
                     <legend name="namesNickNamesOfPartnersOrWhoResponsibleOfManageCompanyAbdWhoHaveRightInSignWithTheirNamesTheirAttributeBirthDateAndPlaceTheirNationalityAndTheirPowerInSdministrationAndSigning">namesNickNamesOfPartnersOrWhoResponsibleOfManageCompanyAbdWhoHaveRightInSignWithTheirNamesTheirAttributeBirthDateAndPlaceTheirNationalityAndTheirPowerInSdministrationAndSigning</legend>
                     <label>name</label>
                     <input type="text" name="name">
@@ -215,8 +216,8 @@
                     <input type="text" name="nationality">
                     <label>hisPowerScopeInAdministrationAndSignature</label>
                     <input type="text" name="hisPowerScopeInAdministrationAndSignature">
-                    </fieldset>
-                    <fieldset>
+                </fieldset>
+                <fieldset>
                     <legend name="namesNickNamesOfDirectorsBordInJointStockCompanyOrCoopretativeSocietyTheirAgentsTheirAttributeBirthDateAndPlaceTheirNationalityAndTheirPowerOnAdministerationAndSigning">namesNickNamesOfDirectorsBordInJointStockCompanyOrCoopretativeSocietyTheirAgentsTheirAttributeBirthDateAndPlaceTheirNationalityAndTheirPowerOnAdministerationAndSigning</legend>
                     <label>directorName</label>
                     <input type="text" name="directorName">
@@ -230,8 +231,8 @@
                     <input type="text" name="powerScopeInAdministration">
                     <label>hisAgents</label>
                     <input type="text" name="hisAgents">
-                    </fieldset>
-                    <fieldset>
+                </fieldset>
+                <fieldset>
                     <legend name="nameNickNameOfHeadOfficeDirectorOrGeneralAgentInEgyptBirthDateAndPlaceAndHisNationalityIfGeneralCenterOfCompanyWasOutside">nameNickNameOfHeadOfficeDirectorOrGeneralAgentInEgyptBirthDateAndPlaceAndHisNationalityIfGeneralCenterOfCompanyWasOutside</legend>
                     <label>managerOfHeadOfficeName</label>
                     <input type="text" name="managerOfHeadOfficeName">
@@ -269,9 +270,9 @@
                     <input type="text" name="addressOfBrachOrAgent">
                     <label>uploadCopy</label>
                     <input type="text" name="uploadCopy">
-                    </fieldset>
-        </fieldset>
-        <fieldset>
+                </fieldset>
+            </fieldset>
+            <fieldset>
                 <legend name="recordCardInImporterRegister">recordCardInImporterRegister</legend>
                 <label>recordNumber</label>
                 <input type="text" name="recordNumber">
@@ -295,8 +296,8 @@
                 <input type="text" name="dateOfRecord">
                 <label>uploadCopy</label>
                 <input type="text" name="uploadCopy">
-        </fieldset>
-        <fieldset>
+            </fieldset>
+            <fieldset>
                 <legend name="recordInExporterRegister">recordInExporterRegister</legend>
                 <label>valiedFrom</label>
                 <input type="text" name="valiedFrom">
@@ -332,8 +333,8 @@
                 <input type="text" name="itemsAreExported">
                 <label>uploadCopy</label>
                 <input type="text" name="uploadCopy">
-        </fieldset>
-        <fieldset>
+            </fieldset>
+            <fieldset>
                 <legend name="registerationGeneralTaxOnSales">registerationGeneralTaxOnSales</legend>
                 <label>businessName</label>
                 <input type="text" name="businessName">
@@ -345,8 +346,8 @@
                 <input type="text" name="registerationDate">
                 <label>uploadCopy</label>
                 <input type="text" name="uploadCopy">
-        </fieldset>
-        <fieldset>
+            </fieldset>
+            <fieldset>
                 <legend name="engagementBusinessLicense">engagementBusinessLicense</legend>
                 <label>licenceNumber</label>
                 <input type="text" name="licenceNumber">
@@ -376,8 +377,8 @@
                 <input type="text" name="expirationDateOfLicence">
                 <label>uploadCopy</label>
                 <input type="text" name="uploadCopy">
-        </fieldset>
-        <fieldset>
+            </fieldset>
+            <fieldset>
                 <legend name="regiseterationCertifecateOfValueAddedTaxe">regiseterationCertifecateOfValueAddedTaxe</legend>
                 <label>distrect</label>
                 <input type="text" name="distrect">
@@ -393,12 +394,12 @@
                 <input type="text" name="registerationDate">
                 <label>uploadCopy</label>
                 <input type="text" name="uploadCopy">
-        </fieldset>
-                
-    
-        <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
-
-</form>
+            </fieldset>
 
 
-<%- include('../parts/footer.ejs')%>
+            <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
+
+        </form>
+
+
+        <%- include('../parts/footer.ejs')%>

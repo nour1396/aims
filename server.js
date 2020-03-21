@@ -14,24 +14,22 @@ var MongoStore = require('connect-mongo')(session);
 var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 const cors = require('cors');
-var bcrypt = require('bcryptjs');
-var LocalStrategy = require('passport-local').Strategy;
+
 //defining the port
 var port = process.env.PORT || 5000;
 const NODE__ENV = 'development'
 const IN_PROD = NODE__ENV === 'production'
 const SESS_NAME = 'Sid'
 var configDB = require('./config/database');
+
 //connect to database
 mongoose.connect(configDB.url, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
 }, (err) => { console.log('DB connected ^_^ ') })
-
 mongoose.set('useFindAndModify', false);
-
-
 app.use(compression());
+
 //define the middlewares
 app.use(cors());
 app.use(morgan('dev'));
@@ -42,7 +40,7 @@ app.use(session({
         sameSite: true,
         secure: IN_PROD
     },
-    secret: 'anystringoftext',
+    secret: 'anystring',
     saveUninitialized: true,
     resave: true,
     store: new MongoStore({
@@ -50,26 +48,24 @@ app.use(session({
         ttl: 2 * 24 * 60 * 60
     })
 }));
+
 //use passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
 //flash module to alert messeges
 app.use(flash());
+
 //define the static folder
 app.use(express.static(path.join(__dirname, '/assets')));
+
 //use body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 //specify ejs as view engien
 app.set('view engine', 'ejs');
 
-// Global variables
-/* app.use(function(req, res, next) {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    next();
-}); */
 //routing files
 require('./config/passport')(passport);
 require('./routes/client_rout')(app, passport);

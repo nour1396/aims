@@ -9,15 +9,33 @@ const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
 var configDB = require('../config/database');
 var mongoose = require('mongoose');
 module.exports = function(router) {
+    //to show log for specific user 
     router.get('/log', (req, res) => {
             const log = req.query.log;
             let data = {}
-            Log.find({ user: log }).then(logs => {
-                data.logs = logs
-                res.render('log', data)
-            })
+            console.log(log)
+            if (log == '') {
+                Log.find({}).then(logs => {
+                        data.logs = logs
+                        res.render('log', data)
+                    })
+                    //record when user do something
+                Log.create({
+                    statement: 'User: ' + req.user.userName + ' entered to get all users log',
+                    user: req.user.userName
+                });
+            } else if (log.constructor === String) {
+                Log.find({ user: log }).then(logs => {
+                    data.logs = logs
+                    res.render('log', data)
+                })
+                Log.create({
+                    statement: 'User: ' + req.user.userName + ' entered to get log of user: ' + log,
+                    user: req.user.userName
+                });
+            }
         })
-        //home page
+        //get list of clients saved
     router.get('/clients', function(req, res) {
         if (!req.user == false) {
             Log.create({
@@ -32,6 +50,8 @@ module.exports = function(router) {
             res.redirect(302, '/login');
         }
     })
+
+    //main page
     router.get('/index', (req, res) => {
         res.render('index')
     })
@@ -40,7 +60,6 @@ module.exports = function(router) {
     router.get('/signup', (req, res, next) => {
         res.render('signup', { message: req.flash('signupMessage') });
     });
-
     router.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/login',
         failureRedirect: '/signup',
@@ -55,7 +74,6 @@ module.exports = function(router) {
             })
         })
     });
-
     router.post('/login',
         passport.authenticate('local-login', {
             successRedirect: '/index',
@@ -64,10 +82,19 @@ module.exports = function(router) {
         })
     );
 
+    // show user details name and password 
     router.get('/profile', isLoggedIn, function(req, res) {
         res.render('profile', { user: req.user });
     });
 
+    function isLoggedIn(req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
+        }
+        res.redirect('/login');
+    }
+
+    //page to show if user has drafts or not 
     router.get('/ind', function(req, res) {
         let data = {}
         DraftClient.find({ user: req.user.userName }).then(draftEn => {
@@ -82,6 +109,7 @@ module.exports = function(router) {
         })
     })
 
+    //logout
     router.get('/logout', (req, res) => {
         req.session.destroy((err) => {
             if (err) {
@@ -89,13 +117,5 @@ module.exports = function(router) {
             }
             res.redirect('/login');
         });
-
     });
-
-    function isLoggedIn(req, res, next) {
-        if (req.isAuthenticated()) {
-            return next();
-        }
-        res.redirect('/login');
-    }
 }

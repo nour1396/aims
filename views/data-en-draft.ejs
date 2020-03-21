@@ -15,15 +15,16 @@
     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
 </head>
 
-<body style="backgtoun-img : " >
+<body>
     <h1> ADD New Person</h1>
 
-<!-- Now make value= the value of draft -->
-<!-- One thing I should-->
-    <form action="/data-en" id="data-en-form" method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
-    <label style="color:gold">ID</label>
+    <!-- Now make value= the value of draft -->
+    <!-- One thing I should-->
+    <form action="/data-en" id="data-en-form" method="POST" enctype="multipart/form-data ">
+        </*onsubmit="returen false" */>
+        <label style="color:gold">ID</label>
         <input type="text" maxlength="14" name="_id" placeholder="Enter Your ID Number" value="<%= draft._id ? draft._id : '' %>">
-        <fieldset id="f1" class="draftStyle"  name="personalInformation" dir="auto">
+        <fieldset id="f1" class="draftStyle" name="personalInformation" dir="auto">
             <legend>Basic Information</legend>
             <label>First Name</label>
             <input type="text" name="PI_firstName" value="<%= draft.personalInformation ? draft.personalInformation.PI_firstName : '' %>" placeholder="Enter Your First Name" title="enter your first name only without any spaces">
@@ -35,7 +36,7 @@
             <input type="text" name="PI_fourthName" value="<%= draft.personalInformation ? draft.personalInformation.PI_fourthName : '' %>" placeholder="Enter Your Fourth Name">
             <label>Last Name </label>
             <input type="text" name="PI_lastName" value="<%= draft.personalInformation ? draft.personalInformation.PI_lastName : '' %>" placeholder="Enter Your Last Name">
-             <label>Title </label>
+            <label>Title </label>
             <select name="PI_title" placeholder="اللقب" value="<%= draft.personalInformation ? draft.personalInformation.PI_title : '' %>">
                 <%for(let t of titles){%> 
                 <%if (t.male_english.length !==0){%>
@@ -65,11 +66,11 @@
 
         </fieldset>
 
-<!-- Ok?-->
+        <!-- Ok?-->
         <fieldset id="f2" name="identityCard">
             <legend>Identity Card</legend>
             <label>ID Number</label>
-            <input type="text"  maxlength="14" value="<%= draft.identityCard ? draft.identityCard.IC_idNumber : '' %>" name="IC_idNumber" placeholder="Enter Your ID Number">
+            <input type="text" maxlength="14" value="<%= draft.identityCard ? draft.identityCard.IC_idNumber : '' %>" name="IC_idNumber" placeholder="Enter Your ID Number">
             <label>Issued From</label>
             <select name="IC_issuedfrom">
             </select><br>
@@ -495,7 +496,7 @@
                 <label>Expiration Date</label>
                 <input type="date" name="SI_expirationDate">
                 <label>Country</label>
-                <select  type="text" name="SI_country">
+                <select type="text" name="SI_country">
                     <%for(let c of countries){%> 
                     <%if (c.country_english.length !==0){%>
                     <option value=""><%= c.country_english%></option>
@@ -534,240 +535,240 @@
                 <input type="file" name="PC_uploadCopy">
             </fieldset>
         </fieldset>
-            <fieldset name="bankAccount">
-                <legend>Bank Account</legend>
-                <label >Account Type</label>
-                <input type="text" name="BA_accountType">
-                <label >Account Number</label>
-                <input type="text" name="BA_accountNumber">
-                <label >Bank Name</label>
-                <input type="text" name="BA_bankName">
-                <label>Currency</label>
-                <input type="text" name="BA_currency">
-                <label >Branch</label>
-                <input type="text" name="BA_branch">
+        <fieldset name="bankAccount">
+            <legend>Bank Account</legend>
+            <label>Account Type</label>
+            <input type="text" name="BA_accountType">
+            <label>Account Number</label>
+            <input type="text" name="BA_accountNumber">
+            <label>Bank Name</label>
+            <input type="text" name="BA_bankName">
+            <label>Currency</label>
+            <input type="text" name="BA_currency">
+            <label>Branch</label>
+            <input type="text" name="BA_branch">
+        </fieldset>
+        <fieldset name="contactData">
+            <legend>Contact</legend>
+            <label>Telephone Number</label>
+            <input type="tel" name="CD_telephoneNumber">
+            <label>Mobile Number</label>
+            <input type="tel" name="CD_mobileNumber">
+            <label>Postal Code</label>
+            <input type="text" name="CD_postalCode">
+            <label>E-mail</label>
+            <input type="email" name="CD_email">
+            <label>Contact Language</label>
+            <select type="text" name="CD_contactLanguage">
+                <%for(let l of languages){%> 
+                        <%if (l.english_name.length !==0){%>
+                        <option value=""><%= l.english_name%></option>
+                        <%}%>
+                        <%}%>
+                </select>
+            <label>Native Language</label>
+            <select type="text" name="CD_nativeLanguage">
+                <%for(let l of languages){%> 
+                        <%if (l.english_name.length !==0){%>
+                        <option value=""><%= l.english_name%></option>
+                        <%}%>
+                        <%}%>
+                </select>
+            <label>Spoken Language</label>
+            <select type="text" name="CD_spokenLanguage">
+                <%for(let l of languages){%> 
+                        <%if (l.english_name.length !==0){%>
+                        <option value=""><%= l.english_name%></option>
+                        <%}%>
+                        <%}%>
+                </select>
+        </fieldset>
+        <fieldset name="Education">
+            <legend>Education</legend>
+            <label>Last Degree Level</label>
+            <input type="text" name="E_lastDegreeLevel" value="">
+            <fieldset name="university">
+                <legend>University</legend>
+                <label>University Name</label>
+                <input type="text" name="UNI_universtyName" value="">
+                <label>Faculty Name</label>
+                <input type="text" name="UNI_facultyName" value=""><br>
+                <label>Degree Level</label>
+                <select name="UNI_degreeLevel" value="">
+                        <option></option>
+                    </select>
+                <label>Department</label>
+                <input type="text" name="UNI_department" value=""><br>
+                <label>Grade</label>
+                <select name="UNI_grade" value="">
+                        <option></option>
+                    </select>
+                <label for="">Graduate Date</label>
+                <input type="date" name="UNI_graduateDate" value=""><br>
+                <label for="">Cetificate</label>
+                <input type="file" name="UNI_copyOfCertificate" value="">
             </fieldset>
-            <fieldset name="contactData">
-                <legend>Contact</legend>
-                <label >Telephone Number</label>
-                <input type="tel" name="CD_telephoneNumber">
-                <label >Mobile Number</label>
-                <input type="tel" name="CD_mobileNumber">
-                <label >Postal Code</label>
-                <input type="text" name="CD_postalCode">
-                <label>E-mail</label>
-                <input type="email" name="CD_email">
-                <label >Contact Language</label>
-                <select type="text" name="CD_contactLanguage">
-                <%for(let l of languages){%> 
-                        <%if (l.english_name.length !==0){%>
-                        <option value=""><%= l.english_name%></option>
-                        <%}%>
-                        <%}%>
-                </select>
-                <label>Native Language</label>
-                <select type="text" name="CD_nativeLanguage">
-                <%for(let l of languages){%> 
-                        <%if (l.english_name.length !==0){%>
-                        <option value=""><%= l.english_name%></option>
-                        <%}%>
-                        <%}%>
-                </select>
-                <label >Spoken Language</label>
-                <select type="text" name="CD_spokenLanguage">
-                <%for(let l of languages){%> 
-                        <%if (l.english_name.length !==0){%>
-                        <option value=""><%= l.english_name%></option>
-                        <%}%>
-                        <%}%>
-                </select>
+            <fieldset name="secondrySchool">
+                <legend>Secondry School</legend>
+                <label for="">Type</label>
+                <select name="SEC_schoolType" value="">
+                        <option ></option>
+                    </select>
+                <label for="">School Name</label>
+                <input type="text" name="SEC_secondrySchoolName" value=""><br>
+                <label for="">Grade</label>
+                <select name="SEC_grade" value="">
+                        <option></option>
+                    </select>
+                <label for="">Graduate Date</label>
+                <input type="date" name="SEC_graduateDate" value=""><br>
+                <label for="">Certificate</label>
+                <input type="file" name="SEC_copyOfCertificate" value="">
             </fieldset>
-            <fieldset name="Education">
-                <legend>Education</legend>
-                <label>Last Degree Level</label>
-                <input type="text" name="E_lastDegreeLevel" value="">
-                <fieldset name="university">
-                    <legend>University</legend>
-                    <label>University Name</label>
-                    <input type="text" name="UNI_universtyName" value="">
-                    <label>Faculty Name</label>
-                    <input type="text" name="UNI_facultyName" value=""><br>
-                    <label>Degree Level</label>
-                    <select name="UNI_degreeLevel" value="">
-                        <option></option>
-                    </select>
-                    <label>Department</label>
-                    <input type="text" name="UNI_department" value=""><br>
-                    <label>Grade</label>
-                    <select name="UNI_grade" value="">
-                        <option></option>
-                    </select>
-                    <label for="">Graduate Date</label>
-                    <input type="date" name="UNI_graduateDate" value=""><br>
-                    <label for="">Cetificate</label>
-                    <input type="file" name="UNI_copyOfCertificate" value="">
-                </fieldset>
-                <fieldset name="secondrySchool">
-                    <legend>Secondry School</legend>
-                    <label for="">Type</label>
-                    <select name="SEC_schoolType" value="">
+            <fieldset name="middleSchool">
+                <legend>Middle School</legend>
+                <label for="">Type</label>
+                <select name="MIDD_typeOfSchool" value="">
                         <option ></option>
                     </select>
-                    <label for="">School Name</label>
-                    <input type="text" name="SEC_secondrySchoolName" value=""><br>
-                    <label for="">Grade</label>
-                    <select name="SEC_grade" value="">
+                <label for="">School Name</label>
+                <input type="text" name="MIDD_schoolName" value=""><br>
+                <label for="">Grade</label>
+                <select name="MIDD_grade" value="">
                         <option></option>
                     </select>
-                    <label for="">Graduate Date</label>
-                    <input type="date" name="SEC_graduateDate" value=""><br>
-                    <label for="">Certificate</label>
-                    <input type="file" name="SEC_copyOfCertificate" value="">
-                </fieldset>
-                <fieldset name="middleSchool">
-                    <legend>Middle School</legend>
-                    <label for="">Type</label>
-                    <select name="MIDD_typeOfSchool" value="">
+                <label for="">Graduate Date</label>
+                <input type="date" name="MIDD_graduateDate" value=""><br>
+                <label for="">Certificate</label>
+                <input type="file" name="MIDD_copyOfCertificate" value="">
+            </fieldset>
+            <fieldset name="primarySchool">
+                <legend>Primary School</legend>
+                <label for="">Type</label>
+                <select name="PRIM_schoolType" value="">
                         <option ></option>
                     </select>
-                    <label for="">School Name</label>
-                    <input type="text" name="MIDD_schoolName" value=""><br>
-                    <label for="">Grade</label>
-                    <select name="MIDD_grade" value="">
+                <label for="">Schoole Name</label>
+                <input type="text" name="PRIM_schoolName" value=""><br>
+                <label for="">Grade</label>
+                <select name="PRIM_grade" value="">
                         <option></option>
                     </select>
-                    <label for="">Graduate Date</label>
-                    <input type="date" name="MIDD_graduateDate" value=""><br>
-                    <label for="">Certificate</label>
-                    <input type="file" name="MIDD_copyOfCertificate" value="">
-                </fieldset>
-                <fieldset name="primarySchool">
-                    <legend>Primary School</legend>
-                    <label for="">Type</label>
-                    <select name="PRIM_schoolType" value="">
-                        <option ></option>
-                    </select>
-                    <label for="">Schoole Name</label>
-                    <input type="text" name="PRIM_schoolName" value=""><br>
-                    <label for="">Grade</label>
-                    <select name="PRIM_grade" value="">
+                <label for="">Graduate Date</label>
+                <input type="date" name="PRIM_graduateDate" value=""><br>
+                <label for="">Certificate</label>
+                <input type="file" name="PRIM_copyOfCertificate" value="">
+            </fieldset>
+            <fieldset name="trainingAndCourses">
+                <legend>Training And Courses</legend>
+                <label for="">Training Topic</label>
+                <input type="text" name="TAC_trainingTopic" value="">
+                <label for="">Organization Or institution Name</label>
+                <input type="text" name="TAC_organizationOrinstitutionName" value=""><br>
+                <label for="">Month</label>
+                <input type="text" name="TAC_month" value="">
+                <label for="">Year</label>
+                <input type="text" name="TAC_year" value=""><br>
+                <label for="">Additional Information</label>
+                <textarea rows="2" cols="" maxlength="150" placeholder="Enter Any additional Information"></textarea>
+            </fieldset>
+            <fieldset name="skills">
+                <legend>Skills</legend>
+                <label for="">Skill Name</label>
+                <select name="SK_skillName" value="">
                         <option></option>
                     </select>
-                    <label for="">Graduate Date</label>
-                    <input type="date" name="PRIM_graduateDate" value=""><br>
-                    <label for="">Certificate</label>
-                    <input type="file" name="PRIM_copyOfCertificate" value="">
-                </fieldset>
-                <fieldset name="trainingAndCourses">
-                    <legend>Training And Courses</legend>
-                    <label for="">Training Topic</label>
-                    <input type="text" name="TAC_trainingTopic" value="">
-                    <label for="">Organization Or institution Name</label>
-                    <input type="text" name="TAC_organizationOrinstitutionName" value=""><br>
-                    <label for="">Month</label>
-                    <input type="text" name="TAC_month" value="">
-                    <label for="">Year</label>
-                    <input type="text" name="TAC_year" value=""><br>
-                    <label for="">Additional Information</label>
-                    <textarea rows="2" cols="" maxlength="150" placeholder="Enter Any additional Information"></textarea>
-                </fieldset>
-                <fieldset name="skills">
-                    <legend>Skills</legend>
-                    <label for="">Skill Name</label>
-                    <select name="SK_skillName" value="">
-                        <option></option>
-                    </select>
-                    <label for="">Proficiency</label>
-                    <select name="SK_proficiency" value="">
+                <label for="">Proficiency</label>
+                <select name="SK_proficiency" value="">
                         <option></option>
                     </select><br>
-                    <label for="">Interest</label>
-                    <input type="text" name="SK_interest" value="">
-                    <label for="">Years of Experience</label>
-                    <select name="SK_yearsOfExperience" value="">
+                <label for="">Interest</label>
+                <input type="text" name="SK_interest" value="">
+                <label for="">Years of Experience</label>
+                <select name="SK_yearsOfExperience" value="">
                         <option></option>
                     </select><br>
-                    <label for="">Add Justification</label>
-                    <textarea rows="2" cols="" maxlength="150" placeholder="Enter Add Justification"></textarea>
-                </fieldset>
-                <fieldset name="languages">
-                    <legend>Languages</legend>
-                    <label for="">Language</label>
-                    <select name="LANG_language" value="">
+                <label for="">Add Justification</label>
+                <textarea rows="2" cols="" maxlength="150" placeholder="Enter Add Justification"></textarea>
+            </fieldset>
+            <fieldset name="languages">
+                <legend>Languages</legend>
+                <label for="">Language</label>
+                <select name="LANG_language" value="">
                         <%for(let l of languages){%> 
                         <%if (l.english_name.length !==0){%>
                         <option value=""><%= l.english_name%></option>
                         <%}%>
                         <%}%>
                     </select>
-                    <label for="">Reading Proficiency</label>
-                    <select name="LANG_readingProficiency" value="">
+                <label for="">Reading Proficiency</label>
+                <select name="LANG_readingProficiency" value="">
                         <option></option>
                     </select>
-                    <label for="">Writing Proficiency</label>
-                    <select name="LANG_writingProficiency" value="">
+                <label for="">Writing Proficiency</label>
+                <select name="LANG_writingProficiency" value="">
                         <option></option>
                     </select>
-                    <label for="">Listening Proficiency</label>
-                    <select name="LANG_listeningProficiency" value="">
+                <label for="">Listening Proficiency</label>
+                <select name="LANG_listeningProficiency" value="">
                         <option></option>
                     </select>
-                    <label for="">Speaking Proficiency</label>
-                    <select name="LANG_speakingProficiency" value="">
+                <label for="">Speaking Proficiency</label>
+                <select name="LANG_speakingProficiency" value="">
                         <option></option>
                     </select>
-                    <label for="">Add Justification</label>
-                    <textarea rows="2" cols="" maxlength="150" placeholder="Enter Add Justification"></textarea>                   
-                </fieldset>
+                <label for="">Add Justification</label>
+                <textarea rows="2" cols="" maxlength="150" placeholder="Enter Add Justification"></textarea>
             </fieldset>
-            <fieldset name="medicalProfile">
-                <legend>Medical Profile</legend>
-                <label for="">Blood Group</label>
-                <select name="MP_bloodGroup" value="">
+        </fieldset>
+        <fieldset name="medicalProfile">
+            <legend>Medical Profile</legend>
+            <label for="">Blood Group</label>
+            <select name="MP_bloodGroup" value="">
                     <option></option>
                 </select>
-                <fieldset name="MP_vitalRates">
-                    <legend>Vital Rates</legend>
-                    <label for="">Blood Pressure</label>
-                    <input type="text" name="VR_bloodPressure" value="">
-                    <label for="">Breathing Average</label>
-                    <input type="text" name="VR_breathingAverage" value="">
-                    <label for="">Pulse Average</label>
-                    <input type="text" name="VR_pulseAverage" value="">
-                </fieldset>
-                <fieldset name="MP_physicalProperties">
-                    <legend>Physical Properties</legend>
-                    <label for="">Hip Size</label>
-                    <input type="text" name="PP_hipSize" value="">
-                    <label for="">Wrist Size</label>
-                    <input type="text" name="PP_wristSize" value="">
-                    <label for="">Height</label>
-                    <input type="text" name="" value="">
-                </fieldset>
-                <fieldset name="MP_regularHabits">
-                    <legend>Regular Habits</legend>
-                    <label for="">Eat Fruits</label>
-                    <input type="checkbox" class="checkBox" name="RH_eatFruits" value=""><br>
-                    <label for="">Eat Vegetables</label>
-                    <input type="checkbox" class="checkBox" name="RH_eatVegetables" value=""><br>
-                    <label for="">Eat Chicken</label>
-                    <input type="checkbox" class="checkBox" name="RH_eatChicken" value=""><br>
-                    <label for="">Eat Meats</label>
-                    <input type="checkbox" class="checkBox" name="RH_eatMeats" value=""><br>
-                    <label for="">Smoke</label>
-                    <input type="checkbox" class="checkBox" name="RH_smoke" value=""><br>
-                    <label for="">Drink Alchol</label>
-                    <input type="checkbox" class="checkBox" name="RH_drinkAlchole" value=""><br>
-                    <label for="">Take Drugs</label>
-                    <input type="checkbox" class="checkBox" name="RH_takeDrugs" value=""><br>
-                </fieldset>
-                
+            <fieldset name="MP_vitalRates">
+                <legend>Vital Rates</legend>
+                <label for="">Blood Pressure</label>
+                <input type="text" name="VR_bloodPressure" value="">
+                <label for="">Breathing Average</label>
+                <input type="text" name="VR_breathingAverage" value="">
+                <label for="">Pulse Average</label>
+                <input type="text" name="VR_pulseAverage" value="">
+            </fieldset>
+            <fieldset name="MP_physicalProperties">
+                <legend>Physical Properties</legend>
+                <label for="">Hip Size</label>
+                <input type="text" name="PP_hipSize" value="">
+                <label for="">Wrist Size</label>
+                <input type="text" name="PP_wristSize" value="">
+                <label for="">Height</label>
+                <input type="text" name="" value="">
+            </fieldset>
+            <fieldset name="MP_regularHabits">
+                <legend>Regular Habits</legend>
+                <label for="">Eat Fruits</label>
+                <input type="checkbox" class="checkBox" name="RH_eatFruits" value=""><br>
+                <label for="">Eat Vegetables</label>
+                <input type="checkbox" class="checkBox" name="RH_eatVegetables" value=""><br>
+                <label for="">Eat Chicken</label>
+                <input type="checkbox" class="checkBox" name="RH_eatChicken" value=""><br>
+                <label for="">Eat Meats</label>
+                <input type="checkbox" class="checkBox" name="RH_eatMeats" value=""><br>
+                <label for="">Smoke</label>
+                <input type="checkbox" class="checkBox" name="RH_smoke" value=""><br>
+                <label for="">Drink Alchol</label>
+                <input type="checkbox" class="checkBox" name="RH_drinkAlchole" value=""><br>
+                <label for="">Take Drugs</label>
+                <input type="checkbox" class="checkBox" name="RH_takeDrugs" value=""><br>
             </fieldset>
 
+        </fieldset>
 
-    
-            
-        
+
+
+
+
 
 
 

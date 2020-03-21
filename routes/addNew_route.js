@@ -1,10 +1,10 @@
-const addItem = require('../models/accounts/addItem').addItem;
-const addItemCategory = require('../models/accounts/addItem').addItemCategory;
-const addAcc = require('../models/accounts/accountCard').addAcc;
-const Company = require('../models/accounts/companySchema').Company;
-const Organization = require('../models/accounts/orgSchema').Organization;
-const addAsset = require('../models/accounts/assets').addAsset;
-const addService = require('../models/accounts/services').addService;
+const addItem = require('../models/accounts/addItem').addItem; //items schema
+const addItemCategory = require('../models/accounts/addItem').addItemCategory; //item category schema
+const addAcc = require('../models/accounts/accountCard').addAcc; //account card schema
+const Company = require('../models/accounts/companySchema').Company; //company schema
+const Organization = require('../models/accounts/orgSchema').Organization; //org schema
+const addAsset = require('../models/accounts/assets').addAsset; //assetr schema
+const addService = require('../models/accounts/services').addService; //service schema
 module.exports = function(router) {
     //get form to add new item 
     router.get('/accounts/newItem', function(req, res, next) {

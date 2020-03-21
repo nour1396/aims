@@ -15,17 +15,17 @@
     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
 </head>
 
-<body style="backgtoun-img : " >
+<body>
     <h1> ADD New Person</h1>
-  <form class="form-inline my-2 my-lg-0" action="/search" method="get">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search"  name="search">
-        <button class="btn btn-outline-success my-2 my-sm-0" >Search</button>
+    <form class="form-inline my-2 my-lg-0" action="/search" method="get">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+        <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
     </form>
     <form action="/update" method="post" onsubmit="handleFormSubmission(event, this)" enctype="multipart/form-data ">
         <input type="hidden" name="userId" value="<%=Client._id%>">
         <label style="color:gold">ID</label>
         <input type="text" maxlength="14" name="_id" placeholder="Enter Your ID Number" value="<%=Client._id%>">
-        <fieldset id="f1"  name="personalInformation" dir="auto">
+        <fieldset id="f1" name="personalInformation" dir="auto">
             <legend>Basic Information</legend>
             <label>First Name</label>
             <input type="text" name="PI_firstName" value="<%=Client.personalInformation.PI_firstName%>" placeholder="Enter Your First Name" title="enter your first name only without any spaces">
@@ -37,8 +37,8 @@
             <input type="text" name="PI_fourthName" value="<%=Client.personalInformation.PI_fourthName%>" placeholder="Enter Your Fourth Name">
             <label>Last Name </label>
             <input type="text" name="PI_lastName" value="<%=Client.personalInformation.PI_lastName%>" placeholder="Enter Your Last Name">
-             <label>Title </label>
-            <select name="PI_title" value="<%=Client.personalInformation.PI_title%>" placeholder="Enter Your Title" >
+            <label>Title </label>
+            <select name="PI_title" value="<%=Client.personalInformation.PI_title%>" placeholder="Enter Your Title">
                 
             </select>
             <label>Gender</label>
@@ -55,7 +55,7 @@
             </select><br>
         </fieldset>
 
-       <!-- <fieldset id="f2" name="identityCard">
+        <!-- <fieldset id="f2" name="identityCard">
             <legend>Identity Card</legend>
             <label>ID Number</label>
             <input type="text" maxlength="14" name=" idNumber " placeholder="Enter Your ID Number">
@@ -413,12 +413,12 @@
         <button type="submit">Edit</button>
     </form>
 
-  
-   
 
-      <script>
-    // When you load this page
-    // get firstName from localStorage and  append it to the value of PI_firstName in the .update-form
+
+
+    <script>
+        // When you load this page
+        // get firstName from localStorage and  append it to the value of PI_firstName in the .update-form
         document.querySelector('.update-form').elements['PI_firstName'].value = localStorage.getItem('PI_firstName') || '';
         // you can type whatever you want
         // but you should use a name you can get later 

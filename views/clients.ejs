@@ -1,30 +1,41 @@
 <%- include('parts/header.ejs')%>
-<%- include('parts/navbar.ejs')%>
+    <%- include('parts/navbar.ejs')%>
 
-<div class="container">
-<form class="form-inline my-2 my-lg-0" action="/searchC" method="get">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search"  name="searchC">
-        <button class="btn btn-outline-success my-2 my-sm-0" >Search</button>
-    </form>
-    <div class="row">
-        <%for (let client of clients){%>
-            <div  class="col col-12 col-md-6 col-lg-2 col-xl-3">
-                <div class="card" style="width: 40rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <p>Name: <%= client.personalInformation.PI_firstName%> <%=client.personalInformation.PI_secondName%></p>
-                            <p>ID : <%= client._id%></p>
-                            <p>Gender: <%= client.personalInformation.PI_gender%></p>
-                            <p>Marital Status: <%= client.personalInformation.PI_maritalStatus%></p>
-                            <p>Nationality: <%= client.personalInformation.PI_nationality%></p>
-                        </h5>
-                        <a href="/edit/<%= client._id%>">Edit</a>  
+        <div class="container">
+            <form class="form-inline my-2 my-lg-0" action="/searchC" method="get">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="searchC">
+                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+            </form>
+            <div class="row">
+                <%for (let client of clients){%>
+                    <div class="col col-12 col-md-6 col-lg-2 col-xl-3">
+                        <div class="card" style="width: 40rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <p>Name:
+                                        <%= client.personalInformation.PI_firstName%>
+                                            <%=client.personalInformation.PI_secondName%>
+                                    </p>
+                                    <p>ID :
+                                        <%= client._id%>
+                                    </p>
+                                    <p>Gender:
+                                        <%= client.personalInformation.PI_gender%>
+                                    </p>
+                                    <p>Marital Status:
+                                        <%= client.personalInformation.PI_maritalStatus%>
+                                    </p>
+                                    <p>Nationality:
+                                        <%= client.personalInformation.PI_nationality%>
+                                    </p>
+                                </h5>
+                                <a href="/edit/<%= client._id%>">Edit</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <%}%>
             </div>
-        <%}%>
-    </div>
-</div>
+        </div>
 
 
-<%- include('parts/footer.ejs')%>
+        <%- include('parts/footer.ejs')%>

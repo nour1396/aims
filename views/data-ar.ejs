@@ -18,10 +18,11 @@
 <body background="/hd1.jpg" background-size="full">
     <h1 dir="rtl"> اضافة شخص جديد</h1>
 
-    <form action="/data-ar" id="data-ar-form" method="POST" enctype="multipart/form-data " > </*onsubmit="returen false"*/>
+    <form action="/data-ar" id="data-ar-form" method="POST" enctype="multipart/form-data ">
+        </*onsubmit="returen false" */>
         <label style="color:gold">ID</label>
         <input type="text" maxlength="14" name="_id" placeholder="Enter Your ID Number">
-        <fieldset id="f1"  name="personalInformation" dir="rtl">
+        <fieldset id="f1" name="personalInformation" dir="rtl">
             <legend>Basic Information</legend>
             <label>الاسم الاول</label>
             <input type="text" name="PI_firstName" placeholder="Enter Your First Name" title="ادخل الاسم الاول">
@@ -33,8 +34,8 @@
             <input type="text" name="PI_fourthName" placeholder="ادخل الاسم الرابع">
             <label>الاسم الاخير </label>
             <input type="text" name="PI_lastName" placeholder="ادخل الاسم الاخير">
-             <label>اللقب </label>
-            <select name="PI_title" placeholder="اللقب" >
+            <label>اللقب </label>
+            <select name="PI_title" placeholder="اللقب">
                 <%for(let t of titles){%> 
                 <%if (t.male_arabic.length !==0){%>
                 <option value=""><%= t.male_arabic%></option>
@@ -63,7 +64,7 @@
 
         </fieldset>
 
-       <!-- <fieldset name="identity card" dir="rtl">
+        <!-- <fieldset name="identity card" dir="rtl">
             <legend>البطاقة الشخصية</legend>
             <label>رقم البطاقة الشخصية</label>
             <input type="text" maxlength="14" name="_id" placeholder="ادخل الرقم القومي">
@@ -356,21 +357,21 @@
         <input type="submit" id="submitDetails" name="submitDetails" value="حفظ" /><br>
     </form>
     <script>
-    document.getElementById('data-ar-form').querySelectorAll('input').forEach(input => {
-    input.addEventListener('blur', function() {
+        document.getElementById('data-ar-form').querySelectorAll('input').forEach(input => {
+            input.addEventListener('blur', function() {
 
-        fetch('/data-ar/draft', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                field: input.parentNode.getAttribute('name') + '.' + input.getAttribute('name'),
-                value: input.value
+                fetch('/data-ar/draft', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        field: input.parentNode.getAttribute('name') + '.' + input.getAttribute('name'),
+                        value: input.value
+                    })
+                })
             })
         })
-    })
-})
     </script>
 </body>
 
