@@ -6,18 +6,17 @@ const Log = require('../models/log').Log;
 const DraftClient = require('../models/drafts/draftClientEN').DraftClient;
 const DraftClientAr = require('../models/drafts/draftClientAR').DraftClientAr;
 const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
-var configDB = require('../config/database');
-var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 module.exports = function(router) {
     //to show log for specific user 
     router.get('/log', (req, res) => {
             const log = req.query.log;
             let data = {}
             console.log(log)
-            if (log == '') {
+            if (log == undefined) {
                 Log.find({}).then(logs => {
                         data.logs = logs
-                        res.render('log', data)
+                        res.json(data)
                     })
                     //record when user do something
                 Log.create({
@@ -27,7 +26,7 @@ module.exports = function(router) {
             } else if (log.constructor === String) {
                 Log.find({ user: log }).then(logs => {
                     data.logs = logs
-                    res.render('log', data)
+                    res.json(data)
                 })
                 Log.create({
                     statement: 'User: ' + req.user.userName + ' entered to get log of user: ' + log,
@@ -39,28 +38,33 @@ module.exports = function(router) {
     router.get('/clients', function(req, res) {
         if (!req.user == false) {
             Log.create({
-                statement: 'User: ' + req.user.userName + ' entered All Clients '
+                statement: 'User: ' + req.user.userName + ' entered All Clients at date:' + Date(),
+                user: req.user.userName
             });
             clientsModel.getAllClients().then(clients => {
-                res.render('clients', {
+                res.json({
                     clients: clients
                 })
             })
         } else {
-            res.redirect(302, '/login');
+            res.json('login again');
         }
     })
 
     //main page
     router.get('/index', (req, res) => {
-        res.render('index')
+        res.json([req.user.userName, Date()])
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' entered to main page at : ' + Date(),
+            user: req.user.userName
+        });
     })
 
     //signup
     router.get('/signup', (req, res, next) => {
-        res.render('signup', { message: req.flash('signupMessage') });
+        res.json("enter your data please");
     });
-    router.post('/signup', passport.authenticate('local-signup', {
+    router.post('/signup', bodyParser.json(), passport.authenticate('local-signup', {
         successRedirect: '/login',
         failureRedirect: '/signup',
         failureFlash: true
@@ -70,7 +74,7 @@ module.exports = function(router) {
     router.get('/login', (req, res) => {
         req.logIn(User, () => {
             req.session.save(() => {
-                res.render('login', { message: req.flash('loginMessage') })
+                res.json('login using your username and pass.')
             })
         })
     });
@@ -84,14 +88,14 @@ module.exports = function(router) {
 
     // show user details name and password 
     router.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile', { user: req.user });
+        res.json({ user: req.user });
     });
 
     function isLoggedIn(req, res, next) {
         if (req.isAuthenticated()) {
             return next();
         }
-        res.redirect('/login');
+        res.json('login first');
     }
 
     //page to show if user has drafts or not 
@@ -103,7 +107,7 @@ module.exports = function(router) {
                 data.draftAr = draftAr
                 DraftPersonal.find({ user: req.user.userName }).then(draftPI => {
                     data.draftPI = draftPI
-                    res.render('ind', data);
+                    res.json(data);
                 })
             })
         })
@@ -115,7 +119,7 @@ module.exports = function(router) {
             if (err) {
                 return console.log(err);
             }
-            res.redirect('/login');
+            res.json('you logged out');
         });
     });
 }
