@@ -26,10 +26,45 @@ var configDB = require('./config/database');
 mongoose.connect(configDB.url, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-}, (err) => { console.log('DB connected ^_^ ') })
+}, (err) => {initial(); console.log('DB connected ^_^ ') })
 mongoose.set('useFindAndModify', false);
 app.use(compression());
-
+//.....
+const db = require("./models");
+const Role = db.role;
+//initial() function helps us to create 3 important rows in roles collection.
+function initial() {
+    Role.estimatedDocumentCount((err, count) => {
+      if (!err && count === 0) {
+        new Role({
+          name: "user"
+        }).save(err => {
+          if (err) {
+            console.log("error", err);
+          }
+          console.log("added 'user' to roles collection");
+        });
+  
+        new Role({
+          name: "moderator"
+        }).save(err => {
+          if (err) {
+            console.log("error", err);
+          }
+          console.log("added 'moderator' to roles collection");
+        });
+  
+        new Role({
+          name: "admin"
+        }).save(err => {
+          if (err) {
+            console.log("error", err);
+          }
+          console.log("added 'admin' to roles collection");
+        });
+      }
+    });
+}
 //define the middlewares
 app.use(cors());
 app.use(morgan('dev'));
@@ -56,24 +91,20 @@ app.use(passport.session());
 //flash module to alert messeges
 app.use(flash());
 
-//define the static folder
-app.use(express.static(path.join(__dirname, '/assets')));
-
-//use body parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+// parse requests of content-type - application/json
 app.use(bodyParser.json());
 
-//specify ejs as view engien
-app.set('view engine', 'ejs');
-
-//routing files
-require('./config/passport')(passport);
+// routes
 require('./routes/client_rout')(app, passport);
 require('./routes/main_routes')(app, passport);
 require('./routes/addNew_route')(app);
-require('./routes/route_transactions')(app)
+require('./routes/route_transactions')(app);
+require('./routes/auth_routes')(app);
+require('./routes/user_routes')(app);
 
-//localhost listen at 5000
+// set port, listen for requests at 5000
 app.listen(port, () => {
     console.log('server listening on' + " " + port)
 });

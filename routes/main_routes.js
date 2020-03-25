@@ -1,4 +1,4 @@
-var User = require('../models/users').User;
+var User = require('../models/user').User;
 var Client = require('../models/clients').Client;
 var passport = require('passport')
 var clientsModel = require('../models/clients')
@@ -59,7 +59,7 @@ module.exports = function(router) {
             user: req.user.userName
         });
     })
-
+/* 
     //signup
     router.get('/signup', (req, res, next) => {
         res.json("enter your data please");
@@ -121,5 +121,5 @@ module.exports = function(router) {
             }
             res.json('you logged out');
         });
-    });
+    }); */
 }
