@@ -73,7 +73,7 @@ function initial() {
 app.use(cors());
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(session({
+/* app.use(session({
     name: SESS_NAME,
     cookie: {
         sameSite: true,
@@ -86,7 +86,7 @@ app.use(session({
         mongooseConnection: mongoose.connection,
         ttl: 2 * 24 * 60 * 60
     })
-}));
+})); */
 
 //use passport middleware
 app.use(passport.initialize());

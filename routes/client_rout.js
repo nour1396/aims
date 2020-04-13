@@ -98,12 +98,13 @@ module.exports = function(router) {
     router.post('/data-en', (req, res, next) => {
         DraftClient.deleteOne({ /* user: req.user.userName */ }).then(resolve => {});
         var newClient = new Client(req.body);
+        var error
 
         newClient.save((data) => {
             if (error) {
                 return next(error)
             } else {
-                res.json(data)
+                res.status(200).json([data, "saved"])
             }
         });
         //when user save data will record that in database

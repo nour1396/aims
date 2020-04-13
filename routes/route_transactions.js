@@ -76,9 +76,9 @@ module.exports = function(router) {
     //search assets by name
     router.get('/assetName', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
         let data = {}
-        const assetName = req.query.assetName;
+        const assetName = req.body;
         Transaction.aggregate([{ $unwind: "$assets" },
-                { $match: { transactionType: "sales", "assets.assetName": assetName } }, {
+                { $match: assetName }, {
                     $project: {
                         transactionType: "$transactionType",
                         assetName: "$assets.assetName",
@@ -88,7 +88,7 @@ module.exports = function(router) {
             ]).exec(transactions => {
                 data.transactions = transactions;
                 Transaction.aggregate([{ $unwind: "$assets" },
-                    { $match: { transactionType: "purchase", "assets.assetName": assetName } }, {
+                    { $match: assetName }, {
                         $project: {
                             transactionType: "$transactionType",
                             assetName: "$assets.assetName",
@@ -103,19 +103,19 @@ module.exports = function(router) {
                 })
             })
             //record when user do something
-        Log.create({
-            statement: 'User: ' + req.user.userName + ' entered to search in assets name:' + assetName,
-            user: req.user.userName
-        });
+            /*  Log.create({
+                 statement: 'User: ' + req.user.userName + ' entered to search in assets name:' + assetName,
+                 user: req.user.userName
+             }); */
     })
 
     /*search item by name (single name , multi names ,
      if not choosen get all ,if single name was chosen not exist return no record)*/
-    router.get('/itemName', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
+    router.get('/itemName', /* [authJwt.verifyToken, authJwt.isAdmin],  */ (req, res) => {
         let data = {}
         var itemName = req.body;
         console.log(itemName)
-        if (itemName == undefined) {
+        if (itemName == 0) {
             var itemName = req.body;
             Transaction.aggregate([{ $unwind: "$items" },
                     {
@@ -138,13 +138,11 @@ module.exports = function(router) {
                        statement: 'User: ' + req.user.userName + ' entered to get all items',
                        user: req.user.userName
                    }); */
-        } else if (itemName.constructor === String) {
+        } else if (itemName.constructor === Object) {
             var itemName = req.body;
             Transaction.aggregate([{ $unwind: "$items" },
                     {
-                        $match: {
-                            "items.itemName": itemName
-                        }
+                        $match: itemName
                     }, {
                         $project: {
                             transactionDate: "$transactionDate",
@@ -171,15 +169,15 @@ module.exports = function(router) {
                 }); */
         } else {
             var itemName = req.body;
-            var x = []
+            /* var x = []
             itemName.forEach(function(value) {
                 x.push({ "items.itemName": value })
                 console.log(x);
-            });
+            }); */
             Transaction.aggregate([{ $unwind: "$items" },
                     {
                         $match: {
-                            $or: x
+                            $or: itemName
                         }
                     }, {
                         $project: {

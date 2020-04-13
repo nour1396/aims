@@ -13,7 +13,13 @@ var clientSchema = mongoose.Schema({
             lowercase: true,
             trim: true,
             minLength: [4, 'Name is too short!'],
-            maxLength: 10
+            maxLength: 10,
+            validate: [function(n) {
+                    return !!n && n.length >= 4 && n.length < 10;
+                },
+                'Invalid Name , name should contain from 4 to 10 charcters and not contain !@#$%^&*.,+=-_ or numbers'
+            ]
+
         },
         PI_secondName: {
             type: String,
@@ -21,7 +27,12 @@ var clientSchema = mongoose.Schema({
             lowercase: true,
             trim: true,
             minLength: [4, 'Name is too short!'],
-            maxLength: 10
+            maxLength: 10,
+            validate: [function(n) {
+                    return !!n && n.length >= 4 && n.length < 10;
+                },
+                'Invalid Name , name should contain from 4 to 10 charcters'
+            ]
         },
         PI_thirdName: {
             type: String,
@@ -30,12 +41,11 @@ var clientSchema = mongoose.Schema({
             trim: true,
             minLength: [4, 'Name is too short!'],
             maxLength: 10,
-            validate: {
-                validator: function(v) {
-                    return maxLength.test(v);
+            validate: [function(n) {
+                    return !!n && n.length >= 4 && n.length < 10;
                 },
-                message: '{VALUE} is not a valid phone number!'
-            }
+                'Invalid Name , name should contain from 4 to 10 charcters'
+            ]
         },
         PI_fourthName: {
             type: String,
@@ -43,7 +53,12 @@ var clientSchema = mongoose.Schema({
             lowercase: true,
             trim: true,
             minLength: [4, 'Name is too short!'],
-            maxLength: 10
+            maxLength: 10,
+            validate: [function(n) {
+                    return !!n && n.length >= 4 && n.length < 10;
+                },
+                'Invalid Name , name should contain from 4 to 10 charcters'
+            ]
         },
         PI_lastName: {
             type: String,
@@ -51,7 +66,12 @@ var clientSchema = mongoose.Schema({
             lowercase: true,
             trim: true,
             minLength: [4, 'Name is too short!'],
-            maxLength: 10
+            maxLength: 10,
+            validate: [function(n) {
+                    return !!n && n.length >= 4 && n.length < 10;
+                },
+                'Invalid Name , name should contain from 4 to 10 charcters'
+            ]
         },
         PI_title: {
             type: String,
@@ -266,8 +286,13 @@ var clientSchema = mongoose.Schema({
             required: [true, 'What is your telephone Number?']
         },
         CD_mobileNumber: {
-            type: Number,
-            required: [true, 'What is your mobile Number?']
+            type: String,
+            required: [true, 'What is your mobile Number?'],
+            /* validate: [function(v) {
+                    return /\d{3}-\d{3}-\d{4}/.test(v);
+                },
+                '{VALUE} is not a valid phone number!'
+            ] */
         },
         CD_postalCode: String,
         CD_email: {
@@ -506,6 +531,7 @@ var clientSchema = mongoose.Schema({
 clientSchema.plugin(timestamps)
 
 const Client = mongoose.model('Client', clientSchema);
+
 
 exports.getAllClients = () => {
     //3mlt promise gdid 3shan anbh function mn barra w aflt el promise 3n tre2 el disconnect
