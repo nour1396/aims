@@ -10,6 +10,8 @@ const Log = require('../models/log').Log;
 const DraftClient = require('../models/drafts/draftClientEN').DraftClient;
 const DraftClientAr = require('../models/drafts/draftClientAR').DraftClientAr;
 const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
+const { authJwt } = require("../config");
+var assert = require('assert')
 module.exports = function(router) {
     //data-en **get page to enter data
     router.get('/data-en', function(req, res, next) {
@@ -93,23 +95,28 @@ module.exports = function(router) {
             })
         })
         //save data in database
-    router.post('/data-en', (req, res) => {
-        DraftClient.deleteOne({ user: req.user.userName }).then(resolve => {});
+    router.post('/data-en', (req, res, next) => {
+        DraftClient.deleteOne({ /* user: req.user.userName */ }).then(resolve => {});
         var newClient = new Client(req.body);
-        newClient.save(() => {
-            res.json('saved!')
+
+        newClient.save((data) => {
+            if (error) {
+                return next(error)
+            } else {
+                res.json(data)
+            }
         });
         //when user save data will record that in database
-        Log.create({
-            statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to add new client with ID: ' + req.body.IC_idNumber +
-                ' and name :' + req.body.PI_firstName + ' ' + req.body.PI_secondName,
-            user: req.user.userName
-        });
+        /*    Log.create({
+               statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to add new client with ID: ' + req.body.IC_idNumber +
+                   ' and name :' + req.body.PI_firstName + ' ' + req.body.PI_secondName,
+               user: req.user.userName
+           }); */
     });
 
 
     //get client by id 
-    router.get('/searchC', (req, res) => {
+    router.get('/searchC', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
             const searchC = req.query.searchC;
             //when user search client data will record that in database
             Log.create({
@@ -131,7 +138,7 @@ module.exports = function(router) {
             });
         })
         //get page
-    router.get('/edit/:_id', (req, res) => {
+    router.get('/edit/:_id', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
             const _id = req.params._id;
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered /data-en to search for client :' + _id,
@@ -148,7 +155,7 @@ module.exports = function(router) {
             })
         })
         //update data of specific client
-    router.post('/update', (req, res) => {
+    router.post('/update', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to update client with ID:' + req.body.userId,
                 user: req.user.userName

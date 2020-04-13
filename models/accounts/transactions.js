@@ -3,21 +3,48 @@ const mongoose = require('mongoose');
 var transactionSchema = mongoose.Schema({
     dateCreated: {
         type: Date,
-        default: Date.now
+        default: Date()
     },
     transactionDate: String,
-    postDate: Date,
-    postNumber: String,
-    patchNumber: String,
-    docNumber: String,
-    invoiceNumber: String,
+    postNumber: {
+        type: Number,
+        min: 5,
+        max: 10
+    },
+    patchNumber: {
+        type: Number,
+        min: 5,
+        max: 10
+    },
+    docNumber: {
+        type: Number,
+        min: 5,
+        max: 10
+    },
+    invoiceNumber: {
+        type: Number,
+        min: 5,
+        max: 10
+    },
     from: {
-        fromEntity: String,
-        fromSubEntity: String
+        fromEntity: {
+            type: String,
+            lowercase: true,
+        },
+        fromSubEntity: {
+            type: String,
+            lowercase: true,
+        }
     },
     to: {
-        toEntity: String,
-        toSubEntity: String
+        toEntity: {
+            type: String,
+            lowercase: true,
+        },
+        toSubEntity: {
+            type: String,
+            lowercase: true,
+        }
     },
     transactionType: String,
     transactionClass: String,
@@ -29,23 +56,26 @@ var transactionSchema = mongoose.Schema({
     currency: String,
     assets: [{
         assetID: String,
-        assetName: String,
+        assetName: {
+            type: String,
+            lowercase: true,
+        },
         assetsSerialNumber: Array,
         assetsQuantity: Number,
         assetsUintOfMeasurment: String,
         assetsPrice: Number,
         assetsFrom: String,
         assetsTo: String,
-        /* assetsTotal: {
-             type: Number,
-             default: function() {
-                 return (this.assets.assetsQuantity * this.assets.assetsPrice)
-             }
-         }*/
     }],
     items: [{
-        itemID: String,
-        itemName: String,
+        itemID: {
+            type: Number,
+            min: 4
+        },
+        itemName: {
+            type: String,
+            lowercase: true,
+        },
         itemsSerialNumber: Array,
         itemsQuantity: Number,
         itemsUintOfMeasurment: String,
@@ -54,12 +84,6 @@ var transactionSchema = mongoose.Schema({
         itemsPackageName: String,
         itemsFrom: String,
         itemsTo: String,
-        /* itemsTotal: {
-             type: String,
-             default: function() {
-                 return (this.items[0].itemsQuantity * this.items[0].itemsPrice)
-             }
-         }*/
     }],
     services: [{
         serviceID: String,
@@ -72,12 +96,6 @@ var transactionSchema = mongoose.Schema({
         servicesPackage: String,
         servicesFrom: String,
         servicesTo: String,
-        /* servicesTotal: {
-             type: Number,
-             default: function() {
-                 return (this.services.servicesQuantity * this.services.servicesPrice)
-             }
-         }*/
     }],
     jobs: [{
         jobID: String,
@@ -85,12 +103,6 @@ var transactionSchema = mongoose.Schema({
         jobsUintOfMeasurment: String,
         jobsQuantity: Number,
         jobsPrice: Number,
-        /* jobsTotal: {
-             type: Number,
-             default: function() {
-                 return (this.jobs.jobsQuantity * this.jobs.jobsPrice)
-             }
-         }*/
     }],
     fees: [{
         feeID: String,

@@ -26,8 +26,12 @@ var configDB = require('./config/database');
 mongoose.connect(configDB.url, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-}, (err) => {initial(); console.log('DB connected ^_^ ') })
+}, (err) => {
+    initial();
+    console.log('DB connected ^_^ ')
+})
 mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 app.use(compression());
 //.....
 const db = require("./models");
@@ -35,34 +39,34 @@ const Role = db.role;
 //initial() function helps us to create 3 important rows in roles collection.
 function initial() {
     Role.estimatedDocumentCount((err, count) => {
-      if (!err && count === 0) {
-        new Role({
-          name: "user"
-        }).save(err => {
-          if (err) {
-            console.log("error", err);
-          }
-          console.log("added 'user' to roles collection");
-        });
-  
-        new Role({
-          name: "moderator"
-        }).save(err => {
-          if (err) {
-            console.log("error", err);
-          }
-          console.log("added 'moderator' to roles collection");
-        });
-  
-        new Role({
-          name: "admin"
-        }).save(err => {
-          if (err) {
-            console.log("error", err);
-          }
-          console.log("added 'admin' to roles collection");
-        });
-      }
+        if (!err && count === 0) {
+            new Role({
+                name: "user"
+            }).save(err => {
+                if (err) {
+                    console.log("error", err);
+                }
+                console.log("added 'user' to roles collection");
+            });
+
+            new Role({
+                name: "moderator"
+            }).save(err => {
+                if (err) {
+                    console.log("error", err);
+                }
+                console.log("added 'moderator' to roles collection");
+            });
+
+            new Role({
+                name: "admin"
+            }).save(err => {
+                if (err) {
+                    console.log("error", err);
+                }
+                console.log("added 'admin' to roles collection");
+            });
+        }
     });
 }
 //define the middlewares

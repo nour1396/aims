@@ -1,10 +1,11 @@
-const Transaction = require('../models/accounts/invoices/transactions').Transaction; //transactions Schema
+const Transaction = require('../models/accounts/transactions').Transaction; //transactions Schema
 const addItem = require('../models/accounts/addItem').addItem; //items Schema
 const configDB = require('../config/database'); //Connections to database
 const mongoose = require('mongoose'); //mongoose module
 const csv = require('csv-express'); // csv module
 const mongoXlsx = require('mongo-xlsx'); //mongoXlsx module
 const Log = require('../models/log').Log;
+const { authJwt } = require("../config");
 module.exports = function(router) {
     //get page to enter data of invoice (transaction)
     router.get('/accounts/invoices/transactions', (req, res, next) => {
@@ -58,7 +59,7 @@ module.exports = function(router) {
     })
 
     //get customize page to search item by name
-    router.get('/accounts/invoices/search', (req, res) => {
+    router.get('/accounts/invoices/search', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
         let data = {}
             //get list of items
         addItem.find({}).then(items => {
@@ -73,7 +74,7 @@ module.exports = function(router) {
     })
 
     //search assets by name
-    router.get('/assetName', (req, res) => {
+    router.get('/assetName', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
         let data = {}
         const assetName = req.query.assetName;
         Transaction.aggregate([{ $unwind: "$assets" },
@@ -110,7 +111,7 @@ module.exports = function(router) {
 
     /*search item by name (single name , multi names ,
      if not choosen get all ,if single name was chosen not exist return no record)*/
-    router.get('/itemName', (req, res) => {
+    router.get('/itemName', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
         let data = {}
         var itemName = req.body;
         console.log(itemName)
@@ -133,10 +134,10 @@ module.exports = function(router) {
                     res.json(data)
                 })
                 //record when user do something
-            Log.create({
-                statement: 'User: ' + req.user.userName + ' entered to get all items',
-                user: req.user.userName
-            });
+                /*    Log.create({
+                       statement: 'User: ' + req.user.userName + ' entered to get all items',
+                       user: req.user.userName
+                   }); */
         } else if (itemName.constructor === String) {
             var itemName = req.body;
             Transaction.aggregate([{ $unwind: "$items" },
@@ -164,10 +165,10 @@ module.exports = function(router) {
                     }
                 })
                 //record when user do something
-            Log.create({
-                statement: 'User: ' + req.user.userName + ' entered to search in item name:' + itemName,
-                user: req.user.userName
-            });
+                /* Log.create({
+                    statement: 'User: ' + req.user.userName + ' entered to search in item name:' + itemName,
+                    user: req.user.userName
+                }); */
         } else {
             var itemName = req.body;
             var x = []
@@ -196,15 +197,15 @@ module.exports = function(router) {
                     res.json(data)
                 })
                 //record when user do something
-            Log.create({
-                statement: 'User: ' + req.user.userName + ' entered to search in items :' + itemName,
-                user: req.user.userName
-            });
+                /* Log.create({
+                    statement: 'User: ' + req.user.userName + ' entered to search in items :' + itemName,
+                    user: req.user.userName
+                }); */
         }
     })
 
     //search by transactionType
-    router.get('/transactionType', (req, res) => {
+    router.get('/transactionType', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
         let data = {}
         const transactionType = req.query.transactionType
         Transaction.aggregate([{ $unwind: "$items" },
@@ -232,7 +233,7 @@ module.exports = function(router) {
     })
 
     //search by transactionDate
-    router.get('/transactionDate', (req, res) => {
+    router.get('/transactionDate', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
         let data = {}
         const transactionDatefrom = req.query.transactionDatefrom
         const transactionDateto = req.query.transactionDateto
@@ -268,7 +269,7 @@ module.exports = function(router) {
     })
 
     //search by transactionDate, itemName, transactionType,entities
-    router.get('/specific', (req, res) => {
+    router.get('/specific', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
             let data = {}
             const transactionDatefrom = req.query.transactionDatefrom
             const transactionDateto = req.query.transactionDateto
