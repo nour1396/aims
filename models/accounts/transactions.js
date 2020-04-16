@@ -9,22 +9,46 @@ var transactionSchema = mongoose.Schema({
     postNumber: {
         type: Number,
         min: 5,
-        max: 10
+        max: 10,
+        validate: {
+            validator: function(n) {
+                return n.length >= 5 && n.length < 10;
+            },
+            message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+        }
     },
     patchNumber: {
         type: Number,
         min: 5,
-        max: 10
+        max: 10,
+        validate: {
+            validator: function(n) {
+                return n.length >= 5 && n.length < 10;
+            },
+            message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+        }
     },
     docNumber: {
         type: Number,
         min: 5,
-        max: 10
+        max: 10,
+        validate: {
+            validator: function(n) {
+                return n.length >= 5 && n.length < 10;
+            },
+            message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+        }
     },
     invoiceNumber: {
         type: Number,
         min: 5,
-        max: 10
+        max: 10,
+        validate: {
+            validator: function(n) {
+                return n.length >= 5 && n.length < 10;
+            },
+            message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+        }
     },
     from: {
         fromEntity: {
@@ -91,8 +115,28 @@ var transactionSchema = mongoose.Schema({
         servicesUintOfMeasurment: String,
         servicesQuantity: Number,
         servicesPrice: Number,
-        servicesStart: Date,
-        servicesEnd: Date,
+        servicesStart: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
+        servicesEnd: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         servicesPackage: String,
         servicesFrom: String,
         servicesTo: String,
@@ -163,11 +207,31 @@ var transactionSchema = mongoose.Schema({
         checkOwner: String,
         checkBankName: String,
         checkPayee: String,
-        checkDate: Date,
+        checkDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         checkAmount: Number,
         checkCurrency: String,
         checkNumber: String,
-        checkDueDate: Date,
+        checkDueDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         checkType: String,
         checkCopy: String,
 

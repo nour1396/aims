@@ -1,6 +1,6 @@
 var timestamps = require('mongoose-timestamp');
 var mongoose = require('mongoose');
-
+var mongooseValidator = require('mongoose-validate');
 var clientSchema = mongoose.Schema({
     _id: {
         type: Number,
@@ -14,12 +14,18 @@ var clientSchema = mongoose.Schema({
             trim: true,
             minLength: [4, 'Name is too short!'],
             maxLength: 10,
-            validate: [function(n) {
-                    return !!n && n.length >= 4 && n.length < 10;
+            validate: [{
+                validator: function(n) {
+                    prevent = /[`!@#&^&()_+\-=\[\]{};':"\\|,.<>\/?~]/
+                    return !prevent.test(n);
                 },
-                'Invalid Name , name should contain from 4 to 10 charcters and not contain !@#$%^&*.,+=-_ or numbers'
-            ]
-
+                message: 'Invalid Name , name should not $@#%#^$#'
+            }, {
+                validator: function(n) {
+                    return n.length >= 4 && n.length < 10;
+                },
+                message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+            }]
         },
         PI_secondName: {
             type: String,
@@ -28,11 +34,18 @@ var clientSchema = mongoose.Schema({
             trim: true,
             minLength: [4, 'Name is too short!'],
             maxLength: 10,
-            validate: [function(n) {
-                    return !!n && n.length >= 4 && n.length < 10;
+            validate: [{
+                validator: function(n) {
+                    prevent = /[`!@#&^&()_+\-=\[\]{};':"\\|,.<>\/?~]/
+                    return !prevent.test(n);
                 },
-                'Invalid Name , name should contain from 4 to 10 charcters'
-            ]
+                message: 'Invalid Name , name should not $@#%#^$#'
+            }, {
+                validator: function(n) {
+                    return n.length >= 4 && n.length < 10;
+                },
+                message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+            }]
         },
         PI_thirdName: {
             type: String,
@@ -41,11 +54,18 @@ var clientSchema = mongoose.Schema({
             trim: true,
             minLength: [4, 'Name is too short!'],
             maxLength: 10,
-            validate: [function(n) {
-                    return !!n && n.length >= 4 && n.length < 10;
+            validate: [{
+                validator: function(n) {
+                    prevent = /[`!@#&^&()_+\-=\[\]{};':"\\|,.<>\/?~]/
+                    return !prevent.test(n);
                 },
-                'Invalid Name , name should contain from 4 to 10 charcters'
-            ]
+                message: 'Invalid Name , name should not $@#%#^$#'
+            }, {
+                validator: function(n) {
+                    return n.length >= 4 && n.length < 10;
+                },
+                message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+            }]
         },
         PI_fourthName: {
             type: String,
@@ -54,11 +74,18 @@ var clientSchema = mongoose.Schema({
             trim: true,
             minLength: [4, 'Name is too short!'],
             maxLength: 10,
-            validate: [function(n) {
-                    return !!n && n.length >= 4 && n.length < 10;
+            validate: [{
+                validator: function(n) {
+                    prevent = /[`!@#&^&()_+\-=\[\]{};':"\\|,.<>\/?~]/
+                    return !prevent.test(n);
                 },
-                'Invalid Name , name should contain from 4 to 10 charcters'
-            ]
+                message: 'Invalid Name , name should not $@#%#^$#'
+            }, {
+                validator: function(n) {
+                    return n.length >= 4 && n.length < 10;
+                },
+                message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+            }]
         },
         PI_lastName: {
             type: String,
@@ -67,11 +94,18 @@ var clientSchema = mongoose.Schema({
             trim: true,
             minLength: [4, 'Name is too short!'],
             maxLength: 10,
-            validate: [function(n) {
-                    return !!n && n.length >= 4 && n.length < 10;
+            validate: [{
+                validator: function(n) {
+                    prevent = /[`!@#&^&()_+\-=\[\]{};':"\\|,.<>\/?~]/
+                    return !prevent.test(n);
                 },
-                'Invalid Name , name should contain from 4 to 10 charcters'
-            ]
+                message: 'Invalid Name , name should not $@#%#^$#'
+            }, {
+                validator: function(n) {
+                    return n.length >= 4 && n.length < 10;
+                },
+                message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+            }]
         },
         PI_title: {
             type: String,
@@ -94,12 +128,44 @@ var clientSchema = mongoose.Schema({
         IC_idNumber: {
             type: Number,
             unique: true,
-            minLength: 14,
-            maxLength: 14
+            validate: [{
+                    validator: function(v) {
+                        prevent = /^[0-9]*$/im
+                        return prevent.test(v);
+                    },
+                    message: 'it is not a valid id number!'
+                },
+                {
+                    validator: function(v) {
+                        return v.length === 14;
+                    },
+                    message: 'it is not 14 number!'
+                }
+            ]
         },
         IC_issuedFrom: String,
-        IC_startDate: Date,
-        IC_endDate: Date,
+        IC_startDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
+        IC_endDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         IC_fullName: String,
         IC_gender: String,
         IC_address: String,
@@ -111,13 +177,50 @@ var clientSchema = mongoose.Schema({
     },
     militaryState: {
         MS_fullName: String,
-        MS_birthDate: Date,
+        MS_birthDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         MS_militaryServiceIDTriple: Number,
         MS_issuedFrom: String,
-        MS_idNumber: Number,
+        MS_idNumber: {
+            type: String,
+            unique: true,
+            validate: [{
+                    validator: function(v) {
+                        prevent = /^[0-9]*$/im
+                        return prevent.test(v);
+                    },
+                    message: 'it is not a valid id number!'
+                },
+                {
+                    validator: function(v) {
+                        return v.length === 14;
+                    },
+                    message: 'it is not 14 number!'
+                }
+            ]
+        },
         MS_IDIssuedFrom: String,
         MS_decisionCode: String,
-        MS_decisionDate: Date,
+        MS_decisionDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         MS_decisionNumber: Number,
         MS_decision: String,
         MS_uploadMilitary: String
@@ -130,14 +233,41 @@ var clientSchema = mongoose.Schema({
         FS_parentStatus: String
     },
     birthDetails: {
-        BD_nationalNumber: Number,
+        BD_nationalNumber: {
+            type: String,
+            unique: true,
+            validate: [{
+                    validator: function(v) {
+                        prevent = /^[0-9]*$/im
+                        return prevent.test(v);
+                    },
+                    message: 'it is not a valid id number!'
+                },
+                {
+                    validator: function(v) {
+                        return v.length === 14;
+                    },
+                    message: 'it is not 14 number!'
+                }
+            ]
+        },
         BD_fullNameInEnglish: String,
         BD_fullNameInArabic: String,
         BD_nationality: String,
         BD_placeOfBirth: String,
         BD_religion: String,
         BD_gender: String,
-        BD_dateOfBirth: Date,
+        BD_dateOfBirth: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         BD_fullFatherName: String,
         BD_hisReligion: String,
         BD_hisNationality: String,
@@ -146,14 +276,44 @@ var clientSchema = mongoose.Schema({
         BD_herNationality: String,
         BD_civilRegister: String,
         BD_issueRegister: String,
-        BD_registerDate: Date,
-        BD_issueDate: Date,
+        BD_registerDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
+        BD_issueDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         BD_uploadCopy: String
 
     },
     addressDetails: {
         AD_addressType: String,
-        AD_expirationDateOfRenting: Date,
+        AD_expirationDateOfRenting: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         AD_country: String,
         AD_city: String,
         AD_area: String,
@@ -168,11 +328,48 @@ var clientSchema = mongoose.Schema({
     legalInformation: {
         drivingLicence: {
             DL_trafficUnit: String,
-            DL_ID: Number,
+            DL_ID: {
+                type: String,
+                unique: true,
+                validate: [{
+                        validator: function(v) {
+                            prevent = /^[0-9]*$/im
+                            return prevent.test(v);
+                        },
+                        message: 'it is not a valid id number!'
+                    },
+                    {
+                        validator: function(v) {
+                            return v.length === 14;
+                        },
+                        message: 'it is not 14 number!'
+                    }
+                ]
+            },
             DL_address: String,
             DL_nationality: String,
-            DL_issueDate: Date,
-            DL_endDate: Date,
+            DL_issueDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
+            DL_endDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             DL_job: String,
             DL_typeOfLicence: String,
             DL_licenceNumber: Number,
@@ -184,7 +381,17 @@ var clientSchema = mongoose.Schema({
             IDL_name: String,
             IDL_address: String,
             IDL_placeOfBirth: String,
-            IDL_dateOfBirth: Date,
+            IDL_dateOfBirth: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             IDL_height: String,
             IDL_gender: String,
             IDL_eyesColor: String,
@@ -192,8 +399,28 @@ var clientSchema = mongoose.Schema({
             IDL_passportNumber: Number,
             IDL_classCategory: String,
             IDL_licenceType: String,
-            IDL_issuedDate: Date,
-            IDL_expireDate: Date,
+            IDL_issuedDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
+            IDL_expireDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             IDL_category: String,
             IDL_uploadCopy: String
         },
@@ -203,8 +430,28 @@ var clientSchema = mongoose.Schema({
             P_passportType: String,
             P_passportCountry: String,
             P_issuedAt: String,
-            P_issueDate: Date,
-            P_endDate: Date,
+            P_issueDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
+            P_endDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             P_profession: String,
             P_issueOffice: String,
             P_copyOfPassport: String
@@ -213,7 +460,17 @@ var clientSchema = mongoose.Schema({
             V_typeOfVisa: String,
             V_validFor: String,
             V_periodValidity: {
-                V_periodValidity_From: Date,
+                V_periodValidity_From: {
+                    type: String,
+                    unique: true,
+                    validate: [{
+                        validator: function(n) {
+                            prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                            return prevent.test(n);
+                        },
+                        message: 'Invalid date'
+                    }]
+                },
                 V_periodValidity_To: Date
             },
             V_numberOfEntries: Number,
@@ -222,8 +479,28 @@ var clientSchema = mongoose.Schema({
             V_religion: String,
             V_nationality: String,
             V_issuingAuthority: String,
-            V_issuedDate: Date,
-            V_expirationDate: Date,
+            V_issuedDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
+            V_expirationDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             V_purpose: String,
             V_transporter: String,
             V_passportNumber: Number,
@@ -236,9 +513,39 @@ var clientSchema = mongoose.Schema({
             RP_fullName: String,
             RP_numberOfResidencePermit: Number,
             RP_issuedPlace: String,
-            RP_issuedDate: Date,
-            RP_expirationDate: Date,
-            RP_birthDate: Date,
+            RP_issuedDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
+            RP_expirationDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
+            RP_birthDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             RP_profession: String,
             RP_nationality: String,
             RP_religion: String,
@@ -254,8 +561,28 @@ var clientSchema = mongoose.Schema({
             SI_contractName: String,
             SI_contractNumber: Number,
             SI_licenceNumber: Number,
-            SI_issuedDate: Date,
-            SI_expirationDate: Date,
+            SI_issuedDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
+            SI_expirationDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             SI_country: String,
             SI_city: String
         },
@@ -267,7 +594,17 @@ var clientSchema = mongoose.Schema({
             PC_address: String,
             PC_presentedTo: String,
             PC_transactionNumber: Number,
-            PC_dateOfIssue: Date,
+            PC_dateOfIssue: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             PC_resultOfInspection: String,
             PC_ifAnyMentionIt: String,
             PC_uploadCopy: String
@@ -283,22 +620,38 @@ var clientSchema = mongoose.Schema({
     contactData: {
         CD_telephoneNumber: {
             type: Number,
-            required: [true, 'What is your telephone Number?']
+            required: [true, 'What is your telephone Number?'],
+            validate: [{
+                validator: function(v) {
+                    prevent = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid telephone number!'
+            }]
         },
         CD_mobileNumber: {
-            type: String,
+            type: Number,
             required: [true, 'What is your mobile Number?'],
-            /* validate: [function(v) {
-                    return /\d{3}-\d{3}-\d{4}/.test(v);
+            validate: [{
+                validator: function(v) {
+                    prevent = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+                    return prevent.test(v);
                 },
-                '{VALUE} is not a valid phone number!'
-            ] */
+                message: 'it is not a valid phone number!'
+            }]
         },
         CD_postalCode: String,
         CD_email: {
             type: String,
             required: true,
-            lowercase: true
+            lowercase: true,
+            validate: {
+                validator: function(v) {
+                    prevent = /^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@{[a-zA-Z0-9_\-\.]+0\.([a-zA-Z]{2,5}){1,25})+)*$/;
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid phone number!'
+            }
         },
         CD_contactLanguage: String,
         CD_nativeLanguage: String,
@@ -312,28 +665,68 @@ var clientSchema = mongoose.Schema({
             UNI_degreeLevel: String,
             UNI_department: String,
             UNI_grade: String,
-            UNI_graduateDate: Date,
+            UNI_graduateDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             UNI_copyOfCertificate: String
         },
         secondrySchool: {
             SEC_schoolType: String,
             SEC_secondrySchoolName: String,
             SEC_grade: String,
-            SEC_graduateDate: Date,
+            SEC_graduateDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             SEC_copyOfCertificate: String
         },
         middleSchool: {
             MIDD_typeOfSchool: String,
             MIDD_schoolName: String,
             MIDD_grade: String,
-            MIDD_graduateDate: Date,
+            MIDD_graduateDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             MIDD_copyOfCertificate: String
         },
         primarySchool: {
             PRIM_schoolType: String,
             PRIM_schoolName: String,
             PRIM_grade: String,
-            PRIM_graduateDate: Date,
+            PRIM_graduateDate: {
+                type: String,
+                unique: true,
+                validate: [{
+                    validator: function(n) {
+                        prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                        return prevent.test(n);
+                    },
+                    message: 'Invalid date'
+                }]
+            },
             PRIM_copyOfCertificate: String
 
         },
@@ -408,7 +801,17 @@ var clientSchema = mongoose.Schema({
     socialInsurance: {
         INS_type: String,
         INS_insuranceNumber: Number,
-        INS_dateOfRegistryCertificate: Date,
+        INS_dateOfRegistryCertificate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         INS_numberOfRegistryCertificate: Number,
         INS_numberOfHealthInsurance: Number,
         INS_uploadCopy: String
@@ -417,7 +820,17 @@ var clientSchema = mongoose.Schema({
         SY_syndicateName: String,
         SY_name: String,
         SY_licencingNumber: Number,
-        SY_registryDate: Date,
+        SY_registryDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         SY_lastYearDischarge: String,
         SY_expirationDate: String,
         SY_typeOfSpecialization: String,
@@ -435,8 +848,28 @@ var clientSchema = mongoose.Schema({
     careerHistory: {
         CH_companyName: String,
         CH_position: String,
-        CH_startDate: Date,
-        CH_endDate: Date,
+        CH_startDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
+        CH_endDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         CH_reasonOfLeaving: String,
         CH_yearsOfExperience: String
     },
@@ -461,7 +894,17 @@ var clientSchema = mongoose.Schema({
         DD_nationality: String,
         DD_motherName: String,
         DD_maritalStatus: String,
-        DD_deathDate: Date,
+        DD_deathDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         DD_deathPlace: String,
         DD_ageAtDeath: String,
         DD_birthPlace: String
@@ -480,24 +923,133 @@ var clientSchema = mongoose.Schema({
         HC_job: String,
         HC_birthDateAndAge: String,
         HC_familyID: Number,
-        HC_withDate: Date,
+        HC_withDate: {
+            type: String,
+            unique: true,
+            validate: [{
+                validator: function(n) {
+                    prevent = /^\d{2}[./-]\d{2}[./-]\d{4}$/
+                    return prevent.test(n);
+                },
+                message: 'Invalid date'
+            }]
+        },
         HC_civilRegister: String,
         HC_result: String,
         HC_uploadCopy: String
     },
     financialStatus: String,
     socialMediaAccounts: {
-        facebook: String,
-        instagram: String,
-        whatsapp: String,
-        twitter: String,
-        linkedin: String,
-        Behance: String,
-        GitHub: String,
-        StackOverflow: String,
-        Blog: String,
-        Website: String,
-        Other: String
+        facebook: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        },
+        instagram: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        },
+        whatsapp: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        },
+        twitter: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        },
+        linkedin: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        },
+        Behance: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        },
+        GitHub: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        },
+        StackOverflow: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        },
+        Blog: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        },
+        Website: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        },
+        Other: {
+            type: String,
+            validate: [{
+                validator: function(v) {
+                    prevent = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+                    return prevent.test(v);
+                },
+                message: 'it is not a valid website!'
+            }]
+        }
     },
     bodyMeasures: {
         female: {
@@ -531,7 +1083,6 @@ var clientSchema = mongoose.Schema({
 clientSchema.plugin(timestamps)
 
 const Client = mongoose.model('Client', clientSchema);
-
 
 exports.getAllClients = () => {
     //3mlt promise gdid 3shan anbh function mn barra w aflt el promise 3n tre2 el disconnect
