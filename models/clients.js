@@ -126,7 +126,7 @@ var clientSchema = mongoose.Schema({
     },
     identityCard: {
         IC_idNumber: {
-            type: Number,
+            type: String,
             unique: true,
             validate: [{
                     validator: function(v) {
