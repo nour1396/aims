@@ -1,20 +1,25 @@
 var LocalStrategy = require('passport-local').Strategy;
+
 var User = require('../models/users');
+
 module.exports = function(passport) {
+
+
     passport.serializeUser(function(user, done) {
-        done(null, user._id);
+        done(null, user.id);
     });
-    passport.deserializeUser(function(_id, done) {
-        User.findById(_id, function(err, user) {
+
+    passport.deserializeUser(function(id, done) {
+        User.findById(id, function(err, user) {
             done(err, user);
         });
     });
 
+
     passport.use('local-signup', new LocalStrategy({
             usernameField: 'userName',
             passwordField: 'password',
-            passReqToCallback: true,
-
+            passReqToCallback: true
         },
         function(req, userName, password, done) {
             process.nextTick(function() {
@@ -22,11 +27,12 @@ module.exports = function(passport) {
                     if (err)
                         return done(err);
                     if (user) {
-                        return done(null, false, req.flash('signupMessage', 'Username already taken'));
+                        return done(null, false, req.flash('signupMessage', 'That userName already taken'));
                     } else {
                         var newUser = new User();
                         newUser.userName = userName;
                         newUser.password = newUser.generateHash(password);
+
 
                         newUser.save(function(err) {
                             if (err)
@@ -35,14 +41,14 @@ module.exports = function(passport) {
                         })
                     }
                 })
+
             });
         }));
 
     passport.use('local-login', new LocalStrategy({
             usernameField: 'userName',
             passwordField: 'password',
-            passReqToCallback: true,
-
+            passReqToCallback: true
         },
         function(req, userName, password, done) {
             process.nextTick(function() {
@@ -55,8 +61,11 @@ module.exports = function(passport) {
                         return done(null, false, req.flash('loginMessage', 'inavalid password'));
                     }
                     return done(null, user);
+
                 });
             });
         }
     ));
+
+
 }
