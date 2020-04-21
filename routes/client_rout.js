@@ -10,6 +10,7 @@ const Log = require('../models/log').Log;
 const DraftClient = require('../models/drafts/draftClientEN').DraftClient;
 const DraftClientAr = require('../models/drafts/draftClientAR').DraftClientAr;
 const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
+var tableify = require('tableify');
 module.exports = function(router) {
     //data-en **get page to enter data
     router.get('/data-en', function(req, res, next) {
@@ -529,6 +530,7 @@ module.exports = function(router) {
             }
         });
         newClient.save(() => {
+            console.log(tableify(newClient))
             res.redirect(302, '/index')
         });
         //when user save data will record that in database
