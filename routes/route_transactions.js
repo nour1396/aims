@@ -5,7 +5,6 @@ const mongoose = require('mongoose'); //mongoose module
 const csv = require('csv-express'); // csv module
 const mongoXlsx = require('mongo-xlsx'); //mongoXlsx module
 const Log = require('../models/log').Log;
-const { authJwt } = require("../config");
 module.exports = function(router) {
     //get page to enter data of invoice (transaction)
     router.get('/accounts/invoices/transactions', (req, res, next) => {
@@ -13,7 +12,7 @@ module.exports = function(router) {
             //get list of items
         addItem.find({}).then(items => {
                 data.items = items;
-                res.json(data)
+                res.render('accounts/invoices/transactions', data)
             })
             //record when user do something
         Log.create({
@@ -24,10 +23,155 @@ module.exports = function(router) {
     })
 
     //save transaction(invoice) in database
-    router.post('/accounts/invoices/transactions', (req, res, next) => {
-        var newTransaction = new Transaction(req.body);
+    router.post('/accounts/invoices/transactions', (req, res) => {
+        var newTransaction = new Transaction({
+            transactionDate: req.body.transactionDate,
+            postDate: req.body.postDate,
+            postNumber: req.body.postNumber,
+            patchNumber: req.body.patchNumber,
+            docNumber: req.body.docNumber,
+            invoiceNumber: req.body.invoiceNumber,
+            from: {
+                fromEntity: req.body.fromEntity,
+                fromSubEntity: req.body.fromSubEntity,
+            },
+            to: {
+                toEntity: req.body.toEntity,
+                toSubEntity: req.body.toSubEntity,
+            },
+            transactionType: req.body.transactionType,
+            transactionClass: req.body.transactionClass,
+            transactionNumber: req.body.transactionNumber,
+            parentTransaction: req.body.parentTransaction,
+            reaccurance: req.body.reaccurance,
+            reaacuraneType: req.body.reaacuraneType,
+            taxState: req.body.taxState,
+            currency: req.body.currency,
+            assets: [{
+                assetID: req.body.assetID,
+                assetName: req.body.assetName,
+                assetsSerialNumber: req.body.assetsSerialNumber,
+                assetsQuantity: req.body.assetsQuantity,
+                assetsUintOfMeasurment: req.body.assetsUintOfMeasurment,
+                assetsPrice: req.body.assetsPrice,
+                assetsFrom: req.body.assetsFrom,
+                assetsTo: req.body.assetsTo,
+            }],
+            items: [{
+                itemID: req.body.itemID,
+                itemName: req.body.itemName,
+                itemsSerialNumber: req.body.itemsSerialNumber,
+                itemsQuantity: req.body.itemsQuantity,
+                itemsUintOfMeasurment: req.body.itemsUintOfMeasurment,
+                itemsPrice: req.body.itemsPrice,
+                itemsPackageID: req.body.itemsPackageID,
+                itemsPackageName: req.body.itemsPackageName,
+                itemsFrom: req.body.itemsFrom,
+                itemsTo: req.body.itemsTo,
+            }],
+            services: [{
+                serviceID: req.body.serviceID,
+                serviceName: req.body.serviceName,
+                servicesUintOfMeasurment: req.body.servicesUintOfMeasurment,
+                servicesQuantity: req.body.servicesQuantity,
+                servicesPrice: req.body.servicesPrice,
+                servicesStart: req.body.servicesStart,
+                servicesEnd: req.body.servicesEnd,
+                servicesPackage: req.body.servicesPackage,
+                servicesFrom: req.body.servicesFrom,
+                servicesTo: req.body.servicesTo
+            }],
+            jobs: [{
+                jobID: req.body.jobID,
+                jobName: req.body.jobName,
+                jobsUintOfMeasurment: req.body.jobsUintOfMeasurment,
+                jobsQuantity: req.body.jobsQuantity,
+                jobsPrice: req.body.jobsPrice
+            }],
+            fees: [{
+                feeID: req.body.feeID,
+                feeName: req.body.feeName,
+                feesUintOfMeasurment: req.body.feesUintOfMeasurment,
+                feesQuantity: req.body.feesQuantity,
+                feesPrice: req.body.feesPrice
+            }],
+            fines: [{
+                fineID: req.body.fineID,
+                fineName: req.body.fineName,
+                finesValue: req.body.finesValue
+
+            }],
+            interestAndProfits: [{
+                interestAndProfitsID: req.body.interestAndProfitsID,
+                interestAndProfitsName: req.body.interestAndProfitsName,
+                interestAndProfitsValue: req.body.interestAndProfitsValue
+            }],
+            taxes: [{
+                taxID: req.body.taxID,
+                taxName: req.body.taxName,
+                taxType: req.body.taxType,
+                taxesRatioOrFixedValue: req.body.taxesRatioOrFixedValue,
+                taxesValue: req.body.taxesValue,
+            }],
+            customs: [{
+                customID: req.body.customID,
+                customName: req.body.customName,
+                customType: req.body.customType,
+                customsRatioOrFixedValue: req.body.customsRatioOrFixedValue,
+                customsValue: req.body.customsValue,
+            }],
+            currency: [{
+                currencySource: req.body.currencySource,
+                currencyDestination: req.body.currencyDestination,
+                currencyRate: req.body.currencyRate,
+                currencyAmount: req.body.currencyAmount,
+            }],
+            cash: [{
+                cashValue: req.body.cashValue,
+                cashCurrency: req.body.cashCurrency,
+                cashDetailed: req.body.cashDetailed,
+                cashPapers: req.body.cashPapers,
+                cashFrom: req.body.cashFrom,
+                cashTo: req.body.cashTo,
+            }],
+            accounts: [{
+                accountNumber: req.body.accountNumber,
+                accountName: req.body.accountName,
+                accountDebit: req.body.accountDebit,
+                accountCredit: req.body.accountCredit,
+                accountCurrency: req.body.accountCurrency,
+                accountNotes: req.body.accountNotes
+            }],
+            checks: [{
+                checkOwner: req.body.checkOwner,
+                checkBankName: req.body.checkBankName,
+                checkPayee: req.body.checkPayee,
+                checkDate: req.body.checkDate,
+                checkAmount: req.body.checkAmount,
+                checkCurrency: req.body.checkCurrency,
+                checkNumber: req.body.checkNumber,
+                checkDueDate: req.body.checkDueDate,
+                checkType: req.body.checkType,
+                checkCopy: req.body.checkCopy
+            }],
+            hr: [{
+                hrEmployeeCode: req.body.hrEmployeeCode,
+                hrBaseSalary: req.body.hrBaseSalary,
+                hrGroupedSpecialBonus: req.body.hrGroupedSpecialBonus,
+                hrPreviousYearBonus: req.body.hrPreviousYearBonus,
+                hrExceptionalExpensiveLivingBonus: req.body.hrExceptionalExpensiveLivingBonus,
+                hrWorkNatureAllowance: req.body.hrWorkNatureAllowance,
+                hrLaborHolidayBonus: req.body.hrLaborHolidayBonus,
+                hrFoodAllowance: req.body.hrFoodAllowance,
+                hrSocialBonus: req.body.hrSocialBonus,
+                hrInsurance: req.body.hrInsurance,
+                hrStamp: req.body.hrStamp,
+                hrWorkGainTax: req.body.hrWorkGainTax,
+                hrSyndicate: req.body.hrSyndicate,
+            }]
+        });
         newTransaction.save().then(() => {
-                res.json(newTransaction)
+                res.redirect(302, '../../index', console.log(newTransaction))
             })
             //record when user do something
         Log.create({
@@ -48,8 +192,133 @@ module.exports = function(router) {
 
     //push object in specific and specific array document
     router.post('/accounts/invoices/pushtransactions', (req, res) => {
-        Transaction.aggregate({ $match: { docNumber: req.body.docNumber } }, { $push: req.body }).then(() => {
-                res.json(Transaction)
+        Transaction.updateMany({ docNumber: req.body.documentNumber }, {
+                $push: {
+                    assets: {
+                        assetID: req.body.assetID,
+                        assetName: req.body.assetName,
+                        assetsSerialNumber: req.body.assetsSerialNumber,
+                        assetsQuantity: req.body.assetsQuantity,
+                        assetsUintOfMeasurment: req.body.assetsUintOfMeasurment,
+                        assetsPrice: req.body.assetsPrice,
+                        assetsFrom: req.body.assetsFrom,
+                        assetsTo: req.body.assetsTo,
+                    },
+                    items: {
+                        itemID: req.body.itemID,
+                        itemName: req.body.itemName,
+                        itemsSerialNumber: req.body.itemsSerialNumber,
+                        itemsQuantity: req.body.itemsQuantity,
+                        itemsUintOfMeasurment: req.body.itemsUintOfMeasurment,
+                        itemsPrice: req.body.itemsPrice,
+                        itemsPackageID: req.body.itemsPackageID,
+                        itemsPackageName: req.body.itemsPackageName,
+                        itemsFrom: req.body.itemsFrom,
+                        itemsTo: req.body.itemsTo,
+                    },
+                    services: {
+                        serviceID: req.body.serviceID,
+                        serviceName: req.body.serviceName,
+                        servicesUintOfMeasurment: req.body.servicesUintOfMeasurment,
+                        servicesQuantity: req.body.servicesQuantity,
+                        servicesPrice: req.body.servicesPrice,
+                        servicesStart: req.body.servicesStart,
+                        servicesEnd: req.body.servicesEnd,
+                        servicesPackage: req.body.servicesPackage,
+                        servicesFrom: req.body.servicesFrom,
+                        servicesTo: req.body.servicesTo
+                    },
+                    jobs: {
+                        jobID: req.body.jobID,
+                        jobName: req.body.jobName,
+                        jobsUintOfMeasurment: req.body.jobsUintOfMeasurment,
+                        jobsQuantity: req.body.jobsQuantity,
+                        jobsPrice: req.body.jobsPrice
+                    },
+                    fees: {
+                        feeID: req.body.feeID,
+                        feeName: req.body.feeName,
+                        feesUintOfMeasurment: req.body.feesUintOfMeasurment,
+                        feesQuantity: req.body.feesQuantity,
+                        feesPrice: req.body.feesPrice
+                    },
+                    fines: {
+                        fineID: req.body.fineID,
+                        fineName: req.body.fineName,
+                        finesValue: req.body.finesValue
+
+                    },
+                    interestAndProfits: {
+                        interestAndProfitsID: req.body.interestAndProfitsID,
+                        interestAndProfitsName: req.body.interestAndProfitsName,
+                        interestAndProfitsValue: req.body.interestAndProfitsValue
+                    },
+                    taxes: {
+                        taxID: req.body.taxID,
+                        taxName: req.body.taxName,
+                        taxType: req.body.taxType,
+                        taxesRatioOrFixedValue: req.body.taxesRatioOrFixedValue,
+                        taxesValue: req.body.taxesValue,
+                    },
+                    customs: {
+                        customID: req.body.customID,
+                        customName: req.body.customName,
+                        customType: req.body.customType,
+                        customsRatioOrFixedValue: req.body.customsRatioOrFixedValue,
+                        customsValue: req.body.customsValue,
+                    },
+                    currency: {
+                        currencySource: req.body.currencySource,
+                        currencyDestination: req.body.currencyDestination,
+                        currencyRate: req.body.currencyRate,
+                        currencyAmount: req.body.currencyAmount,
+                    },
+                    cash: {
+                        cashValue: req.body.cashValue,
+                        cashCurrency: req.body.cashCurrency,
+                        cashDetailed: req.body.cashDetailed,
+                        cashPapers: req.body.cashPapers,
+                        cashFrom: req.body.cashFrom,
+                        cashTo: req.body.cashTo,
+                    },
+                    accounts: {
+                        accountNumber: req.body.accountNumber,
+                        accountName: req.body.accountName,
+                        accountDebit: req.body.accountDebit,
+                        accountCredit: req.body.accountCredit,
+                        accountCurrency: req.body.accountCurrency,
+                        accountNotes: req.body.accountNotes
+                    },
+                    checks: {
+                        checkOwner: req.body.checkOwner,
+                        checkBankName: req.body.checkBankName,
+                        checkPayee: req.body.checkPayee,
+                        checkDate: req.body.checkDate,
+                        checkAmount: req.body.checkAmount,
+                        checkCurrency: req.body.checkCurrency,
+                        checkNumber: req.body.checkNumber,
+                        checkDueDate: req.body.checkDueDate,
+                        checkType: req.body.checkType,
+                        checkCopy: req.body.checkCopy
+                    },
+                    hr: {
+                        hrEmployeeCode: req.body.hrEmployeeCode,
+                        hrBaseSalary: req.body.hrBaseSalary,
+                        hrGroupedSpecialBonus: req.body.hrGroupedSpecialBonus,
+                        hrPreviousYearBonus: req.body.hrPreviousYearBonus,
+                        hrExceptionalExpensiveLivingBonus: req.body.hrExceptionalExpensiveLivingBonus,
+                        hrWorkNatureAllowance: req.body.hrWorkNatureAllowance,
+                        hrLaborHolidayBonus: req.body.hrLaborHolidayBonus,
+                        hrFoodAllowance: req.body.hrFoodAllowance,
+                        hrSocialBonus: req.body.hrSocialBonus,
+                        hrInsurance: req.body.hrInsurance,
+                        hrStamp: req.body.hrStamp,
+                        hrWorkGainTax: req.body.hrWorkGainTax,
+                        hrSyndicate: req.body.hrSyndicate,
+                    }
+                }
+            }).then(() => {
+                res.redirect('pushtransactions')
             })
             //record when user do something
         Log.create({
@@ -59,7 +328,7 @@ module.exports = function(router) {
     })
 
     //get customize page to search item by name
-    router.get('/accounts/invoices/search', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
+    router.get('/accounts/invoices/search', (req, res) => {
         let data = {}
             //get list of items
         addItem.find({}).then(items => {
@@ -74,11 +343,11 @@ module.exports = function(router) {
     })
 
     //search assets by name
-    router.get('/assetName', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
+    router.get('/assetName', (req, res) => {
         let data = {}
-        const assetName = req.body;
+        const assetName = req.query.assetName;
         Transaction.aggregate([{ $unwind: "$assets" },
-                { $match: assetName }, {
+                { $match: { transactionType: "sales", "assets.assetName": assetName } }, {
                     $project: {
                         transactionType: "$transactionType",
                         assetName: "$assets.assetName",
@@ -88,7 +357,7 @@ module.exports = function(router) {
             ]).exec(transactions => {
                 data.transactions = transactions;
                 Transaction.aggregate([{ $unwind: "$assets" },
-                    { $match: assetName }, {
+                    { $match: { transactionType: "purchase", "assets.assetName": assetName } }, {
                         $project: {
                             transactionType: "$transactionType",
                             assetName: "$assets.assetName",
@@ -99,19 +368,19 @@ module.exports = function(router) {
                     }
                 ]).then(transactions2 => {
                     data.transactions2 = transactions2;
-                    res.json(data)
+                    res.render('accounts/invoices/customize', data)
                 })
             })
             //record when user do something
-            /*  Log.create({
-                 statement: 'User: ' + req.user.userName + ' entered to search in assets name:' + assetName,
-                 user: req.user.userName
-             }); */
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' entered to search in assets name:' + assetName,
+            user: req.user.userName
+        });
     })
 
     /*search item by name (single name , multi names ,
      if not choosen get all ,if single name was chosen not exist return no record)*/
-    router.get('/itemName', /* [authJwt.verifyToken, authJwt.isAdmin],  */ (req, res) => {
+    router.get('/itemName', (req, res) => {
         let data = {}
         var itemName = req.body;
         console.log(itemName)
@@ -134,15 +403,17 @@ module.exports = function(router) {
                     res.json(data)
                 })
                 //record when user do something
-                /*    Log.create({
-                       statement: 'User: ' + req.user.userName + ' entered to get all items',
-                       user: req.user.userName
-                   }); */
-        } else if (itemName.constructor === Object) {
+                /*  Log.create({
+                     statement: 'User: ' + req.user.userName + ' entered to get all items',
+                     user: req.user.userName
+                 }); */
+        } else if (itemName == req.body) {
             var itemName = req.body;
             Transaction.aggregate([{ $unwind: "$items" },
                     {
-                        $match: itemName
+                        $match: {
+                            itemName
+                        }
                     }, {
                         $project: {
                             transactionDate: "$transactionDate",
@@ -163,10 +434,10 @@ module.exports = function(router) {
                     }
                 })
                 //record when user do something
-                /* Log.create({
-                    statement: 'User: ' + req.user.userName + ' entered to search in item name:' + itemName,
-                    user: req.user.userName
-                }); */
+                /*  Log.create({
+                     statement: 'User: ' + req.user.userName + ' entered to search in item name:' + itemName,
+                     user: req.user.userName
+                 }); */
         } else {
             var itemName = req.body;
             /* var x = []
@@ -175,35 +446,36 @@ module.exports = function(router) {
                 console.log(x);
             }); */
             Transaction.aggregate([{ $unwind: "$items" },
-                    {
-                        $match: {
-                            $or: itemName
-                        }
-                    }, {
-                        $project: {
-                            transactionDate: "$transactionDate",
-                            dateCreated: "$dateCreated",
-                            transactionType: "$transactionType",
-                            itemName: "$items.itemName",
-                            price: "$items.itemsPrice",
-                            totalQuantity: { $sum: "$items.itemsQuantity" },
-                            total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
-                        }
-                    }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
-                ]).then(transactions => {
-                    data.transactions = transactions;
-                    res.json(data)
-                })
-                //record when user do something
-                /* Log.create({
-                    statement: 'User: ' + req.user.userName + ' entered to search in items :' + itemName,
-                    user: req.user.userName
-                }); */
+                {
+                    $match: {
+                        $or: itemName
+                    }
+                }, {
+                    $project: {
+                        transactionDate: "$transactionDate",
+                        dateCreated: "$dateCreated",
+                        transactionType: "$transactionType",
+                        itemName: "$items.itemName",
+                        price: "$items.itemsPrice",
+                        totalQuantity: { $sum: "$items.itemsQuantity" },
+                        total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
+                    }
+                }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
+            ]).then(transactions => {
+                data.transactions = transactions;
+                res.json(data)
+            })
+
+            //record when user do something
+            Log.create({
+                statement: 'User: ' + req.user.userName + ' entered to search in items :' + itemName,
+                user: req.user.userName
+            });
         }
     })
 
     //search by transactionType
-    router.get('/transactionType', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
+    router.get('/transactionType', (req, res) => {
         let data = {}
         const transactionType = req.query.transactionType
         Transaction.aggregate([{ $unwind: "$items" },
@@ -231,7 +503,7 @@ module.exports = function(router) {
     })
 
     //search by transactionDate
-    router.get('/transactionDate', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
+    router.get('/transactionDate', (req, res) => {
         let data = {}
         const transactionDatefrom = req.query.transactionDatefrom
         const transactionDateto = req.query.transactionDateto
@@ -267,7 +539,7 @@ module.exports = function(router) {
     })
 
     //search by transactionDate, itemName, transactionType,entities
-    router.get('/specific', [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {
+    router.get('/specific', (req, res) => {
             let data = {}
             const transactionDatefrom = req.query.transactionDatefrom
             const transactionDateto = req.query.transactionDateto
@@ -389,5 +661,36 @@ module.exports = function(router) {
             statement: 'User: ' + req.user.userName + ' entered to search in entites fromEntity:' + fromEntity + 'and fromSubEntity:' + fromSubEntity + 'and toEntity:' + toEntity + 'and toSubEntity:' + toSubEntity,
             user: req.user.userName
         });
+    })
+
+    //connvert to excel sheet
+    router.get('/export', (req, res) => {
+        var filename = "transactions.csv";
+        var dataArray;
+        var itemName = req.query.itemName;
+        Transaction.aggregate([{ $unwind: "$items" },
+            {
+                $match: {
+                    "items.itemName": itemName
+                }
+            }, {
+                $project: {
+                    transactionDate: "$transactionDate",
+                    dateCreated: "$dateCreated",
+                    transactionType: "$transactionType",
+                    itemName: "$items.itemName",
+                    price: "$items.itemsPrice",
+                    totalQuantity: { $sum: "$items.itemsQuantity" },
+                    total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
+                }
+            }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
+        ]).exec({}, function(err, transactions) {
+            if (err) res.send(err);
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'text/csv');
+            res.setHeader("Content-Disposition", 'attachment; filename=' + filename);
+            res.csv(transactions, true);
+        })
+
     })
 }
