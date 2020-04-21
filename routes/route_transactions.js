@@ -446,26 +446,27 @@ module.exports = function(router) {
                 console.log(x);
             });
             Transaction.aggregate([{ $unwind: "$items" },
-                    {
-                        $match: {
-                            $or: x
-                        }
-                    }, {
-                        $project: {
-                            transactionDate: "$transactionDate",
-                            dateCreated: "$dateCreated",
-                            transactionType: "$transactionType",
-                            itemName: "$items.itemName",
-                            price: "$items.itemsPrice",
-                            totalQuantity: { $sum: "$items.itemsQuantity" },
-                            total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
-                        }
-                    }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
-                ]).then(transactions => {
-                    data.transactions = transactions;
-                    res.render('accounts/invoices/customize', data)
-                })
-                //record when user do something
+                {
+                    $match: {
+                        $or: x
+                    }
+                }, {
+                    $project: {
+                        transactionDate: "$transactionDate",
+                        dateCreated: "$dateCreated",
+                        transactionType: "$transactionType",
+                        itemName: "$items.itemName",
+                        price: "$items.itemsPrice",
+                        totalQuantity: { $sum: "$items.itemsQuantity" },
+                        total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
+                    }
+                }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
+            ]).then(transactions => {
+                data.transactions = transactions;
+                res.render('accounts/invoices/customize', data, console.log(data))
+            })
+
+            //record when user do something
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered to search in items :' + itemName,
                 user: req.user.userName
@@ -664,26 +665,32 @@ module.exports = function(router) {
 
     //connvert to excel sheet
     router.get('/export', (req, res) => {
-        /* var filename = "transactions.csv";
+        var filename = "transactions.csv";
         var dataArray;
-        Transaction.find().lean().exec({}, function(err, transactions) {
+        var itemName = req.query.itemName;
+        Transaction.aggregate([{ $unwind: "$items" },
+            {
+                $match: {
+                    "items.itemName": itemName
+                }
+            }, {
+                $project: {
+                    transactionDate: "$transactionDate",
+                    dateCreated: "$dateCreated",
+                    transactionType: "$transactionType",
+                    itemName: "$items.itemName",
+                    price: "$items.itemsPrice",
+                    totalQuantity: { $sum: "$items.itemsQuantity" },
+                    total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
+                }
+            }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
+        ]).exec({}, function(err, transactions) {
             if (err) res.send(err);
             res.statusCode = 200;
             res.setHeader('Content-Type', 'text/csv');
             res.setHeader("Content-Disposition", 'attachment; filename=' + filename);
             res.csv(transactions, true);
-        }) */
-        /* var model = mongoXlsx.buildDynamicModel(Transaction);
-        mongoXlsx.mongoData2Xlsx(Transaction, model, function(err, Transaction) {
-            console.log('File saved at:', Transaction.fullPath);
-        }); */
-        var data = Transaction.find({})
-        var model = mongoXlsx.buildDynamicModel(data);
-        mongoXlsx.mongoData2Xlsx(data, model, function(err, data) {
-            console.log('File saved at:', data.fullPath);
-        });
-        mongoXlsx.xlsx2MongoData("./file.xlsx", model, function(err, mongoData) {
-            console.log('Mongo data:', mongoData);
-        });
+        })
+
     })
 }
