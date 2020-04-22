@@ -14,7 +14,7 @@ var transactionSchema = mongoose.Schema({
             validator: function(n) {
                 return n.length >= 5 && n.length < 10;
             },
-            message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+            message: 'Invalid postNumber , postNumber should contain from 4 to 10 charcters  b'
         }
     },
     patchNumber: {
@@ -25,7 +25,7 @@ var transactionSchema = mongoose.Schema({
             validator: function(n) {
                 return n.length >= 5 && n.length < 10;
             },
-            message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+            message: 'Invalid patchNumber , patchNumber should contain from 4 to 10 charcters  b'
         }
     },
     docNumber: {
@@ -36,7 +36,7 @@ var transactionSchema = mongoose.Schema({
             validator: function(n) {
                 return n.length >= 5 && n.length < 10;
             },
-            message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+            message: 'Invalid docNumber , docNumber should contain from 4 to 10 charcters  b'
         }
     },
     invoiceNumber: {
@@ -47,7 +47,7 @@ var transactionSchema = mongoose.Schema({
             validator: function(n) {
                 return n.length >= 5 && n.length < 10;
             },
-            message: 'Invalid Name , name should contain from 4 to 10 charcters  b'
+            message: 'Invalid invoiceNumber , invoiceNumber should contain from 4 to 10 charcters  b'
         }
     },
     from: {

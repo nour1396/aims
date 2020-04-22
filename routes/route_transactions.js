@@ -28,13 +28,14 @@ module.exports = function(router) {
     router.post('/accounts/invoices/transactions', (req, res, next) => {
         var newTransaction = new Transaction(req.body);
         newTransaction.save().then(() => {
+                console.log(tableify(newTransaction))
                 res.json(newTransaction)
             })
             //record when user do something
-        Log.create({
-            statement: 'User: ' + req.user.userName + ' saved new transaction with number' + req.body.docNumber + 'and type:' + req.body.transactionType,
-            user: req.user.userName
-        });
+            /*         Log.create({
+                        statement: 'User: ' + req.user.userName + ' saved new transaction with number' + req.body.docNumber + 'and type:' + req.body.transactionType,
+                        user: req.user.userName
+                    }); */
     })
 
     //get page to enter data will be pushed in database
