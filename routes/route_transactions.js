@@ -5,6 +5,8 @@ const mongoose = require('mongoose'); //mongoose module
 const csv = require('csv-express'); // csv module
 const mongoXlsx = require('mongo-xlsx'); //mongoXlsx module
 const Log = require('../models/log').Log;
+const tableify = require('tableify');
+const fs = require('fs');
 module.exports = function(router) {
     //get page to enter data of invoice (transaction)
     router.get('/accounts/invoices/transactions', (req, res, next) => {
@@ -430,7 +432,22 @@ module.exports = function(router) {
                     if (transactions == 0) {
                         res.end('no record found')
                     } else {
-                        res.render('accounts/invoices/customize', data)
+                        var i = transactions.length
+                        fs.writeFile("transactions.csv", transactions[i], {
+                            encoding: "utf8",
+                            flag: "w",
+                            mode: 0o666
+                        }, (err) => {
+                            if (err)
+                                console.log(err);
+                            else {
+                                console.log("File written successfully\n");
+                                console.log("The written has the following contents:");
+
+                                res.render('accounts/invoices/customize', data)
+                            }
+                        });
+
                     }
                 })
                 //record when user do something
@@ -678,13 +695,14 @@ module.exports = function(router) {
         mongoXlsx.mongoData2Xlsx(Transaction, model, function(err, Transaction) {
             console.log('File saved at:', Transaction.fullPath);
         }); */
-        var data = Transaction.find({})
+        /* console.log(tableify(Log.find({})))
+        var data = tableify(Transaction.find({}))
         var model = mongoXlsx.buildDynamicModel(data);
         mongoXlsx.mongoData2Xlsx(data, model, function(err, data) {
             console.log('File saved at:', data.fullPath);
         });
         mongoXlsx.xlsx2MongoData("./file.xlsx", model, function(err, mongoData) {
             console.log('Mongo data:', mongoData);
-        });
+        }); */
     })
 }

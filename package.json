@@ -28,6 +28,7 @@
         "express-ejs-layouts": "^2.5.0",
         "express-flash-notification": "^0.5.0",
         "express-session": "^1.17.0",
+        "fs": "0.0.1-security",
         "google-translate": "^2.3.0",
         "got": "^9.6.0",
         "jquery": "^3.4.1",
