@@ -33,6 +33,7 @@
         "got": "^9.6.0",
         "jquery": "^3.4.1",
         "js-alert": "^1.0.4",
+        "json2csv": "^5.0.0",
         "jsonwebtoken": "^8.5.1",
         "medici": "^3.0.2",
         "mongo-xlsx": "^1.0.12",

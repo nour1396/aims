@@ -1,12 +1,9 @@
 const Transaction = require('../models/accounts/invoices/transactions').Transaction; //transactions Schema
 const addItem = require('../models/accounts/addItem').addItem; //items Schema
-const configDB = require('../config/database'); //Connections to database
-const mongoose = require('mongoose'); //mongoose module
-const csv = require('csv-express'); // csv module
-const mongoXlsx = require('mongo-xlsx'); //mongoXlsx module
 const Log = require('../models/log').Log;
-const tableify = require('tableify');
 const fs = require('fs');
+const path = require('path');
+const json2csv = require('json2csv').parse;
 module.exports = function(router) {
     //get page to enter data of invoice (transaction)
     router.get('/accounts/invoices/transactions', (req, res, next) => {
@@ -432,22 +429,21 @@ module.exports = function(router) {
                     if (transactions == 0) {
                         res.end('no record found')
                     } else {
-                        var i = transactions.length
-                        fs.writeFile("transactions.csv", transactions[i], {
-                            encoding: "utf8",
-                            flag: "w",
-                            mode: 0o666
-                        }, (err) => {
-                            if (err)
-                                console.log(err);
-                            else {
-                                console.log("File written successfully\n");
-                                console.log("The written has the following contents:");
+                        /* Using fs package we can create excel/CSV file from JSON data.
 
-                                res.render('accounts/invoices/customize', data)
-                            }
+                            Step 1: Store JSON data in a variable (here it is in transactions variable).
+
+                            Step 2: Create empty string variable(here it is data).
+
+                            Step 3: Append every property of transactions to string variable data, while appending put '\t' in-between 2 cells and '\n' after completing the row. */
+                        var dataA = '';
+                        for (var i = 0; i < transactions.length; i++) {
+                            dataA = dataA + transactions[i]._id + '\t' + transactions[i].total + '\t' + transactions[i].price + '\t' + transactions[i].transactionDate + '\t' + transactions[i].totalQuantity + '\t' + '\n';
+                        }
+                        fs.appendFile('Filename.pdf', dataA, (err) => {
+                            if (err) throw err;
+                            res.render('accounts/invoices/customize', data)
                         });
-
                     }
                 })
                 //record when user do something
@@ -480,7 +476,15 @@ module.exports = function(router) {
                 }, { $project: { _id: "$itemName", total: "$total", price: "$price", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType", totalQuantity: { $sum: "$totalQuantity" } } }
             ]).then(transactions => {
                 data.transactions = transactions;
-                res.render('accounts/invoices/customize', data, console.log(data))
+
+                var dataA = '';
+                for (var i = 0; i < transactions.length; i++) {
+                    dataA = dataA + transactions[i]._id + '\t' + transactions[i].total + '\t' + transactions[i].price + '\t' + transactions[i].transactionDate + '\t' + transactions[i].totalQuantity + '\t' + '\n';
+                }
+                fs.appendFile('Filename.xls', dataA, (err) => {
+                    if (err) throw err;
+                    res.render('accounts/invoices/customize', data, console.log(data))
+                });
             })
 
             //record when user do something
@@ -680,29 +684,4 @@ module.exports = function(router) {
         });
     })
 
-    //connvert to excel sheet
-    router.get('/export', (req, res) => {
-        /* var filename = "transactions.csv";
-        var dataArray;
-        Transaction.find().lean().exec({}, function(err, transactions) {
-            if (err) res.send(err);
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/csv');
-            res.setHeader("Content-Disposition", 'attachment; filename=' + filename);
-            res.csv(transactions, true);
-        }) */
-        /* var model = mongoXlsx.buildDynamicModel(Transaction);
-        mongoXlsx.mongoData2Xlsx(Transaction, model, function(err, Transaction) {
-            console.log('File saved at:', Transaction.fullPath);
-        }); */
-        /* console.log(tableify(Log.find({})))
-        var data = tableify(Transaction.find({}))
-        var model = mongoXlsx.buildDynamicModel(data);
-        mongoXlsx.mongoData2Xlsx(data, model, function(err, data) {
-            console.log('File saved at:', data.fullPath);
-        });
-        mongoXlsx.xlsx2MongoData("./file.xlsx", model, function(err, mongoData) {
-            console.log('Mongo data:', mongoData);
-        }); */
-    })
 }
