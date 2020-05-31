@@ -7,7 +7,30 @@ const mongoXlsx = require('mongo-xlsx'); //mongoXlsx module
 const Log = require('../models/log').Log;
 const { authJwt } = require("../config");
 var tableify = require('tableify');
+const fs = require('fs');
+var Json2csvParser = require('json2csv');
+const Account = require('../models/accounts/accounts');
+const subAccounts = require('../models/accounts/accountsSub');
 module.exports = function(router) {
+    router.post('/newcat', (req, res) => {
+        var newAccounts = new Account(req.body);
+        newAccounts.save().then(() => {
+                res.json(newAccounts)
+            })
+            .catch((err) => {
+                if (err) throw err;
+            })
+    })
+
+
+    router.post('/newsubcat', (req, res) => {
+        var newSubAccounts = new subAccounts(req.body);
+        newSubAccounts.save().then(() => {
+            res.json(newSubAccounts)
+        })
+    })
+
+
     //get page to enter data of invoice (transaction)
     router.get('/accounts/invoices/transactions', (req, res, next) => {
         let data = {}
@@ -161,7 +184,21 @@ module.exports = function(router) {
                     if (transactions == 0) {
                         res.end('no record found')
                     } else {
-                        res.json(tableify(data))
+                        /* var dataA = '';
+                        for (var i = 0; i < transactions.length; i++) {
+                            dataA = dataA + transactions[i]._id + '\t' + transactions[i].totalQuantity + '\t' + transactions[i].price + transactions[i].total + '\t' + transactions[i].transactionDate + transactions[i].transactionType + '\t' + '\t' + '\n';
+                        }
+                        fs.appendFile('Filename.xls', dataA, (err) => {
+                            if (err) throw err;
+                            res.json(data)
+                        }); */
+                        const json2csvParser = new Json2csvParser({ header: true });
+                        const csvData = json2csvParser.parse(transactions);
+                        fs.writeFileSync("bb_mongodb_fs.csv", csvData, function(error) {
+                            if (error) throw error;
+                            console.log("Write to bezkoder_mongodb_fs.csv successfully!");
+                            res.json(data)
+                        });
                     }
                 })
                 //record when user do something
