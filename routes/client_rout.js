@@ -5,15 +5,46 @@ const Country = require('../models/lists').Country;
 const Language = require('../models/lists').Language;
 const maritalStatus = require('../models/lists').maritalStatus;
 const Religion = require('../models/lists').Religion;
+const Nationality = require('../models/lists').Nationality;
 const Title = require('../models/lists').Title;
+const Gender = require('../models/lists').Gender;
 const Log = require('../models/log').Log;
 const DraftClient = require('../models/drafts/draftClientEN').DraftClient;
 const DraftClientAr = require('../models/drafts/draftClientAR').DraftClientAr;
 const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
 const { authJwt } = require("../config");
+const labelstranslated = require('../models/labelstranslated');
 var assert = require('assert')
 module.exports = function(router) {
     //data-en **get page to enter data
+    router.get('/lists', function(req, res, next) {
+        let data = {};
+        Country.find({}).then(countries => {
+            data.countries = countries
+            Nationality.find({}).then(nationalities => {
+                data.nationalities = nationalities
+                maritalStatus.find({}).then(maritalstatus => {
+                    data.maritalstatus = maritalstatus;
+                    Title.find({}).then(titles => {
+                        data.titles = titles
+                        Religion.find({}).then(religions => {
+                            data.religions = religions
+                            Language.find({}).then(languages => {
+                                data.languages = languages
+                                Gender.find({}).then(gender => {
+                                    data.gender = gender
+                                    labelstranslated.find({}).then(labels => {
+                                        data.labels = labels
+                                        res.json(data) // at the end
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    })
     router.get('/data-en', function(req, res, next) {
         if (!req.user == false) {
             Log.create({
@@ -96,7 +127,7 @@ module.exports = function(router) {
         })
         //save data in database
     router.post('/data-en', (req, res, next) => {
-        DraftClient.deleteOne({ /* user: req.user.userName */ }).then(resolve => {});
+        // DraftClient.deleteOne({ /* user: req.user.userName */ }).then(resolve => {});
         var newClient = new Client(req.body);
         var error
 
