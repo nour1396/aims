@@ -38,9 +38,7 @@
             <label>Title </label>
             <select name="PI_title" placeholder="Enter Your Title">
                 <%for(let t of titles){%> 
-                <%if (t.male_english.length !==0){%>
-                <option value=""><%= t.male_english%></option>
-                <%}%>
+                <option value=""><%= t.english%></option>
                 <%}%>
             </select>
             <label>Gender</label>
@@ -50,9 +48,9 @@
             </select>
             <label>Nationality</label>
             <select name="PI_nationality" placeholder="Enter Your Nationality">
-            <%for(let c of countries){%> 
-                <%if (c.nationality_english.length !==0){%>
-                <option value=""><%= c.nationality_english%></option>
+            <%for(let n of nationalities){%> 
+                <%if (n.english.length !==0){%>
+                <option value=""><%= n.english%></option>
                 <%}%>
                 <%}%>
             </select>
@@ -160,9 +158,9 @@
             <input type="text" name="BD_fullNameInArabic" placeholder="Enter Full Name In Arabic"><br>
             <label>Nationality</label>
             <select name="BD_nationality">
-            <%for(let c of countries){%> 
-                <%if (c.nationality_english.length !==0){%>
-                <option value=""><%= c.nationality_english%></option>
+            <%for(let n of nationalities){%> 
+                <%if (n.english.length !==0){%>
+                <option value=""><%= n.english%></option>
                 <%}%>
                 <%}%>
             </select>
@@ -197,11 +195,11 @@
             </select>
             <label>His Nationality</label>
             <select name="BD_hisNationality">
-                <%for(let c of countries){%> 
-                <%if (c.nationality_english.length !==0){%>
-                <option value=""><%= c.nationality_english%></option>
-                <%}%>
-                <%}%>
+                <%for(let n of nationalities){%> 
+                    <%if (n.english.length !==0){%>
+                    <option value=""><%= n.english%></option>
+                    <%}%>
+                    <%}%>
             </select><br>
             <label>Full Name of Mother</label>
             <input type="text" name="BD_fullMotherName" placeholder="Enter Mother's Full Name">
@@ -215,11 +213,11 @@
             </select>
             <label>Her Nationality</label>
             <select name="BD_herNationality">
-                <%for(let c of countries){%> 
-                <%if (c.nationality_english.length !==0){%>
-                <option value=""><%= c.nationality_english%></option>
-                <%}%>
-                <%}%>
+                <%for(let n of nationalities){%> 
+                    <%if (n.english.length !==0){%>
+                    <option value=""><%= n.english%></option>
+                    <%}%>
+                    <%}%>
             </select><br>
             <label>Civil Register</label>
             <input type="text" name="BD_civilRegister">
@@ -247,11 +245,11 @@
             <input type="date" name="AD_expirationDateOfRenting">
             <label>Country</label>
             <select name="AD_country">
-                <%for(let c of countries){%> 
-                <%if (c.country_english.length !==0){%>
-                <option value=""><%= c.country_english%></option>
-                <%}%>
-                <%}%>
+                <%for(let n of nationalities){%> 
+                    <%if (n.english.length !==0){%>
+                    <option value=""><%= n.english%></option>
+                    <%}%>
+                    <%}%>
             </select>
             <label>City</label>
             <select name="AD_city">
@@ -288,11 +286,11 @@
                 <input type="text" name="DL_address" placeholder="Enter Your Address">
                 <label>Nationality</label>
                 <select name="DL_nationality">
-                    <%for(let c of countries){%> 
-                    <%if (c.nationality_english.length !==0){%>
-                    <option value=""><%= c.nationality_english%></option>
-                    <%}%>
-                    <%}%>
+                    <%for(let n of nationalities){%> 
+                        <%if (n.english.length !==0){%>
+                        <option value=""><%= n.english%></option>
+                        <%}%>
+                        <%}%>
                 </select><br>
                 <label>Issue Date</label>
                 <input type="date" name="DL_issueDate">
@@ -452,11 +450,11 @@
                 <input type="date" name="RP_birthDate">
                 <label>Nationality</label>
                 <select name="RP_nationality">
-                    <%for(let c of countries){%> 
-                    <%if (c.nationality_english.length !==0){%>
-                    <option value=""><%= c.nationality_english%></option>
-                    <%}%>
-                    <%}%>
+                    <%for(let n of nationalities){%> 
+                        <%if (n.english.length !==0){%>
+                        <option value=""><%= n.english%></option>
+                        <%}%>
+                        <%}%>
                 </select>
                 <label>Religion</label>
                 <select name="RP_religion" value="">
@@ -495,11 +493,11 @@
                 <input type="date" name="SI_expirationDate">
                 <label>Country</label>
                 <select type="text" name="SI_country">
-                    <%for(let c of countries){%> 
-                    <%if (c.country_english.length !==0){%>
-                    <option value=""><%= c.country_english%></option>
-                    <%}%>
-                    <%}%>
+                    <%for(let n of nationalities){%> 
+                        <%if (n.english.length !==0){%>
+                        <option value=""><%= n.english%></option>
+                        <%}%>
+                        <%}%>
                 </select>
                 <label>City</label>
                 <input type="text" name="SI_city">

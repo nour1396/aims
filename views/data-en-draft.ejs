@@ -39,9 +39,7 @@
             <label>Title </label>
             <select name="PI_title" placeholder="اللقب" value="<%= draft.personalInformation ? draft.personalInformation.PI_title : '' %>">
                 <%for(let t of titles){%> 
-                <%if (t.male_english.length !==0){%>
-                <option value=""><%= t.male_english%></option>
-                <%}%>
+                <option value=""><%= t.english%></option>
                 <%}%>
             </select>
             <label>Gender</label>
@@ -51,11 +49,11 @@
             </select>
             <label>Nationality</label>
             <select name="PI_nationality" placeholder="Enter Your Nationality" value="<%= draft.personalInformation ? draft.personalInformation.PI_nationality : '' %>">
-            <%for(let c of countries){%> 
-                <%if (c.nationality_english.length !==0){%>
-                <option value=""><%= c.nationality_english%></option>
-                <%}%>
-                <%}%>
+                <%for(let n of nationalities){%> 
+                    <%if (n.english.length !==0){%>
+                    <option value=""><%= n.english%></option>
+                    <%}%>
+                    <%}%>
             </select>
             <label>Marital status</label>
             <select name="PI_maritalStatus" placeholder="Enter Your Marital Status" value="<%= draft.personalInformation ? draft.personalInformation.PI_maritalStatus : '' %>">
@@ -162,11 +160,11 @@
             <input type="text" name="BD_fullNameInArabic" placeholder="Enter Full Name In Arabic"><br>
             <label>Nationality</label>
             <select name="BD_nationality">
-            <%for(let c of countries){%> 
-                <%if (c.nationality_english.length !==0){%>
-                <option value=""><%= c.nationality_english%></option>
-                <%}%>
-                <%}%>
+                <%for(let n of nationalities){%> 
+                    <%if (n.english.length !==0){%>
+                    <option value=""><%= n.english%></option>
+                    <%}%>
+                    <%}%>
             </select>
             <label>Place Of Birth</label>
             <input type="text" name="BD_placeOfBirth" placeholder="Enter Place Of Birth">
@@ -199,11 +197,11 @@
             </select>
             <label>His Nationality</label>
             <select name="BD_hisNationality">
-                <%for(let c of countries){%> 
-                <%if (c.nationality_english.length !==0){%>
-                <option value=""><%= c.nationality_english%></option>
-                <%}%>
-                <%}%>
+                <%for(let n of nationalities){%> 
+                    <%if (n.english.length !==0){%>
+                    <option value=""><%= n.english%></option>
+                    <%}%>
+                    <%}%>
             </select><br>
             <label>Full Name of Mother</label>
             <input type="text" name="BD_fullMotherName" placeholder="Enter Mother's Full Name">
@@ -217,11 +215,11 @@
             </select>
             <label>Her Nationality</label>
             <select name="BD_herNationality">
-                <%for(let c of countries){%> 
-                <%if (c.nationality_english.length !==0){%>
-                <option value=""><%= c.nationality_english%></option>
-                <%}%>
-                <%}%>
+                <%for(let n of nationalities){%> 
+                    <%if (n.english.length !==0){%>
+                    <option value=""><%= n.english%></option>
+                    <%}%>
+                    <%}%>
             </select><br>
             <label>Civil Register</label>
             <input type="text" name="BD_civilRegister">
@@ -250,9 +248,7 @@
             <label>Country</label>
             <select name="AD_country">
                 <%for(let c of countries){%> 
-                <%if (c.country_english.length !==0){%>
-                <option value=""><%= c.country_english%></option>
-                <%}%>
+                <option value=""><%= c.english%></option>
                 <%}%>
             </select>
             <label>City</label>
@@ -290,11 +286,11 @@
                 <input type="text" name="DL_address" placeholder="Enter Your Address">
                 <label>Nationality</label>
                 <select name="DL_nationality">
-                    <%for(let c of countries){%> 
-                    <%if (c.nationality_english.length !==0){%>
-                    <option value=""><%= c.nationality_english%></option>
-                    <%}%>
-                    <%}%>
+                    <%for(let n of nationalities){%> 
+                        <%if (n.english.length !==0){%>
+                        <option value=""><%= n.english%></option>
+                        <%}%>
+                        <%}%>
                 </select><br>
                 <label>Issue Date</label>
                 <input type="date" name="DL_issueDate">
@@ -454,11 +450,11 @@
                 <input type="date" name="RP_birthDate">
                 <label>Nationality</label>
                 <select name="RP_nationality">
-                    <%for(let c of countries){%> 
-                    <%if (c.nationality_english.length !==0){%>
-                    <option value=""><%= c.nationality_english%></option>
-                    <%}%>
-                    <%}%>
+                    <%for(let n of nationalities){%> 
+                        <%if (n.english.length !==0){%>
+                        <option value=""><%= n.english%></option>
+                        <%}%>
+                        <%}%>
                 </select>
                 <label>Religion</label>
                 <select name="RP_religion" value="">
@@ -498,9 +494,7 @@
                 <label>Country</label>
                 <select type="text" name="SI_country">
                     <%for(let c of countries){%> 
-                    <%if (c.country_english.length !==0){%>
-                    <option value=""><%= c.country_english%></option>
-                    <%}%>
+                    <option value=""><%= c.english%></option>
                     <%}%>
                 </select>
                 <label>City</label>

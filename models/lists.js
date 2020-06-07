@@ -29,7 +29,7 @@ const maritalStatusSchema = mongoose.Schema({
     arabic: String,
     gender: String
 })
-const maritalStatus = mongoose.model('marital_status', maritalStatusSchema);
+const maritalStatus = mongoose.model('maritalstatuses', maritalStatusSchema);
 exports.maritalStatus = maritalStatus
 
 
@@ -39,7 +39,7 @@ const religionSchema = mongoose.Schema({
     category_english: String,
     category_arabic: String
 });
-const Religion = mongoose.model('religious_subcategory', religionSchema);
+const Religion = mongoose.model('religioussubcategories', religionSchema);
 exports.Religion = Religion
 
 
@@ -60,5 +60,19 @@ const titleSchema = mongoose.Schema({
     male_arabic: String,
     Gender: String
 });
-const Title = mongoose.model('honorifi_title', titleSchema);
+const Title = mongoose.model('honorifititle', titleSchema);
 exports.Title = Title
+
+const genderSchema = mongoose.Schema({
+    english: String,
+    arabic: String
+});
+const Gender = mongoose.model('genders', genderSchema);
+exports.Gender = Gender
+
+const nationalitySchema = mongoose.Schema({
+    english: String,
+    arabic: String
+});
+const Nationality = mongoose.model('nationalities', nationalitySchema);
+exports.Nationality = Nationality
