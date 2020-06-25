@@ -136,11 +136,36 @@ module.exports = function(router) {
         var newClient = new Client({
             _id: req.body._id,
             personalInformation: {
-                PI_firstName: req.body.PI_firstName,
-                PI_secondName: req.body.PI_secondName,
-                PI_thirdName: req.body.PI_thirdName,
-                PI_fourthName: req.body.PI_fourthName,
-                PI_lastName: req.body.PI_lastName,
+                PI_name: {
+                    english: {
+                        PI_firstName: req.body.PI_firstName,
+                        PI_secondName: req.body.PI_secondName,
+                        PI_thirdName: req.body.PI_thirdName,
+                        PI_fourthName: req.body.PI_fourthName,
+                        PI_lastName: req.body.PI_lastName,
+                    },
+                    arabic: {
+                        PI_firstName_arabic: req.body.PI_firstName_arabic,
+                        PI_secondName_arabic: req.body.PI_secondName_arabic,
+                        PI_thirdName_arabic: req.body.PI_thirdName_arabic,
+                        PI_fourthName_arabic: req.body.PI_fourthName_arabic,
+                        PI_lastName_arabic: req.body.PI_lastName_arabic,
+                    },
+                    Farsi: {
+                        PI_firstName_Farsi: req.body.PI_firstName_Farsi,
+                        PI_secondName_Farsi: req.body.PI_secondName_Farsi,
+                        PI_thirdName_Farsi: req.body.PI_thirdName_Farsi,
+                        PI_fourthName_Farsi: req.body.PI_fourthName_Farsi,
+                        PI_lastName_Farsi: req.body.PI_lastName_Farsi,
+                    },
+                    spanish: {
+                        PI_firstName_spanish: req.body.PI_firstName_spanish,
+                        PI_secondName_spanish: req.body.PI_secondName_spanish,
+                        PI_thirdName_spanish: req.body.PI_thirdName_spanish,
+                        PI_fourthName_spanish: req.body.PI_fourthName_spanish,
+                        PI_lastName_spanish: req.body.PI_lastName_spanish,
+                    }
+                },
                 PI_title: req.body.PI_title,
                 PI_gender: req.body.PI_gender,
                 PI_nationality: req.body.PI_nationality,

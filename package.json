@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "main": "server.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon server.js"
     },
     "author": "nour",
     "license": "ISC",
@@ -31,7 +32,7 @@
         "fs": "0.0.1-security",
         "google-translate": "^2.3.0",
         "got": "^9.6.0",
-        "jquery": "^3.4.1",
+        "jquery": "^3.5.1",
         "js-alert": "^1.0.4",
         "json2csv": "^5.0.0",
         "jsonwebtoken": "^8.5.1",
@@ -44,7 +45,6 @@
         "morgan": "^1.9.1",
         "nodemailer": "^6.4.5",
         "nodemailer-smtp-transport": "^2.7.4",
-        "nodemon": "^1.19.4",
         "passport": "^0.4.1",
         "passport-jwt": "^4.0.0",
         "passport-local": "^1.0.0",
@@ -66,6 +66,7 @@
     "description": "",
     "devDependencies": {
         "mocha": "^6.2.2",
+        "nodemon": "^1.19.4",
         "prettier": "^1.19.1",
         "should": "^13.2.3"
     }
