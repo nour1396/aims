@@ -26,7 +26,7 @@ var configDB = require('./config/database');
 mongoose.connect(configDB.url, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-}, (err) => { console.log('DB connected ^_^ ') })
+}, (err) => { console.log('DB connected ^_^ ', err) })
 mongoose.set('useFindAndModify', false);
 app.use(compression());
 
