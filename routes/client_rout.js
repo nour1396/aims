@@ -37,7 +37,9 @@ const configDB = require('../config/database'),
     bankAccountsTypes = require('../models/lists').bankAccountsTypes,
     banksInEgypt = require('../models/lists').banksInEgypt,
     yearsOfExperience = require('../models/lists').yearsOfExperience,
-    Grades = require('../models/lists').Grades;
+    Grades = require('../models/lists').Grades,
+    transactionsTypes = require('../models/lists').transactionsTypes,
+    addItem = require('../models/accounts/addItem').addItem;
 module.exports = function(router) {
     router.get('/lists', function(req, res, next) {
         let data = {};
@@ -106,7 +108,13 @@ module.exports = function(router) {
                                                                                                                                     data.bankInEgypt = bankInEgypt
                                                                                                                                     yearsOfExperience.find({}).then(yearsOfExperiences => {
                                                                                                                                         data.yearsOfExperiences = yearsOfExperiences
-                                                                                                                                        res.json(data) // at the end
+                                                                                                                                        transactionsTypes.find({}).then(transactionstypes => {
+                                                                                                                                            data.transactionstypes = transactionstypes
+                                                                                                                                            addItem.find({}).then(addItems => {
+                                                                                                                                                data.addItems = addItems
+                                                                                                                                                res.json(data) // at the end
+                                                                                                                                            })
+                                                                                                                                        })
                                                                                                                                     })
                                                                                                                                 })
                                                                                                                             })
@@ -711,44 +719,45 @@ module.exports = function(router) {
 
     //get client by id 
     router.get('/searchC', (req, res) => {
-            const searchC = req.query.searchC;
-            //when user search client data will record that in database
-            Log.create({
-                statement: 'User: ' + req.user.userName + ' entered to search for client',
-                user: req.user.userName
-            });
+        const searchC = req.query.searchC;
+        //when user search client data will record that in database
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' entered to search for client',
+            user: req.user.userName
+        });
 
-            Client.find({ "_id": searchC }, (err, data) => {
-                if (err) throw (err);
-                if (data.length > 0) {
-                    res.render('data-en-copy', { Client: data[0] })
-                } else {
-                    res.end('No records were found');
-                }
-            })
-            Log.create({
-                statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to search for client :' + searchC,
-                user: req.user.userName
-            });
+        Client.find({ "_id": searchC }, (err, data) => {
+            if (err) throw (err);
+            if (data.length > 0) {
+                res.render('data-en-copy', { Client: data[0] })
+            } else {
+                res.end('No records were found');
+            }
         })
-        //get page
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to search for client :' + searchC,
+            user: req.user.userName
+        });
+    });
+
+    //get page
     router.get('/edit/:_id', (req, res) => {
-            const _id = req.params._id;
-            Log.create({
-                statement: 'User: ' + req.user.userName + ' entered /data-en to search for client :' + _id,
-                user: req.user.userName
-            });
+        const _id = req.params._id;
+        /* Log.create({
+            statement: 'User: ' + req.user.userName + ' entered /data-en to search for client :' + _id,
+            user: req.user.userName
+        }); */
 
-            Client.find({ "_id": _id }, (err, data) => {
-                if (err) throw err;
-                if (data.length > 0) {
-                    res.render('data-en-copy', { Client: data[0] })
-                } else {
-                    res.end('No records were found')
-                }
-            })
+        Client.find({ "_id": _id }, (err, data) => {
+            if (err) throw err;
+            if (data.length > 0) {
+                res.json(data[0])
+            } else {
+                res.end('No records were found')
+            }
         })
-        //update data of specific client
+    });
+    //update data of specific client
     router.post('/update', (req, res) => {
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered /data-en[POST] to update client with ID:' + req.body.userId,
@@ -765,15 +774,28 @@ module.exports = function(router) {
             const PI_nationality = req.body.PI_nationality;
             const PI_title = req.body.PI_title;
 
-
             Client.updateOne({ "_id": _id }, {
-                _id,
+                /* _id,
                 personalInformation: {
                     PI_firstName,
                     PI_secondName,
                     PI_thirdName,
                     PI_fourthName,
                     PI_lastName,
+                    PI_gender,
+                    PI_nationality,
+                    PI_title */
+                _id,
+                personalInformation: {
+                    PI_name: {
+                        english: {
+                            PI_firstName,
+                            PI_secondName,
+                            PI_thirdName,
+                            PI_fourthName,
+                            PI_lastName,
+                        }
+                    },
                     PI_gender,
                     PI_nationality,
                     PI_title

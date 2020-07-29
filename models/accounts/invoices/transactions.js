@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-var transactionSchema = mongoose.Schema({
+const transactionSchema = mongoose.Schema({
+    _id: String,
     dateCreated: {
         type: Date,
         default: Date.now
     },
-    transactionDate: String,
-    postDate: Date,
+    transactionDate: Date,
     postNumber: String,
     patchNumber: String,
     docNumber: String,
@@ -24,7 +24,7 @@ var transactionSchema = mongoose.Schema({
     transactionNumber: String,
     parentTransaction: String,
     reaccurance: String,
-    reaacuraneType: String,
+    reaccuranceType: String,
     taxState: String,
     currency: String,
     assets: [{
@@ -32,39 +32,27 @@ var transactionSchema = mongoose.Schema({
         assetName: String,
         assetsSerialNumber: Array,
         assetsQuantity: Number,
-        assetsUintOfMeasurment: String,
+        assetsUnitOfMeasurment: String,
         assetsPrice: Number,
         assetsFrom: String,
         assetsTo: String,
-        /* assetsTotal: {
-             type: Number,
-             default: function() {
-                 return (this.assets.assetsQuantity * this.assets.assetsPrice)
-             }
-         }*/
     }],
     items: [{
         itemID: String,
         itemName: String,
         itemsSerialNumber: Array,
         itemsQuantity: Number,
-        itemsUintOfMeasurment: String,
+        itemsUnitOfMeasurment: String,
         itemsPrice: Number,
         itemsPackageID: String,
         itemsPackageName: String,
         itemsFrom: String,
         itemsTo: String,
-        /* itemsTotal: {
-             type: String,
-             default: function() {
-                 return (this.items[0].itemsQuantity * this.items[0].itemsPrice)
-             }
-         }*/
     }],
     services: [{
         serviceID: String,
         serviceName: String,
-        servicesUintOfMeasurment: String,
+        servicesUnitOfMeasurment: String,
         servicesQuantity: Number,
         servicesPrice: Number,
         servicesStart: Date,
@@ -72,30 +60,19 @@ var transactionSchema = mongoose.Schema({
         servicesPackage: String,
         servicesFrom: String,
         servicesTo: String,
-        /* servicesTotal: {
-             type: Number,
-             default: function() {
-                 return (this.services.servicesQuantity * this.services.servicesPrice)
-             }
-         }*/
+
     }],
     jobs: [{
         jobID: String,
         jobName: String,
-        jobsUintOfMeasurment: String,
+        jobsUnitOfMeasurment: String,
         jobsQuantity: Number,
         jobsPrice: Number,
-        /* jobsTotal: {
-             type: Number,
-             default: function() {
-                 return (this.jobs.jobsQuantity * this.jobs.jobsPrice)
-             }
-         }*/
     }],
     fees: [{
         feeID: String,
         feeName: String,
-        feesUintOfMeasurment: String,
+        feesUnitOfMeasurment: String,
         feesQuantity: Number,
         feesPrice: Number,
 
@@ -176,5 +153,5 @@ var transactionSchema = mongoose.Schema({
         hrSyndicate: String
     }]
 })
-var Transaction = mongoose.model('transactions', transactionSchema);
+const Transaction = mongoose.model('transactions', transactionSchema);
 exports.Transaction = Transaction

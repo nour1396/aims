@@ -6,8 +6,6 @@ const Log = require('../models/log').Log;
 const DraftClient = require('../models/drafts/draftClientEN').DraftClient;
 const DraftClientAr = require('../models/drafts/draftClientAR').DraftClientAr;
 const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
-var configDB = require('../config/database');
-var mongoose = require('mongoose');
 module.exports = function(router) {
     //to show log for specific user 
     router.get('/log', (req, res) => {
@@ -37,18 +35,24 @@ module.exports = function(router) {
         })
         //get list of clients saved
     router.get('/clients', function(req, res) {
-        if (!req.user == false) {
+        /* if (!req.user == false) {
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered All Clients '
             });
             clientsModel.getAllClients().then(clients => {
-                res.render('clients', {
+                res.json({
                     clients: clients
                 })
             })
         } else {
             res.redirect(302, '/login');
-        }
+        } */
+        clientsModel.getAllClients().then(clients => {
+            res.json({
+                clients: clients
+            })
+        })
+
     })
 
     //main page

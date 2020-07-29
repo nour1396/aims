@@ -14,18 +14,18 @@ module.exports = function(router) {
                 res.render('accounts/invoices/transactions', data)
             })
             //record when user do something
-        Log.create({
-            statement: 'User: ' + req.user.userName + ' entered transactionPage to add new transaction',
-            user: req.user.userName
-        });
+            /* Log.create({
+                statement: 'User: ' + req.user.userName + ' entered transactionPage to add new transaction',
+                user: req.user.userName
+            }); */
 
-    })
+    });
 
     //save transaction(invoice) in database
     router.post('/accounts/invoices/transactions', (req, res) => {
         var newTransaction = new Transaction({
+            _id: req.body._id,
             transactionDate: req.body.transactionDate,
-            postDate: req.body.postDate,
             postNumber: req.body.postNumber,
             patchNumber: req.body.patchNumber,
             docNumber: req.body.docNumber,
@@ -43,7 +43,7 @@ module.exports = function(router) {
             transactionNumber: req.body.transactionNumber,
             parentTransaction: req.body.parentTransaction,
             reaccurance: req.body.reaccurance,
-            reaacuraneType: req.body.reaacuraneType,
+            reaccuranceType: req.body.reaccuranceType,
             taxState: req.body.taxState,
             currency: req.body.currency,
             assets: [{
@@ -51,7 +51,7 @@ module.exports = function(router) {
                 assetName: req.body.assetName,
                 assetsSerialNumber: req.body.assetsSerialNumber,
                 assetsQuantity: req.body.assetsQuantity,
-                assetsUintOfMeasurment: req.body.assetsUintOfMeasurment,
+                assetsUnitOfMeasurment: req.body.assetsUnitOfMeasurment,
                 assetsPrice: req.body.assetsPrice,
                 assetsFrom: req.body.assetsFrom,
                 assetsTo: req.body.assetsTo,
@@ -61,7 +61,7 @@ module.exports = function(router) {
                 itemName: req.body.itemName,
                 itemsSerialNumber: req.body.itemsSerialNumber,
                 itemsQuantity: req.body.itemsQuantity,
-                itemsUintOfMeasurment: req.body.itemsUintOfMeasurment,
+                itemsUnitOfMeasurment: req.body.itemsUnitOfMeasurment,
                 itemsPrice: req.body.itemsPrice,
                 itemsPackageID: req.body.itemsPackageID,
                 itemsPackageName: req.body.itemsPackageName,
@@ -71,7 +71,7 @@ module.exports = function(router) {
             services: [{
                 serviceID: req.body.serviceID,
                 serviceName: req.body.serviceName,
-                servicesUintOfMeasurment: req.body.servicesUintOfMeasurment,
+                servicesUnitOfMeasurment: req.body.servicesUnitOfMeasurment,
                 servicesQuantity: req.body.servicesQuantity,
                 servicesPrice: req.body.servicesPrice,
                 servicesStart: req.body.servicesStart,
@@ -83,14 +83,14 @@ module.exports = function(router) {
             jobs: [{
                 jobID: req.body.jobID,
                 jobName: req.body.jobName,
-                jobsUintOfMeasurment: req.body.jobsUintOfMeasurment,
+                jobsUnitOfMeasurment: req.body.jobsUnitOfMeasurment,
                 jobsQuantity: req.body.jobsQuantity,
                 jobsPrice: req.body.jobsPrice
             }],
             fees: [{
                 feeID: req.body.feeID,
                 feeName: req.body.feeName,
-                feesUintOfMeasurment: req.body.feesUintOfMeasurment,
+                feesUnitOfMeasurment: req.body.feesUnitOfMeasurment,
                 feesQuantity: req.body.feesQuantity,
                 feesPrice: req.body.feesPrice
             }],
@@ -170,22 +170,23 @@ module.exports = function(router) {
             }]
         });
         newTransaction.save().then(() => {
-                res.redirect(302, '../../index', console.log(newTransaction))
+                /*               res.redirect(302, '../../index', console.log(newTransaction)) */
+                res.json(console.log(newTransaction))
             })
             //record when user do something
-        Log.create({
-            statement: 'User: ' + req.user.userName + ' saved new transaction with number' + req.body.docNumber + 'and type:' + req.body.transactionType,
-            user: req.user.userName
-        });
-    })
+            /* Log.create({
+                statement: 'User: ' + req.user.userName + ' saved new transaction with number' + req.body.docNumber + 'and type:' + req.body.transactionType,
+                user: req.user.userName
+            }); */
+    });
 
     //get page to enter data will be pushed in database
     router.get('/accounts/invoices/pushtransactions', (req, res) => {
         //record when user do something
-        Log.create({
+        /* Log.create({
             statement: 'User: ' + req.user.userName + ' entered transactionPage to push new items to exsiting transaction',
             user: req.user.userName
-        });
+        }); */
         res.render('accounts/invoices/pushtransactions')
     });
 
@@ -198,7 +199,7 @@ module.exports = function(router) {
                         assetName: req.body.assetName,
                         assetsSerialNumber: req.body.assetsSerialNumber,
                         assetsQuantity: req.body.assetsQuantity,
-                        assetsUintOfMeasurment: req.body.assetsUintOfMeasurment,
+                        assetsUnitOfMeasurment: req.body.assetsUnitOfMeasurment,
                         assetsPrice: req.body.assetsPrice,
                         assetsFrom: req.body.assetsFrom,
                         assetsTo: req.body.assetsTo,
@@ -208,7 +209,7 @@ module.exports = function(router) {
                         itemName: req.body.itemName,
                         itemsSerialNumber: req.body.itemsSerialNumber,
                         itemsQuantity: req.body.itemsQuantity,
-                        itemsUintOfMeasurment: req.body.itemsUintOfMeasurment,
+                        itemsUnitOfMeasurment: req.body.itemsUnitOfMeasurment,
                         itemsPrice: req.body.itemsPrice,
                         itemsPackageID: req.body.itemsPackageID,
                         itemsPackageName: req.body.itemsPackageName,
@@ -218,7 +219,7 @@ module.exports = function(router) {
                     services: {
                         serviceID: req.body.serviceID,
                         serviceName: req.body.serviceName,
-                        servicesUintOfMeasurment: req.body.servicesUintOfMeasurment,
+                        servicesUnitOfMeasurment: req.body.servicesUnitOfMeasurment,
                         servicesQuantity: req.body.servicesQuantity,
                         servicesPrice: req.body.servicesPrice,
                         servicesStart: req.body.servicesStart,
@@ -230,14 +231,14 @@ module.exports = function(router) {
                     jobs: {
                         jobID: req.body.jobID,
                         jobName: req.body.jobName,
-                        jobsUintOfMeasurment: req.body.jobsUintOfMeasurment,
+                        jobsUnitOfMeasurment: req.body.jobsUnitOfMeasurment,
                         jobsQuantity: req.body.jobsQuantity,
                         jobsPrice: req.body.jobsPrice
                     },
                     fees: {
                         feeID: req.body.feeID,
                         feeName: req.body.feeName,
-                        feesUintOfMeasurment: req.body.feesUintOfMeasurment,
+                        feesUnitOfMeasurment: req.body.feesUnitOfMeasurment,
                         feesQuantity: req.body.feesQuantity,
                         feesPrice: req.body.feesPrice
                     },
@@ -320,11 +321,11 @@ module.exports = function(router) {
                 res.redirect('pushtransactions')
             })
             //record when user do something
-        Log.create({
-            statement: 'User: ' + req.user.userName + ' pushed new items to exsiting transaction with document number:' + req.query.docNumber,
-            user: req.user.userName
-        });
-    })
+            /* Log.create({
+                statement: 'User: ' + req.user.userName + ' pushed new items to exsiting transaction with document number:' + req.query.docNumber,
+                user: req.user.userName
+            }); */
+    });
 
     //get customize page to search item by name
     router.get('/accounts/invoices/search', (req, res) => {
@@ -335,11 +336,11 @@ module.exports = function(router) {
                 res.render('accounts/invoices/search', data)
             })
             //record when user do something
-        Log.create({
-            statement: 'User: ' + req.user.userName + ' entered to search in items',
-            user: req.user.userName
-        });
-    })
+            /* Log.create({
+                statement: 'User: ' + req.user.userName + ' entered to search in items',
+                user: req.user.userName
+            }); */
+    });
 
     //search assets by name
     router.get('/assetName', (req, res) => {
@@ -375,7 +376,7 @@ module.exports = function(router) {
             statement: 'User: ' + req.user.userName + ' entered to search in assets name:' + assetName,
             user: req.user.userName
         });
-    })
+    });
 
     /*search item by name (single name , multi names ,
      if not choosen get all ,if single name was chosen not exist return no record)*/
@@ -493,7 +494,7 @@ module.exports = function(router) {
                 user: req.user.userName
             });
         }
-    })
+    });
 
     //search by transactionType
     router.get('/transactionType', (req, res) => {
@@ -521,7 +522,7 @@ module.exports = function(router) {
             statement: 'User: ' + req.user.userName + ' entered to search in items by transactionType :' + transactionType,
             user: req.user.userName
         });
-    })
+    });
 
     //search by transactionDate
     router.get('/transactionDate', (req, res) => {
@@ -557,74 +558,74 @@ module.exports = function(router) {
             statement: 'User: ' + req.user.userName + ' entered to search in items by transactionDate from :' + transactionDatefrom + 'to: ' + transactionDateto,
             user: req.user.userName
         });
-    })
+    });
 
     //search by transactionDate, itemName, transactionType,entities
     router.get('/specific', (req, res) => {
-            let data = {}
-            const transactionDatefrom = req.query.transactionDatefrom
-            const transactionDateto = req.query.transactionDateto
-            const itemName = req.query.itemName;
-            const transactionType = req.query.transactionType
-            const fromEntity = req.query.fromEntity
-            const fromSubEntity = req.query.fromSubEntity
-            const toEntity = req.query.toEntity
-            const toSubEntity = req.query.toSubEntity
-            Transaction.aggregate([{ $unwind: "$items" },
-                    {
-                        $match: {
-                            transactionDate: {
-                                $gte: transactionDatefrom,
-                                $lt: transactionDateto
-                            },
-                            "items.itemName": itemName,
-                            transactionType: transactionType,
-                            "from.fromEntity": fromEntity,
-                            "from.fromSubEntity": fromSubEntity,
-                            "to.toEntity": toEntity,
-                            "to.toSubEntity": toSubEntity
-                        }
-                    },
-                    {
-                        $project: {
-                            fromEntity: "$from.fromEntity",
-                            fromSubEntity: "$from.fromSubEntity",
-                            toEntity: "$to.toEntity",
-                            toSubEntity: "$to.toSubEntity",
-                            transactionDate: "$transactionDate",
-                            dateCreated: "$dateCreated",
-                            transactionType: "$transactionType",
-                            itemName: "$items.itemName",
-                            price: "$items.itemsPrice",
-                            totalQuantity: { $sum: "$items.itemsQuantity" },
-                            total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
-                        }
-                    }, {
-                        $project: {
-                            _id: "$itemName",
-                            fromEntity: "$fromEntity",
-                            fromSubEntity: "$fromSubEntity",
-                            toEntity: "$toEntity",
-                            toSubEntity: "$toSubEntity",
-                            total: "$total",
-                            price: "$price",
-                            transactionDate: "$transactionDate",
-                            dateCreated: "$dateCreated",
-                            transactionType: "$transactionType",
-                            totalQuantity: { $sum: "$totalQuantity" }
-                        }
+        let data = {}
+        const transactionDatefrom = req.query.transactionDatefrom
+        const transactionDateto = req.query.transactionDateto
+        const itemName = req.query.itemName;
+        const transactionType = req.query.transactionType
+        const fromEntity = req.query.fromEntity
+        const fromSubEntity = req.query.fromSubEntity
+        const toEntity = req.query.toEntity
+        const toSubEntity = req.query.toSubEntity
+        Transaction.aggregate([{ $unwind: "$items" },
+                {
+                    $match: {
+                        transactionDate: {
+                            $gte: transactionDatefrom,
+                            $lt: transactionDateto
+                        },
+                        "items.itemName": itemName,
+                        transactionType: transactionType,
+                        "from.fromEntity": fromEntity,
+                        "from.fromSubEntity": fromSubEntity,
+                        "to.toEntity": toEntity,
+                        "to.toSubEntity": toSubEntity
                     }
-                ]).then(transactions => {
-                    data.transactions = transactions;
-                    res.render('accounts/invoices/customize3', data, console.log(data))
-                })
-                //record when user do something
-            Log.create({
-                statement: 'User: ' + req.user.userName + ' entered to search in items by transactionDate from :' + transactionDatefrom + 'to: ' + transactionDateto + 'and itemName:' + itemName + 'and transactionType:' + transactionType + 'and fromEntity:' + fromEntity + 'and fromSubEntity:' + fromSubEntity + 'and toEntity:' + toEntity + 'and toSubEntity:' + toSubEntity,
-                user: req.user.userName
-            });
-        })
-        //search items by name of entity and subEntity
+                },
+                {
+                    $project: {
+                        fromEntity: "$from.fromEntity",
+                        fromSubEntity: "$from.fromSubEntity",
+                        toEntity: "$to.toEntity",
+                        toSubEntity: "$to.toSubEntity",
+                        transactionDate: "$transactionDate",
+                        dateCreated: "$dateCreated",
+                        transactionType: "$transactionType",
+                        itemName: "$items.itemName",
+                        price: "$items.itemsPrice",
+                        totalQuantity: { $sum: "$items.itemsQuantity" },
+                        total: { $multiply: ["$items.itemsPrice", "$items.itemsQuantity"] }
+                    }
+                }, {
+                    $project: {
+                        _id: "$itemName",
+                        fromEntity: "$fromEntity",
+                        fromSubEntity: "$fromSubEntity",
+                        toEntity: "$toEntity",
+                        toSubEntity: "$toSubEntity",
+                        total: "$total",
+                        price: "$price",
+                        transactionDate: "$transactionDate",
+                        dateCreated: "$dateCreated",
+                        transactionType: "$transactionType",
+                        totalQuantity: { $sum: "$totalQuantity" }
+                    }
+                }
+            ]).then(transactions => {
+                data.transactions = transactions;
+                res.render('accounts/invoices/customize3', data, console.log(data))
+            })
+            //record when user do something
+        Log.create({
+            statement: 'User: ' + req.user.userName + ' entered to search in items by transactionDate from :' + transactionDatefrom + 'to: ' + transactionDateto + 'and itemName:' + itemName + 'and transactionType:' + transactionType + 'and fromEntity:' + fromEntity + 'and fromSubEntity:' + fromSubEntity + 'and toEntity:' + toEntity + 'and toSubEntity:' + toSubEntity,
+            user: req.user.userName
+        });
+    });
+    //search items by name of entity and subEntity
     router.get('/entities', (req, res) => {
         let data = {}
         const fromEntity = req.query.fromEntity
@@ -682,6 +683,6 @@ module.exports = function(router) {
             statement: 'User: ' + req.user.userName + ' entered to search in entites fromEntity:' + fromEntity + 'and fromSubEntity:' + fromSubEntity + 'and toEntity:' + toEntity + 'and toSubEntity:' + toSubEntity,
             user: req.user.userName
         });
-    })
+    });
 
 }

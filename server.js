@@ -58,8 +58,8 @@ app.use(flash());
 
 //define the static folder
 app.use(express.static(path.join(__dirname, '/assets')));
-
-//use body parser middleware
+app.use('/scripts', express.static(`${__dirname}/node_modules/`))
+    //use body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

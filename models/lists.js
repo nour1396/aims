@@ -245,3 +245,10 @@ const yearsOfExperienceSchema = mongoose.Schema({
 });
 const yearsOfExperience = mongoose.model('yearsofexperiences', yearsOfExperienceSchema);
 exports.yearsOfExperience = yearsOfExperience;
+
+const transactionsTypesSchema = mongoose.Schema({
+    english: String,
+    arabic: String
+});
+const transactionsTypes = mongoose.model('transactionstypes', transactionsTypesSchema);
+exports.transactionsTypes = transactionsTypes;
