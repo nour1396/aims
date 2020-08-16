@@ -1,7 +1,4 @@
-const configDB = require('../config/database'),
-    mongoose = require('mongoose'),
-    multer = require('multer'),
-    Client = require('../models/clients').Client,
+const Client = require('../models/clients').Client,
     Log = require('../models/log').Log,
     DraftClient = require('../models/drafts/draftClientEN').DraftClient,
     DraftClientAr = require('../models/drafts/draftClientAR').DraftClientAr,
@@ -222,21 +219,21 @@ module.exports = function(router) {
     that's all
     */
     router.post('/data-en/draft', (req, res) => {
-            const field = req.body.field;
-            const value = req.body.value;
-            var query = { user: req.user.userName },
-                update = {
-                    [field]: value
-                },
-                options = { upsert: true, new: true, setDefaultsOnInsert: true };
-            // Find the document
-            DraftClient.findOneAndUpdate(query, update, options, function(error, result) {
-                if (error) return;
-                // do something with the document
-                res.end();
-            })
+        const field = req.body.field;
+        const value = req.body.value;
+        var query = { user: req.user.userName },
+            update = {
+                [field]: value
+            },
+            options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        // Find the document
+        DraftClient.findOneAndUpdate(query, update, options, function(error, result) {
+            if (error) return;
+            // do something with the document
+            res.end();
         })
-        //save data in database
+    });
+    //save data in database
     router.post('/data-en', (req, res) => {
         /* DraftClient.deleteOne({ user: req.user.userName }).then(resolve => {}); */
         var newClient = new Client({
@@ -697,9 +694,9 @@ module.exports = function(router) {
                 missingParts: req.body.missingParts
             }
         });
-        newClient.save(() => {
+        newClient.save().then(() => {
             console.log(newClient)
-            res.redirect(302, '/index')
+            res.redirect(302, '/')
         });
         //when user save data will record that in database
         /*    Log.create({

@@ -57,6 +57,7 @@
         "shortid": "^2.2.15",
         "strategy": "^1.1.1",
         "tableify": "^1.1.0",
+        "underscore": "^1.10.2",
         "util": "^0.12.2",
         "v": "^0.3.0"
     },
@@ -66,8 +67,8 @@
     },
     "description": "",
     "devDependencies": {
-        "mocha": "^6.2.2",
-        "nodemon": "^1.19.4",
+        "mocha": "^8.1.1",
+        "nodemon": "^2.0.4",
         "prettier": "^1.19.1",
         "should": "^13.2.3"
     }

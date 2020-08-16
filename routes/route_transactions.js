@@ -383,7 +383,6 @@ module.exports = function(router) {
     router.get('/itemName', (req, res) => {
         let data = {}
         var itemName = req.query.itemName;
-        console.log(itemName)
         if (itemName == undefined) {
             var itemName = req.query.itemName;
             Transaction.aggregate([{ $unwind: "$items" },
@@ -455,9 +454,8 @@ module.exports = function(router) {
         } else {
             var itemName = req.query.itemName;
             var x = []
-            itemName.forEach(function(value) {
+            itemName.forEach((value) => {
                 x.push({ "items.itemName": value })
-                console.log(x);
             });
             Transaction.aggregate([{ $unwind: "$items" },
                 {
@@ -484,7 +482,7 @@ module.exports = function(router) {
                 }
                 fs.appendFile('Filename.xls', dataA, (err) => {
                     if (err) throw err;
-                    res.render('accounts/invoices/customize', data, console.log(data))
+                    res.render('accounts/invoices/customize', data)
                 });
             })
 

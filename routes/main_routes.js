@@ -56,7 +56,7 @@ module.exports = function(router) {
     })
 
     //main page
-    router.get('/index', (req, res) => {
+    router.get('/', (req, res) => {
         res.render('index')
     })
 
@@ -80,7 +80,7 @@ module.exports = function(router) {
     });
     router.post('/login',
         passport.authenticate('local-login', {
-            successRedirect: '/index',
+            successRedirect: '/',
             failureRedirect: '/login',
             failureFlash: true
         })

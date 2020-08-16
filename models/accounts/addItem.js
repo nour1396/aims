@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const addItemSchema = mongoose.Schema({
-    itemInEnglish: String,
-    itemInArabic: String,
+    english: String,
+    arabic: String,
     categoryEnglish: String,
     categoryArabic: String,
     pricePerOne: Number,

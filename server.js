@@ -1,18 +1,16 @@
-var express = require('express');
+const express = require('express');
 //initialize the app
-var app = express();
-const expressLayouts = require('express-ejs-layouts')
-var router = express.Router()
-var mongoose = require('mongoose');
-var morgan = require('morgan');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var passport = require('passport');
+const app = express();
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
 const compression = require('compression');
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
-var flash = require('connect-flash');
-var bodyParser = require('body-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const flash = require('connect-flash');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 
 //defining the port
@@ -20,7 +18,7 @@ var port = process.env.PORT || 5000;
 const NODE__ENV = 'development'
 const IN_PROD = NODE__ENV === 'production'
 const SESS_NAME = 'Sid'
-var configDB = require('./config/database');
+const configDB = require('./config/database');
 
 //connect to database
 mongoose.connect(configDB.url, {
