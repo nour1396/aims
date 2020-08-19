@@ -9,32 +9,32 @@ const DraftPersonal = require('../models/drafts/personalDraft').DraftPersonal;
 module.exports = function(router) {
     //to show log for specific user 
     router.get('/log', (req, res) => {
-            const log = req.query.log;
-            let data = {}
-            console.log(log)
-            if (log == '') {
-                Log.find({}).then(logs => {
-                        data.logs = logs
-                        res.render('log', data)
-                    })
-                    //record when user do something
-                Log.create({
-                    statement: 'User: ' + req.user.userName + ' entered to get all users log',
-                    user: req.user.userName
-                });
-            } else if (log.constructor === String) {
-                Log.find({ user: log }).then(logs => {
+        const log = req.query.log;
+        let data = {}
+        console.log(log)
+        if (log == '') {
+            Log.find({}).then(logs => {
                     data.logs = logs
                     res.render('log', data)
                 })
-                Log.create({
-                    statement: 'User: ' + req.user.userName + ' entered to get log of user: ' + log,
-                    user: req.user.userName
-                });
-            }
-        })
-        //get list of clients saved
-    router.get('/clients', function(req, res) {
+                //record when user do something
+            Log.create({
+                statement: 'User: ' + req.user.userName + ' entered to get all users log',
+                user: req.user.userName
+            });
+        } else if (log.constructor === String) {
+            Log.find({ user: log }).then(logs => {
+                data.logs = logs
+                res.render('log', data)
+            })
+            Log.create({
+                statement: 'User: ' + req.user.userName + ' entered to get log of user: ' + log,
+                user: req.user.userName
+            });
+        }
+    });
+    //get list of clients saved
+    router.get('/clients', async function(req, res) {
         /* if (!req.user == false) {
             Log.create({
                 statement: 'User: ' + req.user.userName + ' entered All Clients '
@@ -47,7 +47,7 @@ module.exports = function(router) {
         } else {
             res.redirect(302, '/login');
         } */
-        clientsModel.getAllClients().then(clients => {
+        await clientsModel.getAllClients().then(clients => {
             res.json({
                 clients: clients
             })
@@ -58,7 +58,7 @@ module.exports = function(router) {
     //main page
     router.get('/', (req, res) => {
         res.render('index')
-    })
+    });
 
     //signup
     router.get('/signup', (req, res, next) => {
