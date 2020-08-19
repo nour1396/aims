@@ -14,9 +14,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 //defining the port
-var port = process.env.PORT || 5000;
-const NODE__ENV = 'development'
-const IN_PROD = NODE__ENV === 'production'
+const port = process.env.PORT || 5000;
+/* const NODE__ENV = 'development'
+const IN_PROD = NODE__ENV === 'production' */
 const SESS_NAME = 'Sid'
 const configDB = require('./config/database');
 
@@ -35,8 +35,9 @@ app.use(cookieParser());
 app.use(session({
     name: SESS_NAME,
     cookie: {
-        sameSite: true,
-        secure: IN_PROD
+        sameSite: true
+            /* ,
+                    secure: IN_PROD */
     },
     secret: 'anystring',
     saveUninitialized: true,
