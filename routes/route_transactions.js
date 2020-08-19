@@ -2,8 +2,8 @@ const Transaction = require('../models/accounts/invoices/transactions').Transact
 const addItem = require('../models/accounts/addItem').addItem; //items Schema
 const Log = require('../models/log').Log;
 const fs = require('fs');
-const path = require('path');
-const json2csv = require('json2csv').parse;
+const newAccInAccChart = require('../models/addAccountInChart').newAccInAccChart;
+const CostCenter = require('../models/costCenter').CostCenter;
 module.exports = function(router) {
     //get page to enter data of invoice (transaction)
     router.get('/accounts/invoices/transactions', (req, res, next) => {
@@ -25,6 +25,7 @@ module.exports = function(router) {
     router.post('/accounts/invoices/transactions', (req, res) => {
         var newTransaction = new Transaction({
             _id: req.body._id,
+            projectID: req.body.projectID,
             transactionDate: req.body.transactionDate,
             postNumber: req.body.postNumber,
             patchNumber: req.body.patchNumber,
@@ -139,7 +140,13 @@ module.exports = function(router) {
                 accountDebit: req.body.accountDebit,
                 accountCredit: req.body.accountCredit,
                 accountCurrency: req.body.accountCurrency,
-                accountNotes: req.body.accountNotes
+                accountNotes: req.body.accountNotes,
+                costCenter: [{
+                    costCenterName: req.body.costCenterName,
+                    costCenterValue: req.body.costCenterValue,
+                    parent: req.body.parent,
+                    projectID: req.body.projectID
+                }]
             }],
             checks: [{
                 checkOwner: req.body.checkOwner,
@@ -172,6 +179,8 @@ module.exports = function(router) {
         newTransaction.save().then(() => {
                 /*               res.redirect(302, '../../index', console.log(newTransaction)) */
                 res.json(console.log(newTransaction))
+            }).catch(err => {
+                console.log(err.errmsg);
             })
             //record when user do something
             /* Log.create({
@@ -180,6 +189,64 @@ module.exports = function(router) {
             }); */
     });
 
+    //save newAccInAccChart in database
+    router.post('/newAccInAccChart', (req, res) => {
+        var newAccInAccountsChart = new newAccInAccChart({
+            accountNumber: req.body.accountNumber,
+            accountEnglish: req.body.accountEnglish,
+            nature: req.body.nature,
+            accountArabic: req.body.accountArabic,
+            status: req.body.status,
+            category: req.body.category,
+            parent: req.body.parent,
+            descreptionEnglish: req.body.descreptionEnglish,
+            descreptionArabic: req.body.descreptionArabic,
+            notes: req.body.notess
+        });
+        newAccInAccountsChart.save().then(() => {
+            /*               res.redirect(302, '../../index', console.log(newTransaction)) */
+            res.json(console.log(newAccInAccountsChart))
+        });
+        //record when user do something
+        /* Log.create({
+            statement: 'User: ' + req.user.userName + ' saved new transaction with number' + req.body.docNumber + 'and type:' + req.body.transactionType,
+            user: req.user.userName
+        }); */
+    });
+
+    //save transaction(invoice) in database
+    router.post('/newCostCenter', (req, res) => {
+        var newCostCenter = new CostCenter({
+            CostCenterCode: req.body.CostCenterCode,
+            controllingArea: req.body.controllingArea,
+            valid: {
+                from: req.body.from,
+                to: req.body.to
+            },
+            basicData: {
+                name: req.body.name,
+                description: req.body.description,
+                userResponsible: req.body.userResponsible,
+                personResponsible: req.body.personResponsible,
+                department: req.body.department,
+                costCenterCategory: req.body.costCenterCategory,
+                hierarchyArea: req.body.hierarchyArea,
+                businessArea: req.body.businessArea,
+                functionalArea: req.body.functionalArea,
+                currency: req.body.currency,
+                profitCenter: req.body.profitCenter
+            }
+        });
+        newCostCenter.save().then(() => {
+            /*               res.redirect(302, '../../index', console.log(newTransaction)) */
+            res.json(console.log(newCostCenter))
+        });
+        //record when user do something
+        /* Log.create({
+            statement: 'User: ' + req.user.userName + ' saved new transaction with number' + req.body.docNumber + 'and type:' + req.body.transactionType,
+            user: req.user.userName
+        }); */
+    });
     //get page to enter data will be pushed in database
     router.get('/accounts/invoices/pushtransactions', (req, res) => {
         //record when user do something
@@ -332,14 +399,20 @@ module.exports = function(router) {
         let data = {}
             //get list of items
         addItem.find({}).then(items => {
-                data.items = items;
-                res.render('accounts/invoices/search', data)
-            })
-            //record when user do something
-            /* Log.create({
-                statement: 'User: ' + req.user.userName + ' entered to search in items',
-                user: req.user.userName
-            }); */
+            data.items = items;
+            newAccInAccChart.find({}).then(newAccInAccCharts => {
+                data.newAccInAccCharts = newAccInAccCharts;
+                CostCenter.find({}).then(CostCenters => {
+                    data.CostCenters = CostCenters;
+                    res.render('accounts/invoices/search', data)
+                });
+            });
+        });
+        //record when user do something
+        /* Log.create({
+            statement: 'User: ' + req.user.userName + ' entered to search in items',
+            user: req.user.userName
+        }); */
     });
 
     //search assets by name
@@ -377,7 +450,97 @@ module.exports = function(router) {
             user: req.user.userName
         });
     });
+    /*search item by name (single name , multi names ,
+     if not choosen get all ,if single name was chosen not exist return no record)*/
+    router.get('/costCenterName', (req, res) => {
+        let data = {}
+        let costCenter = req.query.costCenter;
+        if (costCenter == undefined) {
+            Transaction.aggregate([{ $unwind: "$accounts" },
+                {
+                    $project: {
+                        transactionDate: "$transactionDate",
+                        dateCreated: "$dateCreated",
+                        transactionType: "$transactionType",
+                        parent: "$accounts.costCenter.parent",
+                        costCenterName: `$accounts.costCenter.costCenterName`,
+                        total: { $sum: "$accounts.costCenter.costCenterValue" },
+                    }
+                }, { $project: { _id: "$costCenterName", total: "$total", parent: "$parent", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType" } }
+            ]).then(costCenters => {
+                data.costCenters = costCenters;
 
+                res.render('accounts/invoices/costCenter', data)
+            })
+        } else
+        if (costCenter.constructor === String) {
+            Transaction.aggregate([{ $unwind: "$accounts" },
+                {
+                    $match: {
+                        "accounts.costCenter.costCenterName": costCenter
+                    }
+                }, {
+                    $project: {
+                        transactionDate: "$transactionDate",
+                        dateCreated: "$dateCreated",
+                        transactionType: "$transactionType",
+                        costCenterName: "$accounts.costCenter.costCenterName",
+                        parent: "$accounts.costCenter.parent",
+                        total: { $sum: "$accounts.costCenter.costCenterValue" },
+                    }
+                }, { $project: { _id: "$costCenterName", total: "$total", parent: "$parent", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType" } }
+            ]).then(costCenters => {
+                data.costCenters = costCenters;
+                res.render('accounts/invoices/costCenter', data)
+            })
+        } else {
+            var x = []
+            costCenter.forEach((CCname) => {
+                x.push({ "accounts.costCenter.costCenterName": CCname })
+            });
+            Transaction.aggregate([{ $unwind: "$accounts" },
+                {
+                    $match: {
+                        $or: x
+                    }
+                }, {
+                    $project: {
+                        transactionDate: "$transactionDate",
+                        dateCreated: "$dateCreated",
+                        transactionType: "$transactionType",
+                        costCenterName: "$accounts.costCenter.costCenterName",
+                        parent: "$accounts.costCenter.parent",
+                        total: { $sum: "$accounts.costCenter.costCenterValue" },
+                    }
+                }, { $project: { _id: "$costCenterName", parent: "$parent", total: "$total", transactionDate: "$transactionDate", dateCreated: "$dateCreated", transactionType: "$transactionType" } }
+            ]).then(costCenters => {
+                data.costCenters = costCenters;
+                Transaction.aggregate([{ $unwind: "$accounts" },
+                    {
+                        $match: {
+                            $or: x
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: "$accounts.costCenter.costCenterName",
+                            total: { $sum: "$accounts.costCenter.costCenterValue" }
+                        }
+                    }, {
+                        $group: {
+
+                            _id: "$_id",
+                            total: { $sum: "$total" },
+                        }
+                    }
+                ]).then(costCentersx => {
+                    console.log(costCentersx);
+                    data.costCentersx = costCentersx;
+                    res.render('accounts/invoices/costCenter', data)
+                });
+            })
+        }
+    });
     /*search item by name (single name , multi names ,
      if not choosen get all ,if single name was chosen not exist return no record)*/
     router.get('/itemName', (req, res) => {

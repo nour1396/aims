@@ -2,21 +2,20 @@
     <%- include('../../parts/navbar.ejs')%>
         <a href='/export' style="margin-left: 60%;">Export to CSV</a>
         <form action="/specific" method="GET" enctype="multipart/form-data ">
-            </*onsubmit="returen false" */>
             <h1></h1>
 
-            <table style="width:99%;">
-                <thead style="font-size: 20px;font-weight: bold;color: #333;border-bottom: #333 solid 1px;">
-                    <td style="font-size:16px;font-weight:bold;">itemName</td>
-                    <td style="font-size:16px;font-weight:bold;">transactionType</td>
-                    <td style="font-size:16px;font-weight:bold;">quantity</td>
-                    <td style="font-size:16px;font-weight:bold;">price</td>
-                    <td style="font-size:16px;font-weight:bold;">total</td>
-                    <td style="font-size:16px;font-weight:bold;">transactionDate</td>
-                    <td style="font-size:16px;font-weight:bold;">fromEntity</td>
-                    <td style="font-size:16px;font-weight:bold;">fromSubEntity</td>
-                    <td style="font-size:16px;font-weight:bold;">toEntity</td>
-                    <td style="font-size:16px;font-weight:bold;">toSubEntity</td>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <th>itemName</th>
+                    <th>transactionType</th>
+                    <th>quantity</th>
+                    <th>price</th>
+                    <th>total</th>
+                    <th>transactionDate</th>
+                    <th>fromEntity</th>
+                    <th>fromSubEntity</th>
+                    <th>toEntity</th>
+                    <th>toSubEntity</th>
                 </thead>
                 <%for (let inc of transactions){%>
                     <tr>

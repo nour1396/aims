@@ -36,7 +36,9 @@ const Client = require('../models/clients').Client,
     yearsOfExperience = require('../models/lists').yearsOfExperience,
     Grades = require('../models/lists').Grades,
     transactionsTypes = require('../models/lists').transactionsTypes,
-    addItem = require('../models/accounts/addItem').addItem;
+    addItem = require('../models/accounts/addItem').addItem,
+    newAccInAccChart = require('../models/addAccountInChart').newAccInAccChart,
+    CostCenter = require('../models/costCenter').CostCenter;
 module.exports = function(router) {
     router.get('/lists', function(req, res, next) {
         let data = {};
@@ -109,7 +111,13 @@ module.exports = function(router) {
                                                                                                                                             data.transactionstypes = transactionstypes
                                                                                                                                             addItem.find({}).then(addItems => {
                                                                                                                                                 data.addItems = addItems
-                                                                                                                                                res.json(data) // at the end
+                                                                                                                                                CostCenter.find({}).then(CostCenters => {
+                                                                                                                                                    data.CostCenters = CostCenters
+                                                                                                                                                    newAccInAccChart.find({}).then(newAccInAccCharts => {
+                                                                                                                                                        data.newAccInAccCharts = newAccInAccCharts
+                                                                                                                                                        res.json(data) // at the end
+                                                                                                                                                    })
+                                                                                                                                                })
                                                                                                                                             })
                                                                                                                                         })
                                                                                                                                     })

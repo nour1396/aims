@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const transactionSchema = mongoose.Schema({
     _id: String,
+    projectID: String,
     dateCreated: {
         type: Date,
         default: Date.now
@@ -122,7 +123,13 @@ const transactionSchema = mongoose.Schema({
         accountDebit: Number,
         accountCredit: Number,
         accountCurrency: String,
-        accountNotes: String
+        accountNotes: String,
+        costCenter: [{
+            costCenterName: String,
+            costCenterValue: Number,
+            parent: String,
+            projectID: String
+        }]
     }],
     checks: [{
         checkOwner: String,

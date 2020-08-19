@@ -1,60 +1,90 @@
 <%- include('../../parts/header.ejs')%>
 <%- include('../../parts/navbar.ejs')%>
-    <form action="/log" method="GET" enctype="multipart/form-data ">
-        </*onsubmit="returen false" */>
-        <h1></h1>
-        <input type="text" name="log" value="" placeholder="user">
-        <button type="">search</button>
-    </form>
-    <form action="/itemName" method="GET" enctype="multipart/form-data ">
-        </*onsubmit="returen false" */>
-        <h1></h1>
-        <select name="itemName" multiple style="height:100px;">
-        <%for (let item of items){%>
-        <option><%= item.english %></option>
-        <%}%>
-    </select>
-        <button type="">search</button>
-    </form>
-    <hr>
-    <form action="/transactionType" method="GET" enctype="multipart/form-data ">
-        </*onsubmit="returen false" */>
-        <h1></h1>
-        <input type="text" name="transactionType" value="" placeholder="transactionType">
-        <button type="">search</button>
-    </form>
-    <hr>
-    <form action="/transactionDate" method="GET" enctype="multipart/form-data ">
-        </*onsubmit="returen false" */>
-        <h1></h1>
-        dateCreatedfrom: <input type="date" name="transactionDatefrom" value="" placeholder="dateCreatedfrom"><br> dateCreatedto: <input type="date" name="transactionDateto" value="" placeholder="dateCreatedto"><br>
-        <button type="">search</button>
-    </form>
-    <hr>
-    <form action="/specific" method="GET" enctype="multipart/form-data ">
-        </*onsubmit="returen false" */>
-        <h1>specific</h1>
-        <select name="itemName" multiple style="height:100px;">
-            <%for (let item of items){%>
-                <option><%= item.english %></option>
-            <%}%>
-        </select>
-        <input type="text" name="fromEntity" value="" placeholder="fromEntity">
-        <input type="text" name="fromSubEntity" value="" placeholder="fromSubEntity">
-        <input type="text" name="toEntity" value="" placeholder="toEntity">
-        <input type="text" name="toSubEntity" value="" placeholder="toSubEntity">
-        <input type="text" name="transactionType" value="" placeholder="transactionType"> dateCreatedfrom: <input type="date" name="transactionDatefrom" value="" placeholder="dateCreatedfrom"><br> dateCreatedto: <input type="date" name="transactionDateto"
-            value="" placeholder="dateCreatedto"><br>
-        <button type="">search</button>
-    </form>
-    <form action="/entities" method="GET" enctype="multipart/form-data ">
-        </*onsubmit="returen false" */>
-        <h1>entities</h1>
-        <input type="text" name="fromEntity" value="" placeholder="fromEntity">
-        <input type="text" name="fromSubEntity" value="" placeholder="fromSubEntity">
-        <input type="text" name="toEntity" value="" placeholder="toEntity">
-        <input type="text" name="toSubEntity" value="" placeholder="toSubEntity">
-        <button type="">search</button>
-    </form>
+    <fieldset class="p-5 bg-light">
+        <form action="/costCenterName" method="GET" enctype="multipart/form-data ">
+            <h1>cost center</h1>
+            <select name="costCenter" class="form-control w-25 d-inline" multiple>
+                <%for (let CostCenter of CostCenters){%>
+                <option><%= CostCenter.basicData.name %></option>
+                <%}%>
+            </select>
+            <button type="submit" class="btn btn-dark">search</button>
+        </form>
+    </fieldset>
 
+
+    <fieldset class="p-5 bg-light">
+        <form action="/log" method="GET" enctype="multipart/form-data ">
+            <h1>user</h1>
+            <input type="text" name="log" class="form-control w-25 d-inline" placeholder="user">
+            <button type="submit" class="btn btn-info">search</button>
+        </form>
+        </fieldset>
+
+
+        <fieldset class="p-5 bg-light">
+        <form action="/itemName" method="GET" enctype="multipart/form-data ">
+            <h1>item name</h1>
+            <select name="itemName" class="form-control w-25 d-inline" multiple >
+                <%for (let item of items){%>
+                <option><%= item.english %></option>
+                <%}%>
+            </select>
+            <button type="submit" class="btn btn-warning">search</button>
+        </form>
+    </fieldset>
+
+
+    <fieldset class="p-5 bg-light">
+    <form action="/transactionType" method="GET" enctype="multipart/form-data ">
+        <h1>transaction type</h1>
+        <input type="text" name="transactionType" class="form-control w-25 d-inline" value="" placeholder="transactionType">
+        <button type="submit" class="btn btn-primary">search</button>
+    </form>
+    </fieldset>
+
+
+    <fieldset class="p-5 bg-light">
+            <form action="/transactionDate" method="GET" enctype="multipart/form-data ">
+                <h1>date created</h1>
+                dateCreatedfrom: <input type="date" name="transactionDatefrom" class="form-control w-25" value="" placeholder="dateCreatedfrom">
+                dateCreatedto: <input type="date" name="transactionDateto" class="form-control w-25" value="" placeholder="dateCreatedto">
+                <button type="submit" class="btn btn-dark">search</button>
+            </form>
+    </fieldset>
+
+
+    <fieldset class="p-5 bg-light">
+        <form action="/specific" method="GET" enctype="multipart/form-data ">
+            <h1>specific</h1>
+            <select name="itemName" class="form-control w-25 my-3" multiple>
+                <%for (let item of items){%>
+                    <option><%= item.english %></option>
+                <%}%>
+            </select>
+            <input type="text" name="fromEntity"  class="form-control w-25 my-2" value="" placeholder="fromEntity">
+            <input type="text" name="fromSubEntity" class="form-control w-25 my-2"  value="" placeholder="fromSubEntity">
+            <input type="text" name="toEntity" class="form-control w-25 my-2"  value="" placeholder="toEntity">
+            <input type="text" name="toSubEntity" class="form-control w-25 my-2"  value="" placeholder="toSubEntity">
+            <input type="text" name="transactionType" class="form-control w-25 my-2"  value="" placeholder="transactionType"> 
+            dateCreatedfrom: <input type="date" class="my-1 form-control w-25" name="transactionDatefrom" value="" placeholder="dateCreatedfrom">
+            dateCreatedto: <input type="date" class="my-1 form-control w-25" name="transactionDateto"
+                value="" class="form-control w-25"  placeholder="dateCreatedto"><br>
+        <button type="submit" class="btn btn-info">search</button>
+        </form>
+    </fieldset>
+
+
+    <fieldset class="p-5 bg-light">
+        <form action="/entities" method="GET" enctype="multipart/form-data ">
+            <h1>entities</h1>
+            <input type="text" name="fromEntity" class="form-control w-25 my-3" value="" placeholder="fromEntity">
+            <input type="text" name="fromSubEntity" class="form-control w-25 my-3" value="" placeholder="fromSubEntity">
+            <input type="text" name="toEntity" class="form-control w-25 my-3" value="" placeholder="toEntity">
+            <input type="text" name="toSubEntity" class="form-control w-25 my-3" value="" placeholder="toSubEntity">
+            <button type="submit" class="btn btn-success">search</button>
+        </form>
+    </fieldset>
+
+    
 <%- include('../../parts/footer.ejs')%>

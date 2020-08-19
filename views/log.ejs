@@ -2,20 +2,18 @@
     <%- include('parts/navbar.ejs')%>
         <a href='/export' style="margin-left: 60%;">Export to CSV</a>
         <form action="/log" method="GET" enctype="multipart/form-data ">
-            </*onsubmit="returen false" */>
             <h1>entities</h1>
-            <table>
-                <thead>
-                    <td style="font-size:16px;font-weight:bold;">user</td>
-                    <td style="font-size:16px;font-weight:bold;">statement</td>
-                    <td style="font-size:16px;font-weight:bold;">createdAt</td>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <th>user</th>
+                    <th>statement</th>
+                    <th>createdAt</th>
                 </thead>
                 <%for (let inc of logs){%>
                     <tr>
                         <td><output style="font-weight:normal;font-size:15px;"><%= inc.user %></output></td>
                         <td><output style="font-weight:normal;font-size:15px;"><%= inc.statement%></output></td>
                         <td><output style="font-weight:normal;font-size:15px;"><%= inc.createdAt%></output></td>
-
                     </tr>
                     <%}%>
             </table>

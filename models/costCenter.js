@@ -10,6 +10,7 @@ const costCenterSchema = mongoose.Schema({
     basicData: {
         name: String,
         description: String,
+        parent: String,
         userResponsible: String,
         personResponsible: String,
         department: String,
