@@ -1,10 +1,10 @@
-const addItem = require('../models/accounts/addItem').addItem; //items schema
-const addItemCategory = require('../models/accounts/addItem').addItemCategory; //item category schema
-const addAcc = require('../models/accounts/accountCard').addAcc; //account card schema
-const Company = require('../models/accounts/companySchema').Company; //company schema
-const Organization = require('../models/accounts/orgSchema').Organization; //org schema
-const addAsset = require('../models/accounts/assets').addAsset; //assetr schema
-const addService = require('../models/accounts/services').addService; //service schema
+const addItem = require('../models/addItem').addItem; //items schema
+const addItemCategory = require('../models/addItem').addItemCategory; //item category schema
+const addAcc = require('../models/accountCard').addAcc; //account card schema
+const Organization = require('../models/orgSchema').Organization; //org schema
+const addAsset = require('../models/assets').addAsset; //assetr schema
+const addService = require('../models/services').addService; //service schema
+const companyController = require('../controller/company.controller');
 module.exports = function(router) {
     //get form to add new item 
     router.get('/accounts/newItem', function(req, res, next) {
@@ -71,227 +71,14 @@ module.exports = function(router) {
             })
         })
         //get form to add new company
-    router.get('/accounts/addCompany', (req, res, next) => {
+    router.get('/newCompany', (req, res, next) => {
         res.render('accounts/addCompany')
     })
 
     //post (add) form of new co. to database
-    router.post('/accounts/addCompany', (req, res, next) => {
-        var newCompany = new Company({
-            companyInformation: {
-                nameInArabic: req.body.nameInArabic,
-                nameInEnglish: req.body.nameInEnglish,
-                namePronunciation: req.body.namePronunciation,
-                descreption: req.body.descreption,
-                allies: req.body.allies,
-                parentCompany: req.body.parentCompany,
-                legalForm: req.body.legalForm,
-                legalInformation: req.body.legalInformation,
-                startDate: req.body.startDate,
-                cityInCorporated: req.body.cityInCorporated,
-                ultimateParentName: req.body.ultimateParentName,
-                companyNationality: req.body.companyNationality
-            },
-            addressDetails: {
-                addressType: req.body.addressType,
-                country: req.body.country,
-                city: req.body.city,
-                streetName: req.body.streetName,
-                area: req.body.area,
-                realStateType: req.body.realStateType,
-                realStateNumber: req.body.realStateNumber,
-                floorNumber: req.body.floorNumber,
-                apartmentNumber: req.body.apartmentNumber,
-                detailedAddress: req.body.detailedAddress,
-                coordinates: req.body.coordinates
-            },
-            contactInformation: {
-                countryCode: req.body.countryCode,
-                governorateCode: req.body.governorateCode,
-                landLine: req.body.landLine,
-                faxNumber: req.body.faxNumber,
-                email: req.body.email,
-                logoURL: req.body.logoURL,
-                website: req.body.website,
-                mobileNumber: req.body.mobileNumber,
-                contactLanguage: req.body.contactLanguage,
-                postOfficeCode: req.body.postOfficeCode
-            },
-            accounts: {
-                balance: req.body.balance,
-                ARbalance: req.body.ARbalance,
-                paymentTerm: req.body.paymentTerm,
-                accountNumber: req.body.accountNumber,
-                creditLimit: req.body.creditLimit,
-                invoiceToParent: req.body.invoiceToParent,
-                salesOrderToParent: req.body.salesOrderToParent,
-                openItem: req.body.openItem,
-                stopCredit: req.body.stopCredit,
-                primaryGroup: req.body.primaryGroup,
-                secondryGroup: req.body.secondryGroup,
-                defaultCurrency: req.body.defaultCurrency,
-                strategy: req.body.strategy
-            },
-            bankAccount: {
-                accountType: req.body.accountType,
-                accountNumber: req.body.accountNumber,
-                bankName: req.body.bankName,
-                currency: req.body.currency,
-                branch: req.body.branch
-            },
-            activityBusiness: {
-                category: req.body.category,
-                subcategory: req.body.subcategory
-            },
-            taxCard: {
-                name: req.body.name,
-                address: req.body.address,
-                UnderlyingOffice: req.body.UnderlyingOffice,
-                typeOfCompany: req.body.typeOfCompany,
-                companyActivity: req.body.companyActivity,
-                fileNumber: req.body.fileNumber,
-                registerNumber: req.body.registerNumber,
-                issueDate: req.body.issueDate,
-                expirationDate: req.body.expirationDate,
-                uploadCopy: req.body.uploadCopy
-            },
-            commercialRegister: {
-                nationalNumberForCompany: req.body.nationalNumberForCompany,
-                commercialRgisterNumber: req.body.commercialRgisterNumber,
-                depositNumber: req.body.depositNumber,
-                depositDate: req.body.depositDate,
-                registrationNumberInCommercialRegister: req.body.registrationNumberInCommercialRegister,
-                depositNumberOfRenewalNumber: req.body.depositNumberOfRenewalNumber,
-                depositDateOf: req.body.depositDateOf,
-                renewalDate: req.body.renewalDate,
-                commercialName: req.body.commercialName,
-                CommercialDenomination: req.body.CommercialDenomination,
-                nameProceedHisTrade: req.body.nameProceedHisTrade,
-                legalForm: req.body.legalForm,
-                addressOfCompanyOrCooperativeSociety: req.body.addressOfCompanyOrCooperativeSociety,
-                commercialAttribute: req.body.commercialAttribute,
-                CommercialDenominationForBranch: req.body.CommercialDenominationForBranch,
-                nameOfMerchantHisNickNameDateAndPalceOfHisBirthAndHisNationality: {
-                    merchantName: req.body.merchantName,
-                    merchantNickName: req.body.merchantNickName,
-                    dateOfBirth: req.body.dateOfBirth,
-                    placeOfBirth: req.body.placeOfBirth,
-                    nationality: req.body.nationality
-                },
-                namesNickNamesOfJointlyResponsibleInGeneralPartnershipOrLimitedPartnershipBirthDateAndPlaceAndTheirNationality: {
-                    partnerName: req.body.partnerName,
-                    partnerNickName: req.body.partnerNickName,
-                    dateOfBirth: req.body.dateOfBirth,
-                    placeOfBirth: req.body.placeOfBirth,
-                    nationality: req.body.nationality
-                },
-                namesNickNamesOfPartnersOrWhoResponsibleOfManageCompanyAbdWhoHaveRightInSignWithTheirNamesTheirAttributeBirthDateAndPlaceTheirNationalityAndTheirPowerInSdministrationAndSigning: {
-                    name: req.body.name,
-                    nickName: req.body.nickName,
-                    attribute: req.body.attribute,
-                    dateOfBirth: req.body.dateOfBirth,
-                    placeOfBirth: req.body.placeOfBirth,
-                    nationality: req.body.nationality,
-                    hisPowerScopeInAdministrationAndSignature: req.body.hisPowerScopeInAdministrationAndSignature
-                },
-                namesNickNamesOfDirectorsBordInJointStockCompanyOrCoopretativeSocietyTheirAgentsTheirAttributeBirthDateAndPlaceTheirNationalityAndTheirPowerOnAdministerationAndSigning: {
-                    directorName: req.body.directorName,
-                    dateOfBirth: req.body.dateOfBirth,
-                    placeOfBirth: req.body.placeOfBirth,
-                    nationality: req.body.nationality,
-                    powerScopeInAdministration: req.body.powerScopeInAdministration,
-                    hisAgents: req.body.hisAgents
-                },
-                nameNickNameOfHeadOfficeDirectorOrGeneralAgentInEgyptBirthDateAndPlaceAndHisNationalityIfGeneralCenterOfCompanyWasOutside: {
-                    managerOfHeadOfficeName: req.body.managerOfHeadOfficeName,
-                    hisNickName: req.body.hisNickName,
-                    dateOfBirth: req.body.dateOfBirth,
-                    placeOfBirth: req.body.placeOfBirth,
-                    nationality: req.body.nationality,
-                    typeOfTrade: req.body.typeOfTrade,
-                    purposeOfEstablishingCompanyOrCooperativeSociety: req.body.purposeOfEstablishingCompanyOrCooperativeSociety,
-                    whenMerchantBeganHisWorksInEgypt: req.body.whenMerchantBeganHisWorksInEgypt,
-                    dateOfEngagementBusinessLicence: req.body.dateOfEngagementBusinessLicence,
-                    startDateOfCompany: req.body.startDateOfCompany,
-                    sendDateOfCompany: req.body.sendDateOfCompany,
-                    openingDateOfAgentOrBranch: req.body.openingDateOfAgentOrBranch,
-                    addressOfHeadOffice: req.body.addressOfHeadOffice,
-                    addressOfGeneralCenterForCompanyOrCooperativeSociety: req.body.addressOfGeneralCenterForCompanyOrCooperativeSociety,
-                    recordNumberOfMainShopOrGeneralCenter: req.body.recordNumberOfMainShopOrGeneralCenter,
-                    addressesOfBranchesOrAgentsSubsetToMainShopOrGeneralCenter: req.body.addressesOfBranchesOrAgentsSubsetToMainShopOrGeneralCenter,
-                    addressOfBrachOrAgent: req.body.addressOfBrachOrAgent,
-                    uploadCopy: req.body.uploadCopy
-                }
-            },
-            recordCardInImporterRegister: {
-                recordNumber: req.body.recordNumber,
-                valiedFrom: req.body.valiedFrom,
-                valiedUntil: req.body.valiedUntil,
-                tradeName: req.body.tradeName,
-                CommercialDenomination: req.body.CommercialDenomination,
-                type: req.body.type,
-                capital: req.body.capital,
-                addressOfBusiness: req.body.addressOfBusiness,
-                governorate: req.body.governorate,
-                dateOfRecord: req.body.dateOfRecord,
-                uploadCopy: req.body.uploadCopy
-            },
-            recordInExporterRegister: {
-                valiedFrom: req.body.valiedFrom,
-                valiedUntile: req.body.valiedUntile,
-                tradeName: req.body.tradeName,
-                CommercialDenomination: req.body.CommercialDenomination,
-                legalForm: req.body.legalForm,
-                capital: req.body.capital,
-                addressOfBusiness: req.body.addressOfBusiness,
-                governorate: req.body.governorate,
-                dateOfRecord: req.body.dateOfRecord,
-                commercialRegisterNumber: req.body.commercialRegisterNumber,
-                hisPlace: req.body.hisPlace,
-                taxRegisterationNumber: req.body.taxRegisterationNumber,
-                IdNumberOfOwner: req.body.IdNumberOfOwner,
-                telephoneNumber: req.body.telephoneNumber,
-                faxNumber: req.body.faxNumber,
-                itemsAreExported: req.body.itemsAreExported,
-                uploadCopy: req.body.uploadCopy
-            },
-            registerationGeneralTaxOnSales: {
-                businessName: req.body.businessName,
-                address: req.body.address,
-                registerationNumber: req.body.registerationNumber,
-                registerationDate: req.body.registerationDate,
-                uploadCopy: req.body.uploadCopy
-            },
-            engagementBusinessLicense: {
-                licenceNumber: req.body.licenceNumber,
-                companyName: req.body.companyName,
-                CommercialDenomination: req.body.CommercialDenomination,
-                legalForm: req.body.legalForm,
-                commercialRegisterNumber: req.body.commercialRegisterNumber,
-                issuedPlaceOfCommercialRegister: req.body.issuedPlaceOfCommercialRegister,
-                issuedDateOfCommercialRegister: req.body.issuedDateOfCommercialRegister,
-                activity: req.body.activity,
-                responsibleDirectorName: req.body.responsibleDirectorName,
-                address: req.body.address,
-                governorate: req.body.governorate,
-                issuedDateOfLicence: req.body.issuedDateOfLicence,
-                expirationDateOfLicence: req.body.expirationDateOfLicence,
-                uploadCopy: req.body.uploadCopy
-            },
-            regiseterationCertifecateOfValueAddedTaxe: {
-                distrect: req.body.distrect,
-                office: req.body.office,
-                address: req.body.address,
-                issuedFrom: req.body.issuedFrom,
-                registerationNumber: req.body.registerationNumber,
-                registerationDate: req.body.registerationDate,
-                uploadCopy: req.body.uploadCopy
-            }
-        });
-        newCompany.save(() => {
-            res.redirect(302, '../index')
-        })
-    });
+    router.post('/newCompany', companyController.newCompanyHandler);
+
+
     //get form to add new organization
     router.get('/accounts/addOrganization', (req, res, next) => {
         res.render('accounts/addOrganization')

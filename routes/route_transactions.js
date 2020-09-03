@@ -1,9 +1,9 @@
-const Transaction = require('../models/accounts/invoices/transactions').Transaction; //transactions Schema
-const addItem = require('../models/accounts/addItem').addItem; //items Schema
+const Transaction = require('../models/transactions').Transaction; //transactions Schema
+const addItem = require('../models/addItem').addItem; //items Schema
 const Log = require('../models/log').Log;
 const fs = require('fs');
-const newAccInAccChart = require('../models/addAccountInChart').newAccInAccChart;
-const CostCenter = require('../models/costCenter').CostCenter;
+const transactionController = require('../controller/transaction.controller');
+
 module.exports = function(router) {
     //get page to enter data of invoice (transaction)
     router.get('/accounts/invoices/transactions', (req, res, next) => {
@@ -22,231 +22,25 @@ module.exports = function(router) {
     });
 
     //save transaction(invoice) in database
-    router.post('/accounts/invoices/transactions', (req, res) => {
-        var newTransaction = new Transaction({
-            _id: req.body._id,
-            projectID: req.body.projectID,
-            transactionDate: req.body.transactionDate,
-            postNumber: req.body.postNumber,
-            patchNumber: req.body.patchNumber,
-            docNumber: req.body.docNumber,
-            invoiceNumber: req.body.invoiceNumber,
-            from: {
-                fromEntity: req.body.fromEntity,
-                fromSubEntity: req.body.fromSubEntity,
-            },
-            to: {
-                toEntity: req.body.toEntity,
-                toSubEntity: req.body.toSubEntity,
-            },
-            transactionType: req.body.transactionType,
-            transactionClass: req.body.transactionClass,
-            transactionNumber: req.body.transactionNumber,
-            parentTransaction: req.body.parentTransaction,
-            reaccurance: req.body.reaccurance,
-            reaccuranceType: req.body.reaccuranceType,
-            taxState: req.body.taxState,
-            currency: req.body.currency,
-            assets: [{
-                assetID: req.body.assetID,
-                assetName: req.body.assetName,
-                assetsSerialNumber: req.body.assetsSerialNumber,
-                assetsQuantity: req.body.assetsQuantity,
-                assetsUnitOfMeasurment: req.body.assetsUnitOfMeasurment,
-                assetsPrice: req.body.assetsPrice,
-                assetsFrom: req.body.assetsFrom,
-                assetsTo: req.body.assetsTo,
-            }],
-            items: [{
-                itemID: req.body.itemID,
-                itemName: req.body.itemName,
-                itemsSerialNumber: req.body.itemsSerialNumber,
-                itemsQuantity: req.body.itemsQuantity,
-                itemsUnitOfMeasurment: req.body.itemsUnitOfMeasurment,
-                itemsPrice: req.body.itemsPrice,
-                itemsPackageID: req.body.itemsPackageID,
-                itemsPackageName: req.body.itemsPackageName,
-                itemsFrom: req.body.itemsFrom,
-                itemsTo: req.body.itemsTo,
-            }],
-            services: [{
-                serviceID: req.body.serviceID,
-                serviceName: req.body.serviceName,
-                servicesUnitOfMeasurment: req.body.servicesUnitOfMeasurment,
-                servicesQuantity: req.body.servicesQuantity,
-                servicesPrice: req.body.servicesPrice,
-                servicesStart: req.body.servicesStart,
-                servicesEnd: req.body.servicesEnd,
-                servicesPackage: req.body.servicesPackage,
-                servicesFrom: req.body.servicesFrom,
-                servicesTo: req.body.servicesTo
-            }],
-            jobs: [{
-                jobID: req.body.jobID,
-                jobName: req.body.jobName,
-                jobsUnitOfMeasurment: req.body.jobsUnitOfMeasurment,
-                jobsQuantity: req.body.jobsQuantity,
-                jobsPrice: req.body.jobsPrice
-            }],
-            fees: [{
-                feeID: req.body.feeID,
-                feeName: req.body.feeName,
-                feesUnitOfMeasurment: req.body.feesUnitOfMeasurment,
-                feesQuantity: req.body.feesQuantity,
-                feesPrice: req.body.feesPrice
-            }],
-            fines: [{
-                fineID: req.body.fineID,
-                fineName: req.body.fineName,
-                finesValue: req.body.finesValue
-
-            }],
-            interestAndProfits: [{
-                interestAndProfitsID: req.body.interestAndProfitsID,
-                interestAndProfitsName: req.body.interestAndProfitsName,
-                interestAndProfitsValue: req.body.interestAndProfitsValue
-            }],
-            taxes: [{
-                taxID: req.body.taxID,
-                taxName: req.body.taxName,
-                taxType: req.body.taxType,
-                taxesRatioOrFixedValue: req.body.taxesRatioOrFixedValue,
-                taxesValue: req.body.taxesValue,
-            }],
-            customs: [{
-                customID: req.body.customID,
-                customName: req.body.customName,
-                customType: req.body.customType,
-                customsRatioOrFixedValue: req.body.customsRatioOrFixedValue,
-                customsValue: req.body.customsValue,
-            }],
-            currency: [{
-                currencySource: req.body.currencySource,
-                currencyDestination: req.body.currencyDestination,
-                currencyRate: req.body.currencyRate,
-                currencyAmount: req.body.currencyAmount,
-            }],
-            cash: [{
-                cashValue: req.body.cashValue,
-                cashCurrency: req.body.cashCurrency,
-                cashDetailed: req.body.cashDetailed,
-                cashPapers: req.body.cashPapers,
-                cashFrom: req.body.cashFrom,
-                cashTo: req.body.cashTo,
-            }],
-            accounts: [{
-                accountNumber: req.body.accountNumber,
-                accountName: req.body.accountName,
-                accountDebit: req.body.accountDebit,
-                accountCredit: req.body.accountCredit,
-                accountCurrency: req.body.accountCurrency,
-                accountNotes: req.body.accountNotes,
-                costCenter: [{
-                    costCenterName: req.body.costCenterName,
-                    costCenterValue: req.body.costCenterValue,
-                    parent: req.body.parent,
-                    projectID: req.body.projectID
-                }]
-            }],
-            checks: [{
-                checkOwner: req.body.checkOwner,
-                checkBankName: req.body.checkBankName,
-                checkPayee: req.body.checkPayee,
-                checkDate: req.body.checkDate,
-                checkAmount: req.body.checkAmount,
-                checkCurrency: req.body.checkCurrency,
-                checkNumber: req.body.checkNumber,
-                checkDueDate: req.body.checkDueDate,
-                checkType: req.body.checkType,
-                checkCopy: req.body.checkCopy
-            }],
-            hr: [{
-                hrEmployeeCode: req.body.hrEmployeeCode,
-                hrBaseSalary: req.body.hrBaseSalary,
-                hrGroupedSpecialBonus: req.body.hrGroupedSpecialBonus,
-                hrPreviousYearBonus: req.body.hrPreviousYearBonus,
-                hrExceptionalExpensiveLivingBonus: req.body.hrExceptionalExpensiveLivingBonus,
-                hrWorkNatureAllowance: req.body.hrWorkNatureAllowance,
-                hrLaborHolidayBonus: req.body.hrLaborHolidayBonus,
-                hrFoodAllowance: req.body.hrFoodAllowance,
-                hrSocialBonus: req.body.hrSocialBonus,
-                hrInsurance: req.body.hrInsurance,
-                hrStamp: req.body.hrStamp,
-                hrWorkGainTax: req.body.hrWorkGainTax,
-                hrSyndicate: req.body.hrSyndicate,
-            }]
-        });
-        newTransaction.save().then(() => {
-                /*               res.redirect(302, '../../index', console.log(newTransaction)) */
-                res.json(console.log(newTransaction))
-            }).catch(err => {
-                console.log(err.errmsg);
-            })
-            //record when user do something
-            /* Log.create({
-                statement: 'User: ' + req.user.userName + ' saved new transaction with number' + req.body.docNumber + 'and type:' + req.body.transactionType,
-                user: req.user.userName
-            }); */
-    });
+    router.post('/transactions', transactionController.transactionPostHandler);
 
     //save newAccInAccChart in database
-    router.post('/newAccInAccChart', (req, res) => {
-        var newAccInAccountsChart = new newAccInAccChart({
-            accountNumber: req.body.accountNumber,
-            accountEnglish: req.body.accountEnglish,
-            nature: req.body.nature,
-            accountArabic: req.body.accountArabic,
-            status: req.body.status,
-            category: req.body.category,
-            parent: req.body.parent,
-            descreptionEnglish: req.body.descreptionEnglish,
-            descreptionArabic: req.body.descreptionArabic,
-            notes: req.body.notess
-        });
-        newAccInAccountsChart.save().then(() => {
-            /*               res.redirect(302, '../../index', console.log(newTransaction)) */
-            res.json(console.log(newAccInAccountsChart))
-        });
-        //record when user do something
-        /* Log.create({
-            statement: 'User: ' + req.user.userName + ' saved new transaction with number' + req.body.docNumber + 'and type:' + req.body.transactionType,
-            user: req.user.userName
-        }); */
-    });
+    router.post('/newAccInAccChart', transactionController.newAccInAccountsChartHandler);
 
     //save transaction(invoice) in database
-    router.post('/newCostCenter', (req, res) => {
-        var newCostCenter = new CostCenter({
-            CostCenterCode: req.body.CostCenterCode,
-            controllingArea: req.body.controllingArea,
-            valid: {
-                from: req.body.from,
-                to: req.body.to
-            },
-            basicData: {
-                name: req.body.name,
-                description: req.body.description,
-                userResponsible: req.body.userResponsible,
-                personResponsible: req.body.personResponsible,
-                department: req.body.department,
-                costCenterCategory: req.body.costCenterCategory,
-                hierarchyArea: req.body.hierarchyArea,
-                businessArea: req.body.businessArea,
-                functionalArea: req.body.functionalArea,
-                currency: req.body.currency,
-                profitCenter: req.body.profitCenter
-            }
-        });
-        newCostCenter.save().then(() => {
-            /*               res.redirect(302, '../../index', console.log(newTransaction)) */
-            res.json(console.log(newCostCenter))
-        });
-        //record when user do something
-        /* Log.create({
-            statement: 'User: ' + req.user.userName + ' saved new transaction with number' + req.body.docNumber + 'and type:' + req.body.transactionType,
-            user: req.user.userName
-        }); */
-    });
+    router.post('/newCostCenter', transactionController.newCostCenterHandler);
+
+    //new vendor class 
+    router.post('/vendorClass', transactionController.vendorClassHandler);
+    //query vendor class
+    router.get('/vendorClassQuery', transactionController.vendorClassQuery);
+
+    //=======new cehckbook=======
+    router.post('/checkbook', transactionController.cehckbookHandler)
+
+
+
+
     //get page to enter data will be pushed in database
     router.get('/accounts/invoices/pushtransactions', (req, res) => {
         //record when user do something
@@ -334,7 +128,7 @@ module.exports = function(router) {
                         customsRatioOrFixedValue: req.body.customsRatioOrFixedValue,
                         customsValue: req.body.customsValue,
                     },
-                    currency: {
+                    currencies: {
                         currencySource: req.body.currencySource,
                         currencyDestination: req.body.currencyDestination,
                         currencyRate: req.body.currencyRate,

@@ -248,7 +248,58 @@ exports.yearsOfExperience = yearsOfExperience;
 
 const transactionsTypesSchema = mongoose.Schema({
     english: String,
-    arabic: String
+    arabic: String,
+    categoryEnglish: String,
+    categoryArabic: String
 });
 const transactionsTypes = mongoose.model('transactionstypes', transactionsTypesSchema);
 exports.transactionsTypes = transactionsTypes;
+
+const reccurrencetypesSchema = mongoose.Schema({
+    english: String,
+    arabic: String
+});
+const reccurrenceTypes = mongoose.model('reccurrencetypes', reccurrencetypesSchema);
+exports.reccurrenceTypes = reccurrenceTypes;
+
+const taxstatesSchema = mongoose.Schema({
+    english: String
+});
+const taxState = mongoose.model('taxstates', taxstatesSchema);
+exports.taxState = taxState;
+
+const transactionsTypeCategoriesSchema = mongoose.Schema({
+    categoryArabic: String,
+    categoryEnglish: String
+});
+const transactionsCategory = mongoose.model('transactionstypecategories', transactionsTypeCategoriesSchema);
+exports.transactionsCategory = transactionsCategory;
+
+const measUnitsSchema = mongoose.Schema({
+    "name_english": String,
+    "system": String,
+    "symbol": String,
+    "multiplier": String,
+    "parent unit": String,
+    "prefix": String,
+    "special_type": String,
+    "Type": String
+});
+const measUnits = mongoose.model('measurementunitslists', measUnitsSchema);
+exports.measUnits = measUnits;
+
+const paymentTermSchema = mongoose.Schema({
+    _id: String,
+    english: String,
+    arabic: String
+});
+const PaymentTerms = mongoose.model('paymentterms', paymentTermSchema);
+exports.PaymentTerms = PaymentTerms;
+
+const shippingMethodSchema = mongoose.Schema({
+    _id: String,
+    english: String,
+    arabic: String
+});
+const ShippingMethod = mongoose.model('shippingmethods', shippingMethodSchema);
+exports.ShippingMethod = ShippingMethod;

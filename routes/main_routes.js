@@ -1,7 +1,5 @@
 var User = require('../models/users').User;
-var Client = require('../models/clients').Client;
 var passport = require('passport')
-var clientsModel = require('../models/clients')
 const Log = require('../models/log').Log;
 const DraftClient = require('../models/drafts/draftClientEN').DraftClient;
 const DraftClientAr = require('../models/drafts/draftClientAR').DraftClientAr;
@@ -33,27 +31,6 @@ module.exports = function(router) {
             });
         }
     });
-    //get list of clients saved
-    router.get('/clients', async function(req, res) {
-        /* if (!req.user == false) {
-            Log.create({
-                statement: 'User: ' + req.user.userName + ' entered All Clients '
-            });
-            clientsModel.getAllClients().then(clients => {
-                res.json({
-                    clients: clients
-                })
-            })
-        } else {
-            res.redirect(302, '/login');
-        } */
-        await clientsModel.getAllClients().then(clients => {
-            res.json({
-                clients: clients
-            })
-        })
-
-    })
 
     //main page
     router.get('/', (req, res) => {

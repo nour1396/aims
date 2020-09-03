@@ -458,26 +458,42 @@ var clientSchema = mongoose.Schema({
     disabilities: {
         disabilityType: String,
         missingParts: String
+    },
+    personClass: {
+        vendor: {
+            vendorId: String,
+            vendorName: String,
+            VendorCheckName: String,
+            VendorShortName: String,
+            VendorStatus: String,
+            VendorBankAccount1: String,
+            VendorBankAccount2: String,
+            VendorBankAccount3: String,
+            VendorBankAccount4: String,
+            vendorClass: String,
+            Accounts: {
+                AccountPayable: String,
+                TradeDiscount: String,
+                Miscellaneous: String,
+                Freight: String,
+                Tax: String,
+                AccruedPurchasing: String,
+                PurchasePricevariance: String
+            },
+            CurrencyID: String,
+            PaymentTerms: String,
+            ShippingMethod: String,
+            CreditLimet: String,
+            MinimumPayment: String,
+            MinimumOrderAmount: String,
+            MaximumInvoiceAmont: String,
+            Taxschedule: String,
+            CheckbookID: String,
+
+        }
     }
-});
+}, { strict: false });
 clientSchema.plugin(timestamps)
 const Client = mongoose.model('clients', clientSchema);
-
-exports.getAllClients = () => {
-
-    //3mlt promise gdid 3shan anbh function mn barra w aflt el promise 3n tre2 el disconnect
-    return new Promise((resolve, reject) => {
-        /* mongoose.connect(configDB.url, { useNewUrlParser: true }).then(() => {
-            return Client.find({})
-        }).then(clients => {
-            mongoose.disconnect();
-            resolve(clients)
-        }).catch(err => reject(err)) */
-
-        Client.find().then(clients => {
-            resolve(clients);
-        }).catch(err => reject(err))
-    })
-}
 
 exports.Client = Client

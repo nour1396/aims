@@ -40,21 +40,6 @@ var companySchema = mongoose.Schema({
         contactLanguage: String,
         postOfficeCode: String
     },
-    accounts: {
-        balance: String,
-        ARbalance: String,
-        paymentTerm: String,
-        accountNumber: String,
-        creditLimit: String,
-        invoiceToParent: String,
-        salesOrderToParent: String,
-        openItem: String,
-        stopCredit: String,
-        primaryGroup: String,
-        secondryGroup: String,
-        defaultCurrency: String,
-        strategy: String
-    },
     bankAccount: {
         accountType: String,
         accountNumber: String,
@@ -212,6 +197,6 @@ var companySchema = mongoose.Schema({
     }
 
 
-})
-var Company = mongoose.model('company', companySchema);
+}, { strict: false })
+var Company = mongoose.model('companies', companySchema);
 exports.Company = Company
