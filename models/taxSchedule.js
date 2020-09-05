@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 
 const taxScheduleSchema = mongoose.Schema({
-    TaxSchedualsID: String,
+    _id: String,
     TaxSchedualsDescreption: String,
-    SelectedTaxDetailsIDs: String,
+    SelectedTaxDetailsIDs: [{
+        type: mongoose.Schema.Types.String,
+        ref: 'taxes'
+    }],
 
-}, { strict: false });
+});
 
 const TaxSchedule = mongoose.model('taxSchedules', taxScheduleSchema);
 exports.TaxSchedule = TaxSchedule;

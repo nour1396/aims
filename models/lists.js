@@ -113,8 +113,11 @@ const ResidencePermitsTypes = mongoose.model('residencepermitstypes', residenceP
 exports.ResidencePermitsTypes = ResidencePermitsTypes;
 
 const currencySchema = mongoose.Schema({
+    _id: String,
     english: String,
-    arabic: String
+    arabic: String,
+    symbol: String,
+    shortcut: String,
 });
 const Currency = mongoose.model('currencies', currencySchema);
 exports.Currency = Currency;

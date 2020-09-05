@@ -13,7 +13,10 @@ const vendorClassSchema = mongoose.Schema({
         accruedPurchasing: String,
         purchasePriceVariance: String
     },
-    currencyID: { type: String, ref: 'currencies' },
+    currencyID: {
+        type: mongoose.Schema.Types.String,
+        ref: 'currencies'
+    },
     paymentTerms: String,
     shippingMethod: String,
     creditLimit: String,
@@ -24,5 +27,5 @@ const vendorClassSchema = mongoose.Schema({
     checkbookId: String
 });
 
-const vendorClass = mongoose.model('vendorclasses', vendorClassSchema);
-exports.vendorClass = vendorClass
+const VendorClass = mongoose.model('vendorclasses', vendorClassSchema);
+exports.VendorClass = VendorClass

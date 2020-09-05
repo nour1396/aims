@@ -5,7 +5,7 @@ const fs = require('fs');
 const transactionController = require('../controller/transaction.controller');
 
 module.exports = function(router) {
-    //get page to enter data of invoice (transaction)
+    //==========get page to enter data of invoice (transaction)==========
     router.get('/accounts/invoices/transactions', (req, res, next) => {
         let data = {}
             //get list of items
@@ -21,25 +21,28 @@ module.exports = function(router) {
 
     });
 
-    //save transaction(invoice) in database
+    //==========save transaction(invoice) in database==========
     router.post('/transactions', transactionController.transactionPostHandler);
 
-    //save newAccInAccChart in database
+    //==========save newAccInAccChart in database==========
     router.post('/newAccInAccChart', transactionController.newAccInAccountsChartHandler);
 
-    //save transaction(invoice) in database
+    //==========save transaction(invoice) in database==========
     router.post('/newCostCenter', transactionController.newCostCenterHandler);
 
-    //new vendor class 
+    //========new vendor class ========
     router.post('/vendorClass', transactionController.vendorClassHandler);
     //query vendor class
     router.get('/vendorClassQuery', transactionController.vendorClassQuery);
 
     //=======new cehckbook=======
-    router.post('/checkbook', transactionController.cehckbookHandler)
+    router.post('/checkbook', transactionController.checkbookHandler)
 
+    //=======new taxDetails=======
+    router.post('/taxDetails', transactionController.taxDetailsHandler)
 
-
+    //=======new taxSchedule=======
+    router.post('/taxSchedule', transactionController.taxScheduleHandler)
 
     //get page to enter data will be pushed in database
     router.get('/accounts/invoices/pushtransactions', (req, res) => {

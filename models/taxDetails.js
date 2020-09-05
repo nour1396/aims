@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const taxDetailsSchema = mongoose.Schema({
-    TaxID: String,
+    _id: String,
     TaxDescreption: String,
     TaxType: String,
     TaxPercentage: String,

@@ -1,7 +1,8 @@
 const Transaction = require('../models/transactions').Transaction; //transactions Schema
 const newAccInAccChart = require('../models/addAccountInChart').newAccInAccChart;
 const CostCenter = require('../models/costCenter').CostCenter;
-const vendorClass = require('../models/vendorClass').vendorClass;
+const VendorClass = require('../models/vendorClass').VendorClass;
+const CustomerClass = require('../models/customerClass').CustomerClass;
 const Checkbook = require('../models/checkbook').Checkbook;
 const Tax = require('../models/taxDetails').Tax;
 const TaxSchedule = require('../models/taxSchedule').TaxSchedule;
@@ -351,16 +352,17 @@ exports.vendorClassHandler = async(req, res) => {
         taxesNotesId,
         checkbookId
     } = req.body;
-    let vendorClasses = await vendorClass.insertMany(data);
+    let vendorClasses = await VendorClass.insertMany(data);
     res.json(vendorClasses)
 };
 
 exports.vendorClassQuery = async(req, res) => {
-    let vc = await vendorClass.find().populate('currencyID')
-    res.json(vc)
+    let VendCla = await VendorClass.find().populate('currencyID')
+    let TaxSch = await TaxSchedule.find().populate('SelectedTaxDetailsIDs')
+    res.json([VendCla, TaxSch])
 };
 
-exports.cehckbookHandler = async(req, res) => {
+exports.checkbookHandler = async(req, res) => {
     let data = {
         CheckbookID,
         CheckbookDescreption,
@@ -377,7 +379,7 @@ exports.cehckbookHandler = async(req, res) => {
 
 exports.taxDetailsHandler = async(req, res) => {
     let data = {
-        TaxID,
+        _id,
         TaxDescreption,
         TaxType,
         TaxPercentage,
@@ -392,13 +394,19 @@ exports.taxDetailsHandler = async(req, res) => {
 
 exports.taxScheduleHandler = async(req, res) => {
     let data = {
-        TaxSchedualsID,
+        _id,
         TaxSchedualsDescreption,
         SelectedTaxDetailsIDs,
     } = req.body;
 
     let taxSchedule = new TaxSchedule(data);
-
+    console.log(data);
     await taxSchedule.save();
     res.json()
-}
+};
+
+exports.customerClassHandler = async(req, res) => {
+    let data = {} = req.body;
+    let customerClass = await CustomerClass.insertMany(data);
+    res.json(customerClass)
+};

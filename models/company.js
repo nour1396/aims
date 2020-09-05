@@ -194,6 +194,77 @@ var companySchema = mongoose.Schema({
         registerationNumber: String,
         registerationDate: String,
         uploadCopy: String
+    },
+    companyClass: {
+        vendor: {
+            vendorId: String,
+            vendorName: String,
+            vendorCheckName: String,
+            vendorShortName: String,
+            vendorStatus: String,
+            vendorBankAccount1: String,
+            vendorBankAccount2: String,
+            vendorBankAccount3: String,
+            vendorBankAccount4: String,
+            vendorClass: String,
+            accounts: {
+                accountPayable: String,
+                tradeDiscount: String,
+                miscellaneous: String,
+                freight: String,
+                tax: String,
+                accruedPurchasing: String,
+                purchasePricevariance: String
+            },
+            currencyID: String,
+            paymentTerms: String,
+            shippingMethod: String,
+            creditLimet: String,
+            minimumPayment: String,
+            minimumOrderAmount: String,
+            maximumInvoiceAmont: String,
+            taxschedule: String,
+            checkbookID: String,
+
+        },
+        customer: {
+            customerID: String,
+            customerName: String,
+            customerShortName: String,
+            customerStatementName: String,
+            customerStatus: String,
+            parentCustomerID: String,
+            customerClass: String,
+            customerBankAccount1: String,
+            customerBankAccount2: String,
+            customerBankAccount3: String,
+            customerBankAccount4: String,
+            accounts: {
+                AccountsReceivable: String,
+                TradeDiscount: String,
+                Miscellaneous: String,
+                Freight: String,
+                Tax: String,
+                Sales: String,
+                CostofSales: String,
+                Inventory: String,
+                SalesReturns: String,
+            },
+            currencyID: {
+                type: mongoose.Schema.Types.String,
+                ref: 'currencies'
+            },
+            paymentTerms: String,
+            shippingMethod: String,
+            creditLimit: String,
+            minimumPayment: String,
+            minimumOrderAmount: String,
+            maximumInvoiceAmount: String,
+            taxschedule: String,
+            salesperson: String,
+            territoryArea: String,
+            priceList: String
+        }
     }
 
 

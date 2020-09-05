@@ -43,7 +43,7 @@ const Client = require('../models/clients').Client,
     CostCenter = require('../models/costCenter').CostCenter,
     transactionsCategory = require('../models/lists').transactionsCategory,
     measUnits = require('../models/lists').measUnits,
-    vendorClass = require('../models/vendorClass').vendorClass,
+    VendorClass = require('../models/vendorClass').VendorClass,
     PaymentTerms = require('../models/lists').PaymentTerms,
     ShippingMethod = require('../models/lists').ShippingMethod,
     Tax = require('../models/taxDetails').Tax;
@@ -88,7 +88,7 @@ exports.handleLists = async(req, res, next) => {
         taxStates = await taxState.find(),
         transactionsCategories = await transactionsCategory.find(),
         measurementUnits = await measUnits.find(),
-        vendorClasses = await vendorClass.find(),
+        vendorClasses = await VendorClass.find(),
         paymentTerms = await PaymentTerms.find(),
         shippingMethod = await ShippingMethod.find(),
         taxes = await Tax.find();
