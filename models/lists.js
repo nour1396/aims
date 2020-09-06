@@ -306,3 +306,29 @@ const shippingMethodSchema = mongoose.Schema({
 });
 const ShippingMethod = mongoose.model('shippingmethods', shippingMethodSchema);
 exports.ShippingMethod = ShippingMethod;
+
+const orgTypesSchema = mongoose.Schema({
+    _id: String,
+    english: String,
+    arabic: String
+});
+const OrgType = mongoose.model('organizationtypes', orgTypesSchema);
+exports.OrgType = OrgType;
+
+const busCategorySchema = mongoose.Schema({
+    _id: String,
+    english: String,
+    arabic: String
+});
+const BusCat = mongoose.model('businesscategories', busCategorySchema);
+exports.BusCat = BusCat;
+
+const busSubCategorySchema = mongoose.Schema({
+    _id: String,
+    english: String,
+    arabic: String,
+    category_english: String,
+    category_arabic: String
+});
+const BusSubCat = mongoose.model('businesssubcategories', busSubCategorySchema);
+exports.BusSubCat = BusSubCat;

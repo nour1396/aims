@@ -1,9 +1,9 @@
 const addItem = require('../models/addItem').addItem; //items schema
 const addItemCategory = require('../models/addItem').addItemCategory; //item category schema
 const addAcc = require('../models/accountCard').addAcc; //account card schema
-const Organization = require('../models/orgSchema').Organization; //org schema
 const addAsset = require('../models/assets').addAsset; //assetr schema
 const addService = require('../models/services').addService; //service schema
+const orgController = require('../controller/org.controller');
 const companyController = require('../controller/company.controller');
 module.exports = function(router) {
     //get form to add new item 
@@ -35,104 +35,47 @@ module.exports = function(router) {
         })
         //post account form
     router.post('/accounts/addAcccard', (req, res) => {
-            var addAccCard = new addAcc({
-                general: {
-                    accountName: req.body.accountName,
-                    accountType: req.body.accountType,
-                    accountCode: req.body.accountCode,
-                    parentAccount: req.body.parentAccount,
-                    description: req.body.description,
-                    IncomeOrBalanceSheet: req.body.IncomeOrBalanceSheet,
-                    debitOrCredit: req.body.debitOrCredit,
-                    totaling: req.body.totaling,
-                    numberOfBlanksLine: req.body.numberOfBlanksLine,
-                    newPage: req.body.newPage,
-                    searchName: req.body.searchName,
-                    balance: req.body.balance,
-                    reconciliationAccount: req.body.reconciliationAccount,
-                    automaticExtendedTexts: req.body.automaticExtendedTexts,
-                    directPosting: req.body.directPosting,
-                    blocked: req.body.blocked,
-                    lastDateModified: req.body.lastDateModified,
-                    currencyType: req.body.currencyType,
-                    active: req.body.active
-                },
-                posting: {
-                    generalPostingType: req.body.generalPostingType,
-                    generalBusinessPostingGroup: req.body.generalBusinessPostingGroup,
-                    generalProductPostingGroup: req.body.generalProductPostingGroup,
-                    VATBusinessPostingGroup: req.body.VATBusinessPostingGroup,
-                    VATProductPostingGroup: req.body.VATProductPostingGroup,
-                    defaultIntercompanyPartnerGeneralLedgerAccNumber: req.body.defaultIntercompanyPartnerGeneralLedgerAccNumber
-                }
-            });
-            addAccCard.save(() => {
-                res.redirect(302, '../index')
-            })
+        var addAccCard = new addAcc({
+            general: {
+                accountName: req.body.accountName,
+                accountType: req.body.accountType,
+                accountCode: req.body.accountCode,
+                parentAccount: req.body.parentAccount,
+                description: req.body.description,
+                IncomeOrBalanceSheet: req.body.IncomeOrBalanceSheet,
+                debitOrCredit: req.body.debitOrCredit,
+                totaling: req.body.totaling,
+                numberOfBlanksLine: req.body.numberOfBlanksLine,
+                newPage: req.body.newPage,
+                searchName: req.body.searchName,
+                balance: req.body.balance,
+                reconciliationAccount: req.body.reconciliationAccount,
+                automaticExtendedTexts: req.body.automaticExtendedTexts,
+                directPosting: req.body.directPosting,
+                blocked: req.body.blocked,
+                lastDateModified: req.body.lastDateModified,
+                currencyType: req.body.currencyType,
+                active: req.body.active
+            },
+            posting: {
+                generalPostingType: req.body.generalPostingType,
+                generalBusinessPostingGroup: req.body.generalBusinessPostingGroup,
+                generalProductPostingGroup: req.body.generalProductPostingGroup,
+                VATBusinessPostingGroup: req.body.VATBusinessPostingGroup,
+                VATProductPostingGroup: req.body.VATProductPostingGroup,
+                defaultIntercompanyPartnerGeneralLedgerAccNumber: req.body.defaultIntercompanyPartnerGeneralLedgerAccNumber
+            }
+        });
+        addAccCard.save(() => {
+            res.redirect(302, '../index')
         })
-        //get form to add new company
-    router.get('/newCompany', (req, res, next) => {
-        res.render('accounts/addCompany')
     })
 
     //post (add) form of new co. to database
     router.post('/newCompany', companyController.newCompanyHandler);
 
-
-    //get form to add new organization
-    router.get('/accounts/addOrganization', (req, res, next) => {
-        res.render('accounts/addOrganization')
-    })
-
     //post (add) form of new organization to database
-    router.post('/accounts/addOrganization', (req, res, next) => {
-        var newOrganization = new Organization({
-            organizationInformation: {
-                orgNameInArabic: req.body.orgNameInArabic,
-                orgNameInEnglish: req.body.orgNameInEnglish,
-                establishmentDate: req.body.establishmentDate,
-                organizationType: req.body.organizationType
-            },
-
-            addressDetails: {
-                addressType: req.body.addressType,
-                country: req.body.country,
-                city: req.body.city,
-                streetName: req.body.streetName,
-                area: req.body.area,
-                realStateType: req.body.realStateType,
-                realStateNumber: req.body.realStateNumber,
-                detailedAddress: req.body.detailedAddress,
-                coordinates: req.body.coordinates
-            },
-
-            contactInformation: {
-                countryCode: req.body.countryCode,
-                governorateCode: req.body.governorateCode,
-                landLine: req.body.landLine,
-                faxNumber: req.body.faxNumber,
-                email: req.body.email,
-                logoURL: req.body.logoURL,
-                website: req.body.website,
-                mobileNumber: req.body.mobileNumber,
-                contactLanguage: req.body.contactLanguage,
-                postOfficeCode: req.body.postOfficeCode,
-                bankAccount: req.body.bankAccount,
-                accountType: req.body.accountType,
-                accountNumber: req.body.accountNumber,
-                bankName: req.body.bankName,
-                currency: req.body.currency,
-                branch: req.body.branch
-            },
-            activityOfBusiness: {
-                category: req.body.category,
-                subCategory: req.body.subCategory
-            }
-        });
-        newOrganization.save(() => {
-            res.redirect(302, '../index')
-        })
-    });
+    router.post('/newOrg', orgController.orgHandler);
 
     //get page to add new asset
     router.get('/accounts/addAsset', (req, res, next) => {

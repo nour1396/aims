@@ -35,6 +35,9 @@ module.exports = function(router) {
     //query vendor class
     router.get('/vendorClassQuery', transactionController.vendorClassQuery);
 
+    //========new vendor class ========
+    router.post('/customerClass', transactionController.customerClassHandler);
+
     //=======new cehckbook=======
     router.post('/checkbook', transactionController.checkbookHandler)
 

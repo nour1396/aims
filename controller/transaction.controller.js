@@ -406,7 +406,32 @@ exports.taxScheduleHandler = async(req, res) => {
 };
 
 exports.customerClassHandler = async(req, res) => {
-    let data = {} = req.body;
-    let customerClass = await CustomerClass.insertMany(data);
-    res.json(customerClass)
+    let data = {
+        _id,
+        nameEnglish,
+        nameArabic,
+        accounts,
+        accountsReceivable,
+        tradeDiscount,
+        miscellaneous,
+        freight,
+        tax,
+        sales,
+        costofSales,
+        inventory,
+        salesReturns,
+        currencyID,
+        paymentTerms,
+        shippingMethod,
+        creditLimit,
+        minimumPayment,
+        minimumOrderAmount,
+        maximumInvoiceAmount,
+        taxschedule,
+        salesperson,
+        territoryArea,
+        priceList,
+    } = req.body;
+    let customerClasses = await CustomerClass.insertMany(data);
+    res.json(customerClasses)
 };

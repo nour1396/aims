@@ -5,15 +5,15 @@ const customerClassSchema = mongoose.Schema({
     nameEnglish: String,
     nameArabic: String,
     accounts: {
-        AccountsReceivable: String,
-        TradeDiscount: String,
-        Miscellaneous: String,
-        Freight: String,
-        Tax: String,
-        Sales: String,
-        CostofSales: String,
-        Inventory: String,
-        SalesReturns: String
+        accountsReceivable: String,
+        tradeDiscount: String,
+        miscellaneous: String,
+        freight: String,
+        tax: String,
+        sales: String,
+        costofSales: String,
+        inventory: String,
+        salesReturns: String
     },
     currencyID: {
         type: mongoose.Schema.Types.String,

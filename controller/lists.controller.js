@@ -44,9 +44,14 @@ const Client = require('../models/clients').Client,
     transactionsCategory = require('../models/lists').transactionsCategory,
     measUnits = require('../models/lists').measUnits,
     VendorClass = require('../models/vendorClass').VendorClass,
+    CustomerClass = require('../models/customerClass').CustomerClass,
     PaymentTerms = require('../models/lists').PaymentTerms,
     ShippingMethod = require('../models/lists').ShippingMethod,
-    Tax = require('../models/taxDetails').Tax;
+    Tax = require('../models/taxDetails').Tax,
+    TaxSchedule = require('../models/taxSchedule').TaxSchedule,
+    BusCat = require('../models/lists').BusCat,
+    BusSubCat = require('../models/lists').BusSubCat,
+    OrgType = require('../models/lists').OrgType;
 exports.handleLists = async(req, res, next) => {
     let countries = await Country.find(),
         nationalities = await Nationality.find(),
@@ -89,9 +94,14 @@ exports.handleLists = async(req, res, next) => {
         transactionsCategories = await transactionsCategory.find(),
         measurementUnits = await measUnits.find(),
         vendorClasses = await VendorClass.find(),
+        customerClasses = await CustomerClass.find(),
         paymentTerms = await PaymentTerms.find(),
         shippingMethod = await ShippingMethod.find(),
-        taxes = await Tax.find();
+        taxes = await Tax.find(),
+        OrgTypes = await OrgType.find(),
+        taxSchedule = await TaxSchedule.find(),
+        busCat = await BusCat.find(),
+        busSubCat = await BusSubCat.find();
 
     let data = {
         countries,
@@ -135,9 +145,14 @@ exports.handleLists = async(req, res, next) => {
         transactionsCategories,
         measurementUnits,
         vendorClasses,
+        customerClasses,
         paymentTerms,
         shippingMethod,
-        taxes
+        taxes,
+        taxSchedule,
+        OrgTypes,
+        busCat,
+        busSubCat
     }
     res.json(data)
 };
