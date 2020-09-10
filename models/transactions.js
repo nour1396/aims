@@ -11,6 +11,8 @@ const transactionSchema = mongoose.Schema( /* {} */ {
     postNumber: String,
     orderNumber: String,
     patchNumber: String,
+    promiseDate: Date,
+    shipmentDate: Date,
     docNumber: String,
     invoiceNumber: String,
     from: {
@@ -85,6 +87,7 @@ const transactionSchema = mongoose.Schema( /* {} */ {
         feesUnitOfMeasurment: String,
         feesQuantity: Number,
         feesPrice: Number,
+        feesSubTotal: String,
         feesNotes: String,
 
     }],
@@ -269,7 +272,14 @@ const transactionSchema = mongoose.Schema( /* {} */ {
         hrWorkGainTax: String,
         hrSyndicate: String,
         hrNotes: String,
-    }]
+    }],
+    transactionFooter: {
+        subTotalEnd: String,
+        miscellaneousEnd: String,
+        freightEnd: String,
+        taxEnd: String,
+        totalEnd: String
+    }
 }, { strict: false })
 const Transaction = mongoose.model('transactions', transactionSchema);
 exports.Transaction = Transaction

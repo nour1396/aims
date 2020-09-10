@@ -540,4 +540,4 @@ var clientSchema = mongoose.Schema({
 clientSchema.plugin(timestamps)
 const Client = mongoose.model('clients', clientSchema);
 
-exports.Client = Client
+exports.Client = Client;
