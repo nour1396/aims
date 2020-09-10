@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 const NODE__ENV = 'development'
 const IN_PROD = NODE__ENV === 'production'
 const SESS_NAME = 'ROOTS'
-const configDB = require('./config/db');
+const configDB = require('./config/database');
 
 //routing files
 const mainRouting = require('./routes/main.routing');
