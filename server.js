@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 const NODE__ENV = 'development'
 const IN_PROD = NODE__ENV === 'production'
 const SESS_NAME = 'ROOTS'
-const configDB = require('./config/database');
+const configDB = require('./config/db');
 
 //routing files
 const mainRouting = require('./routes/main.routing');
@@ -28,6 +28,7 @@ mongoose.connect(configDB.url, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
 }, (err) => { console.log('DB connected ^_^ ', err) })
+
 
 //define the middlewares
 app.use(cors());

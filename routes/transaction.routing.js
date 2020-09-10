@@ -4,15 +4,10 @@ const router = require('express').Router(),
     newAccInAccChart = require('../models/addAccountInChart').newAccInAccChartTransaction,
     CostCenter = require('../models/costCenter').CostCenterTransaction,
     Log = require('../models/log').LogTransaction,
-    transactionController = require('../controller/transaction.controller'),
-    cors = require('cors'),
-    corsOptions = {
-        origin: "https://aimsroots.herokuapp.com",
-        optionsSuccessStatus: 200
-    };
+    transactionController = require('../controller/transaction.controller');
 
 //==========get page to enter data of invoice (transaction)==========
-router.get('/transactions', cors(corsOptions), (req, res, next) => {
+router.get('/transactions', (req, res, next) => {
     let data = {}
         //get list of items
     addItem.find({}).then(items => {
@@ -28,34 +23,34 @@ router.get('/transactions', cors(corsOptions), (req, res, next) => {
 });
 
 //==========save transaction(invoice) in database==========
-router.post('/transactions', cors(corsOptions), transactionController.transactionPostHandler);
+router.post('/transactions', transactionController.transactionPostHandler);
 
 //==========save newAccInAccChart in database==========
-router.post('/newAccInAccChart', cors(corsOptions), transactionController.newAccInAccountsChartHandler);
+router.post('/newAccInAccChart', transactionController.newAccInAccountsChartHandler);
 
 //==========save transaction(invoice) in database==========
-router.post('/newCostCenter', cors(corsOptions), transactionController.newCostCenterHandler);
+router.post('/newCostCenter', transactionController.newCostCenterHandler);
 
 //========new vendor class ========
-router.post('/vendorClass', cors(corsOptions), transactionController.vendorClassHandler);
+router.post('/vendorClass', transactionController.vendorClassHandler);
 //query vendor class
-router.get('/vendorClassQuery', cors(corsOptions), transactionController.vendorClassQuery);
+router.get('/vendorClassQuery', transactionController.vendorClassQuery);
 
 //========new vendor class ========
-router.post('/customerClass', cors(corsOptions), transactionController.customerClassHandler);
+router.post('/customerClass', transactionController.customerClassHandler);
 
 //=======new cehckbook=======
-router.post('/checkbook', cors(corsOptions), transactionController.checkbookHandler)
+router.post('/checkbook', transactionController.checkbookHandler)
 
 //=======new taxDetails=======
-router.post('/taxDetails', cors(corsOptions), transactionController.taxDetailsHandler)
+router.post('/taxDetails', transactionController.taxDetailsHandler)
 
 //=======new taxSchedule=======
-router.post('/taxSchedule', cors(corsOptions), transactionController.taxScheduleHandler)
+router.post('/taxSchedule', transactionController.taxScheduleHandler)
 
 
 //push object in specific and specific array document
-router.post('/pushtransactions', cors(corsOptions), async(req, res) => {
+router.post('/pushtransactions', async(req, res) => {
     try {
         let pushedTrans = await Transaction.updateMany({ docNumber: req.body.documentNumber }, {
             $push: {
@@ -195,7 +190,7 @@ router.post('/pushtransactions', cors(corsOptions), async(req, res) => {
 });
 
 //get customize page to search item by name
-router.get('/search', cors(corsOptions), async(req, res) => {
+router.get('/search', async(req, res) => {
     try {
         let data = {}
             //get list of items
@@ -217,7 +212,7 @@ router.get('/search', cors(corsOptions), async(req, res) => {
 });
 
 //search assets by name
-router.get('/assetName', cors(corsOptions), (req, res) => {
+router.get('/assetName', (req, res) => {
     try {
         let data = {}
         const assetName = req.query.assetName;
@@ -347,7 +342,7 @@ router.get('/costCenterName', (req, res) => {
 });
 /*search item by name (single name , multi names ,
  if not choosen get all ,if single name was chosen not exist return no record)*/
-router.get('/itemName', cors(corsOptions), (req, res) => {
+router.get('/itemName', (req, res) => {
     try {
         let data = {}
         var itemName = req.query.itemName;
@@ -450,7 +445,7 @@ router.get('/itemName', cors(corsOptions), (req, res) => {
 });
 
 //search by transactionType
-router.get('/transactionType', cors(corsOptions), (req, res) => {
+router.get('/transactionType', (req, res) => {
     try {
         let data = {}
         const transactionType = req.query.transactionType
@@ -477,7 +472,7 @@ router.get('/transactionType', cors(corsOptions), (req, res) => {
 });
 
 //search by transactionDate
-router.get('/transactionDate', cors(corsOptions), (req, res) => {
+router.get('/transactionDate', (req, res) => {
     try {
         let data = {}
         const transactionDatefrom = req.query.transactionDatefrom
@@ -586,7 +581,7 @@ router.get('/specific', (req, res) => {
     }
 });
 //search items by name of entity and subEntity
-router.get('/entities', cors(corsOptions), (req, res) => {
+router.get('/entities', (req, res) => {
     try {
         let data = {}
         const fromEntity = req.query.fromEntity
