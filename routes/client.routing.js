@@ -3,19 +3,21 @@ const Client = require('../models/clients').Client;
 const Log = require('../models/log').Log;
 const clientController = require('../controller/client.controller');
 const listController = require('../controller/lists.controller');
-
-
-
-router.get('/lists', listController.handleLists);
+const cors = require('cors');
+let corsOptions = {
+    origin: "https://aimsroots.herokuapp.com",
+    optionsSuccessStatus: 200
+}
+router.get('/lists', cors(corsOptions), listController.handleLists);
 
 //save data in database
-router.post('/personForm', clientController.personFormHandler);
+router.post('/personForm', cors(corsOptions), clientController.personFormHandler);
 
 //get list of clients saved
-router.get('/clients', clientController.getAllClients)
+router.get('/clients', cors(corsOptions), clientController.getAllClients)
 
 //get client by id 
-router.get('/searchClient/:_id', (req, res) => {
+router.get('/searchClient/:_id', cors(corsOptions), (req, res) => {
     const id = req.params._id;
     Client.find({ "_id": id }, (err, client) => {
         if (err) throw (err);
@@ -29,7 +31,7 @@ router.get('/searchClient/:_id', (req, res) => {
 });
 
 //get page
-router.get('/edit/:_id', (req, res) => {
+router.get('/edit/:_id', cors(corsOptions), (req, res) => {
     const _id = req.params._id;
 
     Client.find({ "_id": _id }, (err, data) => {
