@@ -7,7 +7,7 @@ const router = require('express').Router(),
     transactionController = require('../controller/transaction.controller');
 
 //==========get page to enter data of invoice (transaction)==========
-router.get('/transactions', (req, res, next) => {
+router.get('/api/transactions', (req, res, next) => {
     let data = {}
         //get list of items
     addItem.find({}).then(items => {
@@ -23,34 +23,34 @@ router.get('/transactions', (req, res, next) => {
 });
 
 //==========save transaction(invoice) in database==========
-router.post('/transactions', transactionController.transactionPostHandler);
+router.post('/api/transactions', transactionController.transactionPostHandler);
 
 //==========save newAccInAccChart in database==========
-router.post('/newAccInAccChart', transactionController.newAccInAccountsChartHandler);
+router.post('/api/newAccInAccChart', transactionController.newAccInAccountsChartHandler);
 
 //==========save transaction(invoice) in database==========
-router.post('/newCostCenter', transactionController.newCostCenterHandler);
+router.post('/api/newCostCenter', transactionController.newCostCenterHandler);
 
 //========new vendor class ========
-router.post('/vendorClass', transactionController.vendorClassHandler);
+router.post('/api/vendorClass', transactionController.vendorClassHandler);
 //query vendor class
-router.get('/vendorClassQuery', transactionController.vendorClassQuery);
+router.get('/api/vendorClassQuery', transactionController.vendorClassQuery);
 
 //========new vendor class ========
 router.post('/customerClass', transactionController.customerClassHandler);
 
 //=======new cehckbook=======
-router.post('/checkbook', transactionController.checkbookHandler)
+router.post('/api/checkbook', transactionController.checkbookHandler)
 
 //=======new taxDetails=======
-router.post('/taxDetails', transactionController.taxDetailsHandler)
+router.post('/api/taxDetails', transactionController.taxDetailsHandler)
 
 //=======new taxSchedule=======
-router.post('/taxSchedule', transactionController.taxScheduleHandler)
+router.post('/api/taxSchedule', transactionController.taxScheduleHandler)
 
 
 //push object in specific and specific array document
-router.post('/pushtransactions', async(req, res) => {
+router.post('/api/pushtransactions', async(req, res) => {
     try {
         let pushedTrans = await Transaction.updateMany({ docNumber: req.body.documentNumber }, {
             $push: {
@@ -190,7 +190,7 @@ router.post('/pushtransactions', async(req, res) => {
 });
 
 //get customize page to search item by name
-router.get('/search', async(req, res) => {
+router.get('/api/search', async(req, res) => {
     try {
         let data = {}
             //get list of items
@@ -212,7 +212,7 @@ router.get('/search', async(req, res) => {
 });
 
 //search assets by name
-router.get('/assetName', (req, res) => {
+router.get('/api/assetName', (req, res) => {
     try {
         let data = {}
         const assetName = req.query.assetName;
@@ -248,7 +248,7 @@ router.get('/assetName', (req, res) => {
 
 /*search item by name (single name , multi names ,
  if not choosen get all ,if single name was chosen not exist return no record)*/
-router.get('/costCenterName', (req, res) => {
+router.get('/api/costCenterName', (req, res) => {
     try {
         let data = {}
         let costCenter = req.query.costCenter;
@@ -342,7 +342,7 @@ router.get('/costCenterName', (req, res) => {
 });
 /*search item by name (single name , multi names ,
  if not choosen get all ,if single name was chosen not exist return no record)*/
-router.get('/itemName', (req, res) => {
+router.get('/api/itemName', (req, res) => {
     try {
         let data = {}
         var itemName = req.query.itemName;
@@ -445,7 +445,7 @@ router.get('/itemName', (req, res) => {
 });
 
 //search by transactionType
-router.get('/transactionType', (req, res) => {
+router.get('/api/transactionType', (req, res) => {
     try {
         let data = {}
         const transactionType = req.query.transactionType
@@ -512,7 +512,7 @@ router.get('/transactionDate', (req, res) => {
 });
 
 //search by transactionDate, itemName, transactionType,entities
-router.get('/specific', (req, res) => {
+router.get('/api/specific', (req, res) => {
     try {
         let data = {}
         const transactionDatefrom = req.query.transactionDatefrom
@@ -581,7 +581,7 @@ router.get('/specific', (req, res) => {
     }
 });
 //search items by name of entity and subEntity
-router.get('/entities', (req, res) => {
+router.get('/api/entities', (req, res) => {
     try {
         let data = {}
         const fromEntity = req.query.fromEntity

@@ -3,7 +3,7 @@ const router = require('express').Router(),
     Log = require('../models/log').Log;
 
 //to show log for specific user 
-router.get('/log', (req, res) => {
+router.get('/api/log', (req, res) => {
     const log = req.query.log;
     let data = {}
     console.log(log)
@@ -30,7 +30,7 @@ router.get('/log', (req, res) => {
 });
 
 //main page
-router.get('/', (req, res) => {
+router.get('/api/', (req, res) => {
     res.render('index')
 });
 

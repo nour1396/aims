@@ -282,4 +282,4 @@ const transactionSchema = mongoose.Schema( /* {} */ {
     }
 }, { strict: false })
 const Transaction = mongoose.model('transactions', transactionSchema);
-exports.Transaction = Transaction
+exports.Transaction = Transaction;

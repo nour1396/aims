@@ -8,14 +8,14 @@ const router = require('express').Router(),
 
 
 //post (add) form of new co. to database
-router.post('/newCompany', companyController.newCompanyHandler);
+router.post('/api/newCompany', companyController.newCompanyHandler);
 
 //post (add) form of new organization to database
-router.post('/newOrg', orgController.orgHandler);
+router.post('/api/newOrg', orgController.orgHandler);
 
 
 //post (add) new item to database
-router.post('/newItem', (req, res, next) => {
+router.post('/api/newItem', (req, res, next) => {
     let addNewItem = new addItem({
         itemInEnglish: req.body.itemInEnglish,
         itemInArabic: req.body.itemInArabic,
@@ -30,7 +30,7 @@ router.post('/newItem', (req, res, next) => {
 });
 
 //post account form
-router.post('/addAcccard', (req, res) => {
+router.post('/api/addAcccard', (req, res) => {
     var addAccCard = new addAcc({
         general: {
             accountName: req.body.accountName,
@@ -68,14 +68,14 @@ router.post('/addAcccard', (req, res) => {
 });
 
 //add new asset data to database
-router.post('/addAsset', async(req, res) => {
+router.post('/api/addAsset', async(req, res) => {
     var newAsset = new Asset({});
     await newAsset.save()
     res.json('saved')
 });
 
 //post data of add new service to database
-router.post('/addService', async(req, res, next) => {
+router.post('/api/addService', async(req, res, next) => {
     var newService = new addService()
     await newService.save()
     res.json('saved')

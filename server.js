@@ -22,6 +22,7 @@ const mainRouting = require('./routes/main.routing');
 const clientRouting = require('./routes/client.routing');
 const transactionRouting = require('./routes/transaction.routing');
 const addNewRouting = require('./routes/addNew.routing');
+const authRouting = require('./routes/auth.routing');
 
 //connect to database
 mongoose.connect(configDB.url, {
@@ -51,11 +52,13 @@ app.use(express.static(path.join(__dirname, '/assets')));
 
 //use body parser middleware
 app.use(express.json());
-
+/* const verifyJWT = require('./middleware/auth');
+app.all('/api/*', verifyJWT); */
 app.use(clientRouting);
 app.use(transactionRouting);
 app.use(addNewRouting);
 app.use(mainRouting);
+app.use(authRouting);
 
 //localhost listen at 5000
 app.listen(port, () => {
