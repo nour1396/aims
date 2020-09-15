@@ -74,4 +74,4 @@ exports.handleLogin = async(req, res) => {
             oldData: { email, password },
         })
     }
-}
+};
