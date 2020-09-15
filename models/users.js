@@ -1,6 +1,6 @@
 const timestamps = require('mongoose-timestamp');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+/* const bcrypt = require('bcrypt'); */
 
 const userSchema = mongoose.Schema({
     userName: {
