@@ -1,6 +1,5 @@
 const router = require('express').Router(),
     addItem = require('../models/addItem').addItem,
-    addAcc = require('../models/accountCard').addAcc,
     Asset = require('../models/assets').addAsset,
     addService = require('../models/services').addService,
     orgController = require('../controller/org.controller'),

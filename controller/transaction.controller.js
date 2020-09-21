@@ -6,6 +6,8 @@ const CustomerClass = require('../models/customerClass').CustomerClass;
 const Checkbook = require('../models/checkbook').Checkbook;
 const Tax = require('../models/taxDetails').Tax;
 const TaxSchedule = require('../models/taxSchedule').TaxSchedule;
+const Item = require('../models/item').Item;
+const ItemClass = require('../models/itemClass').ItemClass;
 
 exports.transactionPostHandler = async(req, res) => {
     try {
@@ -464,6 +466,74 @@ exports.customerClassHandler = async(req, res) => {
         } = req.body;
         let customerClasses = await CustomerClass.insertMany(data);
         res.json(customerClasses)
+    } catch (error) {
+        res.json(error)
+    }
+};
+
+exports.itemClassHandler = async(req, res) => {
+    try {
+        let data = {
+            itemClassCode,
+            itemGenericDescription,
+            itemType,
+            valuationMethod,
+            itemTaxScheduleID,
+            unitofMeasurementScheduleID,
+            sellingUnitofMeasurement,
+            purchasingUnitofMeasurement,
+            itemTrackingOption,
+            reorderLevel,
+            maximumLevel,
+            siteID,
+            vendorID,
+        } = req.body;
+        let newItemClass = new ItemClass(data)
+        await newItemClass.save();
+        res.json('saved successfully')
+    } catch (error) {
+        res.json(error)
+    }
+};
+
+exports.itemHandler = async(req, res) => {
+    try {
+        let data = {
+            itemClassCode,
+            itemNumber,
+            itemDescription,
+            itemGenericDescription,
+            itemShortName,
+            itemType,
+            valuationMethod,
+            itemTaxScheduleID,
+            unitofMeasurementScheduleID,
+            sellingUnitofMeasurement,
+            purchasingUnitofMeasurement,
+            itemTrackingOption,
+            reorderLevel,
+            maximumLevel,
+            siteID,
+            vendorID,
+            standardCost,
+            currentCost,
+            inventory,
+            inventoryOffset,
+            inventoryReturn,
+            costOfGoodsSold,
+            sales,
+            markdowns,
+            salesReturn,
+            dropShipItems,
+            inUse,
+            inService,
+            Damaged,
+            Variance,
+            purchasePriceVariance,
+        } = req.body;
+        let newItem = new Item(data)
+        await newItem.save();
+        res.json('saved successfully')
     } catch (error) {
         res.json(error)
     }
