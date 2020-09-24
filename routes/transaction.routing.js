@@ -28,7 +28,7 @@ router.post('/api/transactions', transactionController.transactionPostHandler);
 //==========save newAccInAccChart in database==========
 router.post('/api/newAccInAccChart', transactionController.newAccInAccountsChartHandler);
 
-//==========save transaction(invoice) in database==========
+//==========save newCostCenter in database==========
 router.post('/api/newCostCenter', transactionController.newCostCenterHandler);
 
 //========new vendor class ========
@@ -36,7 +36,7 @@ router.post('/api/vendorClass', transactionController.vendorClassHandler);
 //query vendor class
 router.get('/api/vendorClassQuery', transactionController.vendorClassQuery);
 
-//========new vendor class ========
+//========new customer class ========
 router.post('/customerClass', transactionController.customerClassHandler);
 
 //=======new cehckbook=======
@@ -48,6 +48,11 @@ router.post('/api/taxDetails', transactionController.taxDetailsHandler)
 //=======new taxSchedule=======
 router.post('/api/taxSchedule', transactionController.taxScheduleHandler)
 
+/* //=======new item=======
+router.post('/api/newItem', transactionController)
+
+//=======new itemClass=======
+router.post('/api/newItemClass', transactionController) */
 
 //push object in specific and specific array document
 router.post('/api/pushtransactions', async(req, res) => {

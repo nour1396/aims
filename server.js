@@ -28,7 +28,7 @@ const authRouting = require('./routes/auth.routing');
 mongoose.connect(configDB.url, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-}, (err) => { console.log('DB connected ^_^ ', err) })
+}, (err) => { console.log('DB connected ^_^ ', err) });
 
 
 //define the middlewares
@@ -62,5 +62,5 @@ app.use(authRouting);
 
 //localhost listen at 5000
 app.listen(port, () => {
-    console.log('server listening on' + " " + port)
+    console.log('server listening on' + " " + port);
 });
